@@ -38,7 +38,7 @@ export default function App() {
 
       <View style={style.container}>
 
-        <TouchableOpacity style={style.btnContainer}>
+        <TouchableOpacity style={style.btnContainer} onPress = {() => Actions.listaCalendario()}>
           <Image source={require('../../assets/agenda.png') } style={style.imageButton}/>
         </TouchableOpacity>
 
@@ -62,7 +62,7 @@ export default function App() {
 
       <View style={style.container}>
 
-        <TouchableOpacity style={style.btnContainer} onPress = {() => Actions.main()}>
+        <TouchableOpacity style={style.btnContainer} onPress = {() => Actions.listaVacina()}>
           <Image source={require('../../assets/lista.png') } style={style.imageButton}/>
         </TouchableOpacity>
 

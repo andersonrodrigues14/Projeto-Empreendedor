@@ -11,34 +11,31 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import Campanha from './CampanhaVacinacao';
-import {style} from './StyleListCampanha';
+import Calendario from './Calendario';
+import {style} from './StyleListCalendario';
 
 
-export default class ListCamapanha extends Component {
+export default class ListCalendario extends Component {
   state = {
     campanhas: [{
       id: Math.random(),
-      imagem: require('../../assets/dados.png'),
-      nome : 'Primeira Campanha',
+      imagem: require('../../assets/teste.png'),
+      nome : 'Primeira Data Vacina',
       texto: 'Texto primeira Camapanha',
-      dtInicio: '10/10/2020',
-      dtCadastro: '10/10/2222',
+      dtVacina: '10/05/2020',
     },{
     id:Math.random(),
       imagem: require('../../assets/ListCampanha.png'),
-      nome : 'Segunda Campanha',
+      nome : 'Segunda Data Vacina',
       texto: 'Segunda primeira Camapanha',
-      dtInicio: '10/10/2020',
-      dtCadastro: '10/10/2222',
+      dtVacina: '10/05/2020',
     },
     {
       id:Math.random(),
         imagem: require('../../assets/ListCampanha.png'),
-        nome : 'Terceira Campanha',
+        nome : 'Terceira Data Vacina',
         texto: 'Terceira primeira Camapanha',
-        dtInicio: '10/10/2020',
-        dtCadastro: '10/10/2222',
+        dtVacina: '10/05/2020',
       },
   ],
   }
@@ -51,33 +48,31 @@ export default class ListCamapanha extends Component {
         style={style.image}>
       <View style={style.containerLogo}>
         <Image
-          source={require('../../assets/ListCampanha.png')}
+          source={require('../../assets/ListCalendario.png')}
           style={{width: 100, height: 95}}
         />
-        <Text style={style.textTitulo}>Campanha de Vacinação</Text>
+        <Text style={style.textTitulo}>Calendário de Vacinas</Text>
         </View>
 
         <View style={style.containerInfo}>
-            <TouchableOpacity
-              style={style.btnRegister}
-             >
-               <Icon
-                name="globe"
-                size={40}
-                color="#fff"
+            <TouchableOpacity style={style.btnInsert}>
+              <Text style={style.textInsert}>Adicionar Data</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={style.btnFilter}>
+              <Text style={style.textFilter}>Mês do Calendário</Text>
+              <Icon
+                name="angle-down"
+                size={20}
+                color="#020202"
               />
-              <View style={style.containerInfoRow}>
-              <Text style={style.textRegister}>Fique por dentro das</Text>
-                <Text style={style.textRegister}>campanhas que estão</Text>
-                <Text style={style.textRegister}>acontecendo!</Text>
-              </View>
             </TouchableOpacity>
           </View>
 
       <View style={style.container}>
       <FlatList  data={this.state.campanhas}
                 keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <Campanha key={item.id} {...item} />} />
+                renderItem={({item}) => <Calendario key={item.id} {...item} />} />
       </View>
       </ImageBackground>
       </KeyboardAvoidingView>
