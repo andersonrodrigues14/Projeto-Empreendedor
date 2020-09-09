@@ -8,7 +8,7 @@ import Login from './components/Login/Login';
 import Main from './components/Main/Main';
 import CreateUser from './components/CreateUser/CreateUser';
 import ListaCamapanha from './components/CampanhaVacinacao/ListCampanhaVacinacao';
-import ListaVacina from './components/ListaVacina/ListVacina';
+import ListaVacina from './components/Vacina/ListVacina';
 import ListaCalendario from './components/CalendarioVacinacao/ListCalendario';
 
 export default function App() {
