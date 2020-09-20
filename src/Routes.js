@@ -10,6 +10,7 @@ import CreateUser from './components/CreateUser/CreateUser';
 import ListaCamapanha from './components/CampanhaVacinacao/ListCampanhaVacinacao';
 import ListaVacina from './components/Vacina/ListVacina';
 import ListaCalendario from './components/CalendarioVacinacao/ListCalendario';
+import ListaMinhasVacinas from './components/MinhasVacinas/ListMinhasVacinas';
 
 export default function App() {
   return (
@@ -21,7 +22,8 @@ export default function App() {
     <Scene key="createUser" component={CreateUser} title="Create User" hideNavBar={true}/>
     <Scene key="listaVacina" component={ListaVacina} title="Lista Vacinas" hideNavBar={true}/>
     <Scene key="listaCalendario" component={ListaCalendario} title="Lista Calendario" hideNavBar={true}/>
-    </Stack>
+    <Scene key="listaMinhasVacinas" component={ListaMinhasVacinas} title="Lista Minhas Vacinas" hideNavBar={true}/>
+   </Stack>
 </Router>
 
   );
