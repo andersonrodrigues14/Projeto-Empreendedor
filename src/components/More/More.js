@@ -6,9 +6,10 @@ import React from 'react';
 import {
   KeyboardAvoidingView,
   Text,
-  StyleSheet,
   ImageBackground,
+  View,
 } from 'react-native';
+import Menu from '../Main/Main';
 
 //KeyboardAvoidingView usado keybord para evitar possível bug presente no IOS
 
@@ -21,9 +22,12 @@ export default function App() {
   return (
     <KeyboardAvoidingView style={style.background}>
       <ImageBackground  source={require('../../assets/fundo.png')} style={style.image}>
-      <Text>Tela Mais</Text>
+      <Text style={{flex:1, justifyContent:'center', alignItems:'center'}} />
+        <Text style={{flex:1, justifyContent:'center', alignItems:'center'}}>Tela Mais</Text>
+      <View>
+        <Menu/>
+      </View>
       </ImageBackground>
-
     </KeyboardAvoidingView>
   );
 }

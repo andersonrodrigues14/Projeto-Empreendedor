@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
+import 'react-native-gesture-handler';
 import {
   View,
   FlatList,
@@ -12,7 +13,7 @@ import {
 
 import Vacina from './Vacina';
 import {style} from './StyleListVacina';
-
+import Menu from '../Main/Main';
 
 export default class ListVacina extends Component {
   state = {
@@ -63,6 +64,9 @@ export default class ListVacina extends Component {
       <FlatList  data={this.state.campanhas}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({item}) => <Vacina key={item.id} {...item} />} />
+      </View>
+      <View>
+        <Menu/>
       </View>
       </ImageBackground>
       </KeyboardAvoidingView>

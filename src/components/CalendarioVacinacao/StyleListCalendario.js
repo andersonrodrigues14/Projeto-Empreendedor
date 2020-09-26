@@ -27,7 +27,7 @@ export const style = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 35,
     paddingBottom: 30,
-    marginTop: 10,
+    marginTop: 15,
   },
   textTitulo: {
     color: '#28ABE3',

@@ -8,11 +8,11 @@ import {
   ImageBackground,
   Text,
   TouchableOpacity,
-  ListItem,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import Calendario from './Calendario';
+import Menu from '../Main/Main';
 import {style} from './StyleListCalendario';
 
 
@@ -50,7 +50,7 @@ export default class ListCalendario extends Component {
       <View style={style.containerLogo}>
         <Image
           source={require('../../assets/ListCalendario.png')}
-          style={{width: 100, height: 95}}
+          style={{width: 95, height: 90}}
         />
         <Text style={style.textTitulo}>Calendário de Vacinas</Text>
         </View>
@@ -74,6 +74,9 @@ export default class ListCalendario extends Component {
       <FlatList  data={this.state.campanhas}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({item}) => <Calendario key={item.id} {...item} />} />
+      </View>
+      <View>
+        <Menu/>
       </View>
       </ImageBackground>
       </KeyboardAvoidingView>

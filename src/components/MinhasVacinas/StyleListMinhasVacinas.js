@@ -57,7 +57,6 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
-    marginTop:10,
     flexDirection: 'row',
   },
 
@@ -102,6 +101,6 @@ export const style = StyleSheet.create({
     borderRadius: 12,
     flexDirection: 'row',
     paddingHorizontal: 60,
-    marginTop: 15,
+    marginTop: 10,
   },
 });

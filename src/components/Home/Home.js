@@ -12,7 +12,9 @@ import {
   Image,
   ImageBackground,
   Keyboard,
+  ScrollView,
 } from 'react-native';
+import Menu from '../Main/Main';
 //KeyboardAvoidingView usado keybord para evitar possível bug presente no IOS
 
 //Import Style
@@ -25,6 +27,7 @@ export default function App() {
   return (
     <KeyboardAvoidingView style={style.background} onReady =  {() => Keyboard.dismiss}>
       <ImageBackground  source={require('../../assets/fundo.png')} style={style.image}>
+      <ScrollView style={style.scroll}>
 
       <View style={style.containerLogo}>
         <Image source={require('../../assets/teste.png') } style={{width:100,height:95}}/>
@@ -67,7 +70,10 @@ export default function App() {
         </TouchableOpacity>
 
       </View>
-
+      </ScrollView>
+      <View>
+        <Menu/>
+      </View>
       </ImageBackground>
 
     </KeyboardAvoidingView>

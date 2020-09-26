@@ -82,7 +82,7 @@ export default function App(navigation) {
 
       <View style={style.buttons}>
 
-        <TouchableOpacity style={style.btnSubmit} onPress = {() => Actions.main()} >
+        <TouchableOpacity style={style.btnSubmit} onPress = {() => Actions.home()} >
           <Text style={style.textSubmit}>Entrar</Text>
         </TouchableOpacity>
 

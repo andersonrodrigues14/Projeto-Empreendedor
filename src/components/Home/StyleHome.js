@@ -16,13 +16,17 @@ export const style = StyleSheet.create({
     marginTop: Platform.OS === 'ios' ? 20 : 0,
   },
 
+  scroll: {
+    flex: 0.1,
+    //width:'100%',
+  },
+
   containerLogo: {
     //View logo
     flex: 1,
     width: '90%',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 35,
     paddingBottom: 60,
     marginTop: 10,
   },

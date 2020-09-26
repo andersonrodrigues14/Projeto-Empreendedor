@@ -16,6 +16,7 @@ import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 import Profile from './Profile';
 import {style} from './StyleListProfile';
 import {ScrollView} from 'react-native-gesture-handler';
+import Menu from '../Main/Main';
 
 export default class ListProfile extends Component {
   state = {
@@ -95,6 +96,9 @@ export default class ListProfile extends Component {
               keyExtractor={(item) => `${item.id}`}
               renderItem={({item}) => <Profile key={item.id} {...item} />}
             />
+          </View>
+          <View>
+            <Menu/>
           </View>
         </ImageBackground>
       </KeyboardAvoidingView>

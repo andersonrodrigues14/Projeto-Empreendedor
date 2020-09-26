@@ -14,6 +14,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import MinhasVacina from './MinhasVacinas';
+import Menu from '../Main/Main';
 import {style} from './StyleListMinhasVacinas';
 
 
@@ -75,7 +76,7 @@ export default class ListMinhasVacinas extends Component {
         </TouchableOpacity>
 
         <View style={style.InfoUser}>
-         <Image source={require('../../assets/perfil.png') } style={{width:85,height:85,resizeMode: 'contain'}}/>
+         <Image source={require('../../assets/perfil.png') } style={{width:75,height:75,resizeMode: 'contain'}}/>
           <Text style={style.textTitulo}>Nome Usuário</Text>
         </View>
 
@@ -85,6 +86,9 @@ export default class ListMinhasVacinas extends Component {
       <FlatList  data={this.state.minhasVacinas}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({item}) => <MinhasVacina key={item.id} {...item} />} />
+      </View>
+      <View>
+        <Menu/>
       </View>
       </ImageBackground>
       </KeyboardAvoidingView>

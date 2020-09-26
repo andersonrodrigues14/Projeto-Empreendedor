@@ -7,7 +7,9 @@ import {
   KeyboardAvoidingView,
   Text,
   ImageBackground,
+  View,
 } from 'react-native';
+import Menu from '../Main/Main';
 
 //import Style
 import {style} from './StyleFamily';
@@ -20,9 +22,12 @@ export default function App() {
   return (
     <KeyboardAvoidingView style={style.background}>
       <ImageBackground  source={require('../../assets/fundo.png')} style={style.imagem}>
-      <Text>Tela Familia</Text>
+      <Text style={{flex:1, justifyContent:'center', alignItems:'center'}} />
+        <Text style={{flex:1, justifyContent:'center', alignItems:'center'}}>Tela Familia</Text>
+      <View>
+        <Menu/>
+      </View>
       </ImageBackground>
-
     </KeyboardAvoidingView>
   );
 }

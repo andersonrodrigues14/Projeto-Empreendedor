@@ -12,6 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import Campanha from './CampanhaVacinacao';
+import Menu from '../Main/Main';
 import {style} from './StyleListCampanha';
 
 
@@ -78,6 +79,9 @@ export default class ListCamapanha extends Component {
       <FlatList  data={this.state.campanhas}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({item}) => <Campanha key={item.id} {...item} />} />
+      </View>
+      <View>
+        <Menu/>
       </View>
       </ImageBackground>
       </KeyboardAvoidingView>

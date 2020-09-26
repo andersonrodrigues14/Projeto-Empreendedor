@@ -1,66 +1,58 @@
 /* eslint-disable prettier/prettier */
-import * as  React  from  'react';
+import React, {Component} from 'react';
 import 'react-native-gesture-handler';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 
-const {Navigator, Screen} = createBottomTabNavigator();
+import {Actions} from 'react-native-router-flux';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import Home from '../Home/Home';
-import Familia from '../Family/Family';
-import Profile from '../Profile/ListProfile';
-import More from '../More/More';
+export default class menu extends Component {
 
-export default function App() {
-  return (
-  <NavigationContainer>
-    <Navigator tabBarOptions={{
-      style: {
-        height:60,
-        borderTopWidth:0,
-      },
-      tabStyle: {
-        alignItems:'center',
-        justifyContent:'center',
-      },
-      iconStyle:{
-        flex:0,
-        width:40,
-        height:20,
-      },
-      labelStyle: {
-        fontSize:14,
-        marginTop:5,
-      },
-      inactiveTintColor:'#C0C0C0',
-      activeTintColor:'#28ABE3',
-      }}>
-      <Screen name="Menu" component={Home} options={{
-        tabBarIcon:({size, focused})=>{
-          return (
-            <FontAwesome5 name="home"size={size} color={focused ? '#28ABE3' : '#C0C0C0'}/>
-          );
-        }}}/>
-      <Screen name="Familia" component={Familia} options={{
-        tabBarIcon:({size, focused})=>{
-          return (
-            <FontAwesome5 name="users"size={size} color={focused ? '#28ABE3' : '#C0C0C0'}/>
-          );
-        }}}/>
-      <Screen name="Dados" component={Profile} options={{
-        tabBarIcon:({size, focused})=>{
-          return (
-            <FontAwesome5 name="user"size={size} color={focused ? '#28ABE3' : '#C0C0C0'}/>
-          );
-        }}}/>
-      <Screen name="Mais" component={More} options={{
-        tabBarIcon:({size, focused})=>{
-          return (
-            <FontAwesome5 name="bars"size={size} color={focused ? '#28ABE3' : '#C0C0C0'}/>
-          );
-        }}}/>
-    </Navigator>
-</NavigationContainer>
-);
-}
+  render(){
+    return (
+      <View style={{height:60,alignItems: 'center',justifyContent: 'center',flexDirection:'row', width:'100%',backgroundColor:'#fff'}}>
+        <TouchableOpacity style={{alignItems: 'center', width:'25%'}} onPress = {() => Actions.home()} tabBarOptions={{inactiveTintColor:'#C0C0C0',
+      activeTintColor:'#28ABE3'}}>
+        <Icon
+            //style={style.searchIconInfo}
+            name="home"
+            size={23}
+            color="#28ABE3"
+          />
+          <Text style={{color:'#28ABE3'}}>Menu</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{alignItems: 'center', width:'25%'}} onPress = {() => Actions.familia()} tabBarOptions={{inactiveTintColor:'#C0C0C0',
+      activeTintColor:'#28ABE3'}}>
+        <Icon
+            //style={style.searchIconInfo}
+            name="users"
+            size={23}
+            color="#28ABE3"
+          />
+          <Text style={{color:'#28ABE3'}}>Familia</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{alignItems: 'center', width:'25%'}} onPress = {() => Actions.dados()} opt>
+        <Icon
+            name="user"
+            size={23}
+            color="#28ABE3"
+          />
+          <Text style={{color:'#28ABE3'}}>Dados</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{alignItems: 'center', width:'25%'}} onPress = {() => Actions.mais()} >
+        <Icon
+            //style={style.searchIconInfo}
+            name="bars"
+            size={23}
+            color="#28ABE3"
+
+          />
+          <Text style={{color:'#28ABE3'}}>Mais</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }}
