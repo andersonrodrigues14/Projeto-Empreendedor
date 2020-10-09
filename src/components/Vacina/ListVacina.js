@@ -56,7 +56,7 @@ export default class ListVacina extends Component {
 
         <View style={style.containerInfo}>
             <TouchableOpacity style={style.btnInsert}>
-              <Text style={style.textInsert}>Adicionas Vacina</Text>
+              <Text style={style.textInsert}>Adicionar Vacina</Text>
             </TouchableOpacity>
           </View>
 

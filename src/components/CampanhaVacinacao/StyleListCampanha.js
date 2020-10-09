@@ -63,6 +63,18 @@ export const style = StyleSheet.create({
     flexDirection: 'row',
   },
 
+  btnAdicionar: {
+    backgroundColor: '#35AAFF',
+    width: '70%',
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    marginBottom:10,
+    marginTop:10,
+    flexDirection: 'row',
+  },
+
   textRegister: {
     color: '#FFF',
     fontSize: 18,

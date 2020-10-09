@@ -72,7 +72,7 @@ export default class ListMinhasVacinas extends Component {
                 />
         </View>
         <TouchableOpacity style={style.btnInsert}>
-          <Text style={style.textInsert}>Adicionas Vacina</Text>
+          <Text style={style.textInsert}>Adicionar Vacina</Text>
         </TouchableOpacity>
 
         <View style={style.InfoUser}>

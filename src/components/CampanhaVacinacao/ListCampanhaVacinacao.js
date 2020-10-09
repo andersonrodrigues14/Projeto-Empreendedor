@@ -59,6 +59,12 @@ export default class ListCamapanha extends Component {
         </View>
 
         <View style={style.containerInfo}>
+        <TouchableOpacity style={style.btnAdicionar}>
+            <View style={style.containerInfoRow}>
+              <Text style={style.textRegister}>Adicionar Campanha</Text>
+            </View>
+        </TouchableOpacity>
+
             <TouchableOpacity
               style={style.btnRegister}
              >
