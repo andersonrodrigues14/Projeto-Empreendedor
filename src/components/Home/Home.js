@@ -53,7 +53,7 @@ export default function App() {
 
       <View style={style.container}>
 
-        <TouchableOpacity style={style.btnContainer}>
+        <TouchableOpacity style={style.btnContainer} onPress = {() => Actions.listainformacaodoenca()}>
         <Image source={require('../../assets/informacao.png') } style={style.imageButton}/>
         </TouchableOpacity>
 

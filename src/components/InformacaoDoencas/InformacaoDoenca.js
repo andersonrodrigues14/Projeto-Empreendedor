@@ -1,18 +1,10 @@
 /* eslint-disable prettier/prettier */
-
-//import
 import React, {Component} from 'react';
 import {View, Image, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {style} from './StyleInformacao';
 
-//import Style
-import {style} from './StyleFamily';
-
-//KeyboardAvoidingView usado keybord para evitar possível bug presente no IOS
-
-//Criar o component
-export default class Familia extends Component {
-
+export default class InformacaoDoenca extends Component {
   render() {
     return (
       <View style={style.container}>
@@ -37,10 +29,15 @@ export default class Familia extends Component {
             color="#35AAFF"
           />
         </View>
-        <Text style={style.textTitulo}>{this.props.nomeFamiliar}</Text>
-        <Text style={style.textStyle}>{this.props.vacina} /Data Aplicação: {this.props.dtAplicacao} / Data Renovação: {this.props.dtRenovacao}</Text>
+        <Text style={style.textTitulo}>{this.props.titulo}</Text>
+        <Text style={style.textStyle}>{this.props.texto}</Text>
+
+        <View style={style.container}>
+          <Text style={style.textStyle}>
+            Data da Publicação: {this.props.dataPublicacao}
+          </Text>
+        </View>
       </View>
     );
   }
 }
-

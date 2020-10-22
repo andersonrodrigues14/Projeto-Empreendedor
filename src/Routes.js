@@ -12,6 +12,8 @@ import ListaCamapanha from './components/CampanhaVacinacao/ListCampanhaVacinacao
 import ListaVacina from './components/Vacina/ListVacina';
 import ListaCalendario from './components/CalendarioVacinacao/ListCalendario';
 import ListaMinhasVacinas from './components/MinhasVacinas/ListMinhasVacinas';
+import ListaInformacaoDoenca from './components/InformacaoDoencas/ListInformacaoDoenca';
+import ListaFamily from './components/Family/ListFamily';
 import Familia from './components/Family/Family';
 import Profile from './components/Profile/ListProfile';
 import Mais from './components/More/More';
@@ -27,7 +29,8 @@ export default function App() {
     <Scene key="listaVacina" component={ListaVacina} title="Lista Vacinas" hideNavBar={true}/>
     <Scene key="listaCalendario" component={ListaCalendario} title="Lista Calendario" hideNavBar={true}/>
     <Scene key="listaMinhasVacinas" component={ListaMinhasVacinas} title="Lista Minhas Vacinas" hideNavBar={true}/>
-    <Scene key="familia" component={Familia} title="Familia" hideNavBar={true}/>
+    <Scene key="listafamily" component={ListaFamily} title="Familia" hideNavBar={true}/>
+    <Scene key="listainformacaodoenca" component={ListaInformacaoDoenca} title="Informação Doença" hideNavBar={true}/>
     <Scene key="dados" component={Profile} title="Profile" hideNavBar={true}/>
     <Scene key="mais" component={Mais} title="Mais" hideNavBar={true}/>
    </Stack>

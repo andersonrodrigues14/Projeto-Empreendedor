@@ -25,7 +25,7 @@ export default class menu extends Component {
           />
           <Text style={{color:'#28ABE3'}}>Menu</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{alignItems: 'center', width:'25%'}} onPress = {() => Actions.familia()} tabBarOptions={{inactiveTintColor:'#C0C0C0',
+        <TouchableOpacity style={{alignItems: 'center', width:'25%'}} onPress = {() => Actions.listafamily()} tabBarOptions={{inactiveTintColor:'#C0C0C0',
       activeTintColor:'#28ABE3'}}>
         <Icon
             //style={style.searchIconInfo}

@@ -35,20 +35,10 @@ export const style = StyleSheet.create({
     marginTop: Platform.OS === 'ios' ? 20 : 10,
   },
 
-  searchIcon: {
-    padding: 10,
-    marginBottom:8,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 
   textStyle:{
-    fontSize:12,
+    fontSize:14,
     color:'#000',
-    padding:15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
   },
 
   textTitulo:{
