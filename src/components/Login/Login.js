@@ -90,7 +90,7 @@ export default function App(navigation) {
           <Text style={style.textRegister}>Cadastrar-se</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={style.btnAlterPasswor}>
+        <TouchableOpacity style={style.btnAlterPasswor} onPress = {() => Actions.senha()}>
           <Text style={style.textAlterPasswor}>Esqueci minha senha</Text>
         </TouchableOpacity>
       </View>

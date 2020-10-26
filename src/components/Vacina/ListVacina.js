@@ -14,9 +14,11 @@ import {
 import Vacina from './Vacina';
 import {style} from './StyleListVacina';
 import Menu from '../Main/Main';
+import AddVacina from './AddVacina';
 
 export default class ListVacina extends Component {
   state = {
+    showAddVacina: false,
     campanhas: [{
       id: Math.random(),
       imagem: require('../../assets/teste.png'),
@@ -43,6 +45,7 @@ export default class ListVacina extends Component {
   render(){
     return (
       <KeyboardAvoidingView style={style.background}>
+        <AddVacina isVisible={this.state.showAddVacina} onCancel={()=> this.setState({showAddVacina: false})}/>
       <ImageBackground
         source={require('../../assets/fundo.png')}
         style={style.image}>
@@ -55,7 +58,7 @@ export default class ListVacina extends Component {
         </View>
 
         <View style={style.containerInfo}>
-            <TouchableOpacity style={style.btnInsert}>
+            <TouchableOpacity style={style.btnInsert} onPress={() => this.setState({showAddVacina: true})}>
               <Text style={style.textInsert}>Adicionar Vacina</Text>
             </TouchableOpacity>
           </View>

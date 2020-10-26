@@ -5,7 +5,6 @@ import {Router, Scene, Stack} from 'react-native-router-flux';
 
 
 import Login from './components/Login/Login';
-import Main from './components/Main/Main';
 import Home from './components/Home/Home';
 import CreateUser from './components/CreateUser/CreateUser';
 import ListaCamapanha from './components/CampanhaVacinacao/ListCampanhaVacinacao';
@@ -14,9 +13,10 @@ import ListaCalendario from './components/CalendarioVacinacao/ListCalendario';
 import ListaMinhasVacinas from './components/MinhasVacinas/ListMinhasVacinas';
 import ListaInformacaoDoenca from './components/InformacaoDoencas/ListInformacaoDoenca';
 import ListaFamily from './components/Family/ListFamily';
-import Familia from './components/Family/Family';
 import Profile from './components/Profile/ListProfile';
 import Mais from './components/More/More';
+import Senha from './components/Senha/senha';
+
 
 export default function App() {
   return (
@@ -33,6 +33,7 @@ export default function App() {
     <Scene key="listainformacaodoenca" component={ListaInformacaoDoenca} title="Informação Doença" hideNavBar={true}/>
     <Scene key="dados" component={Profile} title="Profile" hideNavBar={true}/>
     <Scene key="mais" component={Mais} title="Mais" hideNavBar={true}/>
+    <Scene key="senha" component={Senha} title="Senha" hideNavBar={true}/>
    </Stack>
 </Router>
 

@@ -60,8 +60,6 @@ export const style = StyleSheet.create({
     flexDirection: 'column',
     marginLeft:'5%',
   },
-
-
 searchIcon: {
     padding: 10,
     marginBottom:8,
