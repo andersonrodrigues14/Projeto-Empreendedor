@@ -2,8 +2,8 @@
 
 //import
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
-import React from 'react';
-
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import {
   KeyboardAvoidingView,
   View,
@@ -22,8 +22,9 @@ import {style} from './StyleHome';
 
 
 //Criar o component
-export default function App() {
+ class Home extends Component {
 
+  render(){
   return (
     <KeyboardAvoidingView style={style.background} onReady =  {() => Keyboard.dismiss}>
       <ImageBackground  source={require('../../assets/fundo.png')} style={style.image}>
@@ -35,8 +36,8 @@ export default function App() {
       </View>
 
       <View style={style.InfoUser}>
-        <Image source={require('../../assets/perfil.png') } style={{width:95,height:95}}/>
-        <Text style={style.textTitulo}>Nome Usuário</Text>
+        <Image source={this.props.imagem} style={style.imagemUser}/>
+        <Text style={style.textTitulo}>{this.props.nome}</Text>
       </View>
 
       <View style={style.container}>
@@ -79,4 +80,15 @@ export default function App() {
     </KeyboardAvoidingView>
   );
 }
+}
 
+//retorna dados para a tela
+const mapStateToProps = ({user}) => {
+  return {
+    nome: user.nome,
+    imagem: user.imagem,
+  };
+};
+
+
+export default connect(mapStateToProps,null)(Home);

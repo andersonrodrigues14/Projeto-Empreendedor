@@ -80,5 +80,13 @@ export const style = StyleSheet.create({
     width: 120,
   },
 
+  imagemUser: {
+    width:75,
+    height:75,
+    resizeMode: 'center',
+    borderRadius: 60,
+    marginRight: 10,
+  },
+
 
 });

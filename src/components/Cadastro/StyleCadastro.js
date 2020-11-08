@@ -25,6 +25,14 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
+    //marginLeft:100,
+  },
+  editContainer2: {
+
+    width: '48%',
+    flexDirection: 'row',
+    justifyContent:'center',
+    alignItems: 'center',
   },
   background: {
     //KeyboardAvoidingView

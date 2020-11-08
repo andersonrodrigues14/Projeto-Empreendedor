@@ -103,4 +103,12 @@ export const style = StyleSheet.create({
     paddingHorizontal: 60,
     marginTop: 10,
   },
+
+  imagemUser: {
+    width:75,
+    height:75,
+    resizeMode: 'center',
+    borderRadius: 60,
+    marginRight: 10,
+  },
 });

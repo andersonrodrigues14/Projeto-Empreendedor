@@ -25,6 +25,7 @@ export const style = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 50,
     paddingBottom: 30,
+    marginBottom:20,
   },
 
   container: {
@@ -102,6 +103,6 @@ export const style = StyleSheet.create({
     fontSize: 20,
     justifyContent: 'center',
     marginBottom:6,
-    marginTop:20,
+    marginTop:30,
   },
 });

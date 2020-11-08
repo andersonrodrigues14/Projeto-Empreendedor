@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {
   View,
   FlatList,
@@ -18,7 +19,7 @@ import Menu from '../Main/Main';
 import {style} from './StyleListFamily';
 
 
-export default class ListFamily extends Component {
+class ListFamily extends Component {
   state = {
     family: [{
       id: Math.random(),
@@ -76,8 +77,8 @@ export default class ListFamily extends Component {
         </TouchableOpacity>
 
         <View style={style.InfoUser}>
-         <Image source={require('../../assets/perfil.png') } style={{width:75,height:75,resizeMode: 'contain'}}/>
-          <Text style={style.textTitulo}>Nome Usuário</Text>
+         <Image source={this.props.imagem } style={style.imagemUser}/>
+    <Text style={style.textTitulo}>{this.props.nome}</Text>
         </View>
 
         </View>
@@ -95,3 +96,13 @@ export default class ListFamily extends Component {
     );
   }
 }
+
+//retorna dados para a tela
+const mapStateToProps = ({user}) => {
+  return {
+    nome: user.nome,
+    imagem: user.imagem,
+  };
+};
+
+export default connect(mapStateToProps,null)(ListFamily);
