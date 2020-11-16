@@ -2,19 +2,17 @@
 //import
 import React, {Component} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-
+import {connect} from 'react-redux';
 import {View, Image, TextInput} from 'react-native';
 
 //Import Styles
 import {style} from './StyleProfile';
 
 //Criar o component
-export default class Profile extends Component {
+class Profile extends Component {
   render() {
-    return (
-      <View style={style.InfoUser}>
-
-        <View style={style.editContainerMenu}>
+    const admProfile = this.props.adm ?
+    <View style={style.editContainerMenu}>
 
         <Icon
             style={style.searchIconInfo}
@@ -34,8 +32,28 @@ export default class Profile extends Component {
             size={20}
             color="#35AAFF"
           />
-        </View>
+        </View> :  <View style={style.editContainerMenu}>
 
+<Icon
+    style={style.searchIconInfo2}
+    size={23}
+    color="#35AAFF"
+  />
+  <Icon
+    style={style.searchIconInfo2}
+    size={20}
+    color="#35AAFF"
+  />
+  <Icon
+    style={style.searchIconInfo2}
+    size={20}
+    color="#35AAFF"
+  />
+</View>;
+
+    return (
+      <View style={style.InfoUser}>
+        {admProfile}
         <View style={style.editContainer}>
           <Image source={this.props.imagem} style={style.imageUser} />
         </View>
@@ -75,3 +93,12 @@ export default class Profile extends Component {
     );
   }
 }
+
+//retorna dados para a tela
+const mapStateToProps = ({user}) => {
+  return {
+    adm: user.adm,
+  };
+};
+
+export default connect(mapStateToProps)(Profile);

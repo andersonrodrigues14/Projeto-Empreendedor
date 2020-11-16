@@ -3,12 +3,12 @@ import React, {Component} from 'react';
 import {View, Image, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {style} from './StyleMinhasVacinas';
+import {connect} from 'react-redux';
 
-export default class MinhasVacinas extends Component {
+class MinhasVacinas extends Component {
   render() {
-    return (
-      <View style={style.container}>
-        <View style={style.editContainer}>
+    const admMinhasVacinas = this.props.adm ?
+    <View style={style.editContainer}>
           <Image source={this.props.imagem} style={style.imagem} />
           <Icon
             style={style.searchIconInfo}
@@ -28,7 +28,27 @@ export default class MinhasVacinas extends Component {
             size={20}
             color="#35AAFF"
           />
-        </View>
+        </View> :  <View style={style.editContainer}>
+          <Image source={this.props.imagem} style={style.imagem} />
+          <Icon
+            style={style.searchIconInfo2}
+            size={23}
+            color="#35AAFF"
+          />
+          <Icon
+            style={style.searchIconInfo2}
+            size={20}
+            color="#35AAFF"
+          />
+          <Icon
+            style={style.searchIconInfo2}
+            size={20}
+            color="#35AAFF"
+          />
+        </View>;
+    return (
+      <View style={style.container}>
+        {admMinhasVacinas}
         <Text style={style.textTitulo}>{this.props.nome}</Text>
         <Text style={style.textStyle}>{this.props.texto}</Text>
 
@@ -44,3 +64,13 @@ export default class MinhasVacinas extends Component {
     );
   }
 }
+
+
+//retorna dados para a tela
+const mapStateToProps = ({user}) => {
+  return {
+    adm: user.adm,
+  };
+};
+
+export default connect(mapStateToProps,null)(MinhasVacinas);

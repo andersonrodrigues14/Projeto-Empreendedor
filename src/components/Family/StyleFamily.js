@@ -42,6 +42,11 @@ export const style = StyleSheet.create({
     alignItems: 'center',
   },
 
+  searchIconInfo2: {
+    paddingHorizontal:18,
+    paddingTop:15,
+  },
+
   textStyle:{
     fontSize:12,
     color:'#000',

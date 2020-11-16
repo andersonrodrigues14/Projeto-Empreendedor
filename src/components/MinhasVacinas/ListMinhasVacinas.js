@@ -17,39 +17,42 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import MinhasVacina from './MinhasVacinas';
 import Menu from '../Main/Main';
 import {style} from './StyleListMinhasVacinas';
+import AddMinhasVacinas from './AddMinhasVacinas';
 
 
 class ListMinhasVacinas extends Component {
   state = {
-    minhasVacinas: [{
-      id: Math.random(),
-      imagem: require('../../assets/teste.png'),
-      nome : 'Primeira Vacina',
-      texto: 'Texto primeira Camapanha',
-      dtAplicacao: '20/09/1998',
-      dtRenovacao: '20/09/1999',
-    },{
-    id:Math.random(),
-      imagem: require('../../assets/ListCampanha.png'),
-      nome : 'Segunda Vacina',
-      texto: 'Segunda primeira Camapanha',
-      dtAplicacao: '20/09/1998',
-      dtRenovacao: '20/09/1999',
-    },
-    {
-      id:Math.random(),
-        imagem: require('../../assets/ListCampanha.png'),
-        nome : 'Terceira Vacina',
-        texto: 'Terceira primeira Camapanha',
-        dtAplicacao: '20/09/1998',
-        dtRenovacao: '20/09/1999',
-      },
-  ],
+    showAddMinhasVacinas: false,
   }
-
   render(){
+    const addMinhasVacinas = this.props.adm ?
+    <View style={style.esconde}>
+          <View style={style.searchContainer}>
+                <TextInput style={style.input} placeholder="CPF" />
+                <Icon
+                  style={style.searchIcon}
+                  name="sistrix"
+                  size={30}
+                  color="#35AAFF"
+                />
+          </View>
+          <TouchableOpacity style={style.btnInsert} onPress={() => this.setState({showAddMinhasVacinas: true})}>
+            <Text style={style.textInsert}>Adicionar Vacina</Text>
+          </TouchableOpacity>
+        </View> : null;
+    const containerPadrao = this.props.adm ?
+    <View style={style.container}>
+      <FlatList  data={this.props.minhasVacinas}
+                keyExtractor={item => `${item.id}`}
+                renderItem={({item}) => <MinhasVacina key={item.id} {...item} />} />
+      </View> : <View style={style.containerUser1}>
+      <FlatList  data={this.props.minhasVacinas}
+                keyExtractor={item => `${item.id}`}
+                renderItem={({item}) => <MinhasVacina key={item.id} {...item} />} />
+      </View>;
     return (
       <KeyboardAvoidingView style={style.background}>
+         <AddMinhasVacinas isVisible={this.state.showAddMinhasVacinas} onCancel={()=> this.setState({showAddMinhasVacinas: false})}/>
       <ImageBackground
         source={require('../../assets/fundo.png')}
         style={style.image}>
@@ -63,19 +66,7 @@ class ListMinhasVacinas extends Component {
       </View>
 
       <View style={style.containerInfo}>
-        <View style={style.searchContainer}>
-                <TextInput style={style.input} placeholder="CPF" />
-                <Icon
-                  style={style.searchIcon}
-                  name="sistrix"
-                  size={30}
-                  color="#35AAFF"
-                />
-        </View>
-        <TouchableOpacity style={style.btnInsert}>
-          <Text style={style.textInsert}>Adicionar Vacina</Text>
-        </TouchableOpacity>
-
+        {addMinhasVacinas}
         <View style={style.InfoUser}>
          <Image source={this.props.imagem} style={{width:75,height:75,resizeMode: 'contain'}}/>
     <Text style={style.textTitulo}>{this.props.nome}</Text>
@@ -83,11 +74,7 @@ class ListMinhasVacinas extends Component {
 
         </View>
       </ScrollView>
-      <View style={style.container}>
-      <FlatList  data={this.state.minhasVacinas}
-                keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <MinhasVacina key={item.id} {...item} />} />
-      </View>
+      {containerPadrao}
       <View>
         <Menu/>
       </View>
@@ -98,10 +85,12 @@ class ListMinhasVacinas extends Component {
 }
 
 //retorna dados para a tela
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({user, minhasVacinas}) => {
   return {
     nome: user.nome,
     imagem: user.imagem,
+    adm : user.adm,
+    minhasVacinas: minhasVacinas.minhasVacinas,
   };
 };
 

@@ -8,6 +8,12 @@ export const style = StyleSheet.create({
     alignItems:'center',
     width:'100%',
   },
+  containerUser:{
+    flex:3.5,
+    justifyContent:'center',
+    alignItems:'center',
+    width:'100%',
+  },
   background: {
     //KeyboardAvoidingView
     flex: 1,
@@ -51,7 +57,6 @@ export const style = StyleSheet.create({
     color: '#FFF',
     fontSize: 18,
   },
-
   containerAdministrador: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -59,6 +64,11 @@ export const style = StyleSheet.create({
     borderRadius: 12,
     flexDirection: 'column',
     marginLeft:'5%',
+  },
+  containerUser1:{
+    flex:2,
+    justifyContent:'center',
+    alignItems:'center',
   },
 searchIcon: {
     padding: 10,

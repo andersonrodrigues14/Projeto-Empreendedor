@@ -16,6 +16,10 @@ export const style = StyleSheet.create({
     paddingTop:15,
   },
 
+  searchIconInfo2: {
+    paddingHorizontal:15,
+    paddingTop:15,
+  },
 
   editContainer: {
     flexDirection: 'row',

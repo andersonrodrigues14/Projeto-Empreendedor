@@ -4,12 +4,12 @@ import {Modal,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,To
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {addVacina} from '../../store/actions/vacina';
+import {addProfile} from '../../store/actions/profile';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 
-const initialState = {imagem:null,nome:'',texto:'',tempoDuracao:''};
+const initialState = {imagem: null, nome: null, cpf: null, sus:null, email: null,dtnascimento:null,sangue:null,obs:null};
 
-class AddVacina extends Component {
+class AddMinhasVacinas extends Component {
 
   state = {
     ...initialState,
@@ -28,16 +28,20 @@ class AddVacina extends Component {
   }
 
   save = () => {
-    this.props.onAddVacina({
+    this.props.onAddProfile({
       id: Math.random(),
       imagem: this.state.imagem,
       nome : this.state.nome,
-      texto: this.state.texto,
-      tempoDuracao: this.state.tempoDuracao,
+      cpf: this.state.cpf,
+      sus: this.state.sus,
+      email: this.state.email,
+      dtnascimento: this.state.dtnascimento,
+      sangue:this.state.sangue,
+      obs:this.state.obs,
     });
 
-    this.setState({imagem: null, nome: null, texto: null, tempoDuracao: null});
-    Actions.listaVacina();
+    this.setState({imagem: null, nome: null, cpf: null, sus:null, email: null,dtnascimento:null,sangue:null,obs:null});
+    Actions.dados();
   };
 
   render(){
@@ -45,28 +49,44 @@ class AddVacina extends Component {
       <Modal transparent={true} visible={this.props.isVisible}
       onRequestClose= {this.props.onCancel}
       animationType= {'slide'}>
-      <KeyboardAvoidingView style={styles.background}>
+        <KeyboardAvoidingView style={styles.background}>
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
         <ScrollView style={styles.scroll}>
           <View style={styles.container}>
-            <Text style={styles.header}>Nova Vacina</Text>
+            <Text style={styles.header}>Novo Usuário</Text>
             <View style={styles.containerImagem}>
                 <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
-              placeholder="Nome da Vacina"
+              placeholder="Nome"
               onChangeText={nome => this.setState({nome})}
               value={this.state.nome}/>
             <TextInput style={styles.input}
-              placeholder="Informação sobre a Vacina"
-              onChangeText={texto => this.setState({texto})}
-              value={this.state.texto}/>
+              placeholder="CPF"
+              onChangeText={cpf => this.setState({cpf})}
+              value={this.state.cpf}/>
             <TextInput style={styles.input}
-              placeholder="Tempo de Duração"
-              onChangeText={tempoDuracao => this.setState({tempoDuracao})}
-              value={this.state.tempoDuracao}/>
+              placeholder="N° SUS"
+              onChangeText={sus => this.setState({sus})}
+              value={this.state.sus}/>
+              <TextInput style={styles.input}
+              placeholder="EMAIL"
+              onChangeText={email => this.setState({email})}
+              value={this.state.email}/>
+              <TextInput style={styles.input}
+              placeholder="Dt Nasc."
+              onChangeText={dtnascimento => this.setState({dtnascimento})}
+              value={this.state.dtnascimento}/>
+              <TextInput style={styles.input}
+              placeholder="Sangue"
+              onChangeText={sangue => this.setState({sangue})}
+              value={this.state.sangue}/>
+              <TextInput style={styles.input}
+              placeholder="OBS"
+              onChangeText={obs => this.setState({obs})}
+              value={this.state.obs}/>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -83,7 +103,8 @@ class AddVacina extends Component {
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+
+        </KeyboardAvoidingView>
       </Modal>
     );
   }
@@ -92,7 +113,7 @@ class AddVacina extends Component {
 
 const styles = StyleSheet.create({
   backgtoundFundo: {
-      flex: 0.2,
+      flex: 0.1,
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   background: {
@@ -182,8 +203,8 @@ const mapStateToProps = ({user}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddVacina: vacina => dispatch(addVacina(vacina)),
+    onAddProfile: profile => dispatch(addProfile(profile)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddVacina);
+export default connect(mapStateToProps,mapDispatchToProps)(AddMinhasVacinas);

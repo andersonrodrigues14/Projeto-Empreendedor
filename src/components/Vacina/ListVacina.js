@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import 'react-native-gesture-handler';
 import {
   View,
@@ -16,33 +17,19 @@ import {style} from './StyleListVacina';
 import Menu from '../Main/Main';
 import AddVacina from './AddVacina';
 
-export default class ListVacina extends Component {
+class ListVacina extends Component {
   state = {
     showAddVacina: false,
-    campanhas: [{
-      id: Math.random(),
-      imagem: require('../../assets/teste.png'),
-      nome : 'Primeira Vacina',
-      texto: 'Texto primeira Camapanha',
-      tempoDuracao: '2 anos',
-    },{
-    id:Math.random(),
-      imagem: require('../../assets/ListCampanha.png'),
-      nome : 'Segunda Vacina',
-      texto: 'Segunda primeira Camapanha',
-      tempoDuracao: '2 anos',
-    },
-    {
-      id:Math.random(),
-        imagem: require('../../assets/ListCampanha.png'),
-        nome : 'Terceira Vacina',
-        texto: 'Terceira primeira Camapanha',
-        tempoDuracao: '2 anos',
-      },
-  ],
   }
 
   render(){
+    const addVacina = this.props.adm ?
+    <View style={style.containerInfo} hide={false}>
+    <TouchableOpacity style={style.btnInsert} onPress={() => this.setState({showAddVacina: true})}>
+        <Text style={style.textInsert}>Adicionar Vacina</Text>
+    </TouchableOpacity>
+  </View> : null;
+
     return (
       <KeyboardAvoidingView style={style.background}>
         <AddVacina isVisible={this.state.showAddVacina} onCancel={()=> this.setState({showAddVacina: false})}/>
@@ -56,17 +43,12 @@ export default class ListVacina extends Component {
         />
         <Text style={style.textTitulo}>Lista de Vacinas</Text>
         </View>
-
-        <View style={style.containerInfo}>
-            <TouchableOpacity style={style.btnInsert} onPress={() => this.setState({showAddVacina: true})}>
-              <Text style={style.textInsert}>Adicionar Vacina</Text>
-            </TouchableOpacity>
-          </View>
+        {addVacina}
 
       <View style={style.container}>
-      <FlatList  data={this.state.campanhas}
+      <FlatList  data={this.props.vacina}
                 keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <Vacina key={item.id} {...item} />} />
+                renderItem={({item}) => <Vacina key={item.id} {...item}/>} />
       </View>
       <View>
         <Menu/>
@@ -76,3 +58,14 @@ export default class ListVacina extends Component {
     );
   }
 }
+
+//retorna dados para a tela
+const mapStateToProps = ({user,vacina}) => {
+  return {
+    adm : user.adm,
+    vacina: vacina.vacina,
+  };
+};
+
+
+export default connect(mapStateToProps)(ListVacina);

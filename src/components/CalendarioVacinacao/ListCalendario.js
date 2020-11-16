@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {
   View,
   FlatList,
@@ -14,36 +15,23 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Calendario from './Calendario';
 import Menu from '../Main/Main';
 import {style} from './StyleListCalendario';
+import AddCalendario from './AddCalendario';
 
 
-export default class ListCalendario extends Component {
+class ListCalendario extends Component {
   state = {
-    campanhas: [{
-      id: Math.random(),
-      imagem: require('../../assets/teste.png'),
-      nome : 'Primeira Data Vacina',
-      texto: 'Texto primeira Camapanha',
-      dtVacina: '10/05/2020',
-    },{
-    id:Math.random(),
-      imagem: require('../../assets/ListCampanha.png'),
-      nome : 'Segunda Data Vacina',
-      texto: 'Segunda primeira Camapanha',
-      dtVacina: '10/05/2020',
-    },
-    {
-      id:Math.random(),
-        imagem: require('../../assets/ListCampanha.png'),
-        nome : 'Terceira Data Vacina',
-        texto: 'Terceira primeira Camapanha',
-        dtVacina: '10/05/2020',
-      },
-  ],
+    showAddCalendario: false,
   }
 
   render(){
+    const addCalendario = this.props.adm ?
+    <TouchableOpacity style={style.btnInsert} onPress={() => this.setState({showAddCalendario: true})}>
+    <Text style={style.textInsert}>Adicionar Data</Text>
+    </TouchableOpacity> : null;
+
     return (
       <KeyboardAvoidingView style={style.background}>
+        <AddCalendario isVisible={this.state.showAddCalendario} onCancel={()=> this.setState({showAddCalendario: false})}/>
       <ImageBackground
         source={require('../../assets/fundo.png')}
         style={style.image}>
@@ -56,10 +44,7 @@ export default class ListCalendario extends Component {
         </View>
 
         <View style={style.containerInfo}>
-            <TouchableOpacity style={style.btnInsert}>
-              <Text style={style.textInsert}>Adicionar Data</Text>
-            </TouchableOpacity>
-
+            {addCalendario}
             <TouchableOpacity style={style.btnFilter}>
               <Text style={style.textFilter}>Mês do Calendário</Text>
               <Icon
@@ -71,7 +56,7 @@ export default class ListCalendario extends Component {
           </View>
 
       <View style={style.container}>
-      <FlatList  data={this.state.campanhas}
+      <FlatList  data={this.props.calendario}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({item}) => <Calendario key={item.id} {...item} />} />
       </View>
@@ -83,3 +68,13 @@ export default class ListCalendario extends Component {
     );
   }
 }
+
+//retorna dados para a tela
+const mapStateToProps = ({user,calendario}) => {
+  return {
+    adm : user.adm,
+    calendario: calendario.calendario,
+  };
+};
+
+export default connect(mapStateToProps)(ListCalendario);

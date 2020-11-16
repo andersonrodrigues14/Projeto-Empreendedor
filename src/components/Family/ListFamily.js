@@ -17,39 +17,43 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Family from './Family';
 import Menu from '../Main/Main';
 import {style} from './StyleListFamily';
+import AddFamily from './AddFamily';
 
 
 class ListFamily extends Component {
   state = {
-    family: [{
-      id: Math.random(),
-      imagem: require('../../assets/teste.png'),
-      nomeFamiliar : 'Primeiro Familiar',
-      vacina: 'Gripe',
-      dtAplicacao: '20/09/1998',
-      dtRenovacao: '20/09/1999',
-    },{
-    id:Math.random(),
-      imagem: require('../../assets/ListCampanha.png'),
-      nomeFamiliar : 'Segunda Familiar',
-      vacina: 'Gripe 2',
-      dtAplicacao: '20/09/1998',
-      dtRenovacao: '20/09/1999',
-    },
-    {
-      id:Math.random(),
-        imagem: require('../../assets/ListCampanha.png'),
-        nomeFamiliar : 'Terceira Familiar',
-        vacina: 'Gripe 3',
-        dtAplicacao: '20/09/1998',
-        dtRenovacao: '20/09/1999',
-      },
-  ],
+    showAddFamilia: false,
   }
 
   render(){
+    const addFamilia = this.props.adm ?
+    <View style={style.esconde}>
+          <View style={style.searchContainer}>
+                <TextInput style={style.input} placeholder="CPF" />
+                <Icon
+                  style={style.searchIcon}
+                  name="sistrix"
+                  size={30}
+                  color="#35AAFF"
+                />
+          </View>
+          <TouchableOpacity style={style.btnInsert} onPress={() => this.setState({showAddFamilia: true})}>
+            <Text style={style.textInsert}>Adicionar Vacina</Text>
+          </TouchableOpacity>
+        </View> : null;
+    const containerPadrao = this.props.adm ?
+      <View style={style.container}>
+          <FlatList  data={this.props.familia}
+                keyExtractor={item => `${item.id}`}
+                renderItem={({item}) => <Family key={item.id} {...item} />}/>
+          </View> : <View style={style.containerUser1}>
+            <FlatList  data={this.props.familia}
+                keyExtractor={item => `${item.id}`}
+                renderItem={({item}) => <Family key={item.id} {...item} />}/>
+            </View>;
     return (
       <KeyboardAvoidingView style={style.background}>
+        <AddFamily isVisible={this.state.showAddFamilia} onCancel={()=> this.setState({showAddFamilia: false})}/>
       <ImageBackground
         source={require('../../assets/fundo.png')}
         style={style.image}>
@@ -63,31 +67,15 @@ class ListFamily extends Component {
       </View>
 
       <View style={style.containerInfo}>
-        <View style={style.searchContainer}>
-                <TextInput style={style.input} placeholder="CPF" />
-                <Icon
-                  style={style.searchIcon}
-                  name="sistrix"
-                  size={30}
-                  color="#35AAFF"
-                />
-        </View>
-        <TouchableOpacity style={style.btnInsert}>
-          <Text style={style.textInsert}>Adicionar Familiar</Text>
-        </TouchableOpacity>
-
+        {addFamilia}
         <View style={style.InfoUser}>
-         <Image source={this.props.imagem } style={style.imagemUser}/>
-    <Text style={style.textTitulo}>{this.props.nome}</Text>
+          <Image source={this.props.imagem } style={style.imagemUser}/>
+          <Text style={style.textTitulo}>{this.props.nome}</Text>
         </View>
 
         </View>
       </ScrollView>
-      <View style={style.container}>
-      <FlatList  data={this.state.family}
-                keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <Family key={item.id} {...item} />} />
-      </View>
+      {containerPadrao}
       <View>
         <Menu/>
       </View>
@@ -98,10 +86,12 @@ class ListFamily extends Component {
 }
 
 //retorna dados para a tela
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({user, familia}) => {
   return {
     nome: user.nome,
     imagem: user.imagem,
+    adm: user.adm,
+    familia:familia.familia,
   };
 };
 

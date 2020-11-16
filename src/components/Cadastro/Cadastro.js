@@ -24,31 +24,31 @@ export default class Cadastro extends Component {
         <Text style={style.textTitulo}>Cadastro</Text>
         </View>
 
-        <TextInput style={style.input} placeholder="Nome" editable={false}>
+        <TextInput style={style.input} placeholder="Nome">
           {this.props.nome}
         </TextInput>
-        <TextInput style={style.input} placeholder="CPF" editable={false}>
+        <TextInput style={style.input} placeholder="CPF">
           {this.props.cpf}
         </TextInput>
-        <TextInput style={style.input} placeholder="N SUS" editable={false}>
+        <TextInput style={style.input} placeholder="N SUS">
           {this.props.sus}
         </TextInput>
-        <TextInput style={style.input} placeholder="Email" editable={false}>
+        <TextInput style={style.input} placeholder="Email">
           {this.props.email}
         </TextInput>
         <View style={style.editContainer2}>
-          <TextInput style={style.input} placeholder="Dt Nasc." editable={false}>
+          <TextInput style={style.input} placeholder="Dt Nasc.">
             {this.props.dtNascimento}
           </TextInput>
           <Text>    </Text>
-          <TextInput style={style.input} placeholder="Sangue" editable={false}>
+          <TextInput style={style.input} placeholder="Sangue">
             {this.props.sangue}
           </TextInput>
         </View>
-        <TextInput style={style.input} placeholder="Senha" editable={false}>
+        <TextInput style={style.input} placeholder="Senha">
           {this.props.senha}
         </TextInput>
-        <TextInput style={style.input} placeholder="Confirmar Senha" editable={false}>
+        <TextInput style={style.input} placeholder="Confirmar Senha">
           {this.props.confSenha}
         </TextInput>
         <TouchableOpacity style={style.btnInsert} onPress={() => this.setState({showAddVacina: true})}>

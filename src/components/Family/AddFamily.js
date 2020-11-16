@@ -1,15 +1,15 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Modal,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
+import {Modal,Platform,KeyboardAvoidingView,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, Alert, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {addVacina} from '../../store/actions/vacina';
+import {addFamilia} from '../../store/actions/family';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 
-const initialState = {imagem:null,nome:'',texto:'',tempoDuracao:''};
+const initialState = {imagem:null,nome:'',texto:'',dtVacina:''};
 
-class AddVacina extends Component {
+class AddFamily extends Component {
 
   state = {
     ...initialState,
@@ -28,16 +28,17 @@ class AddVacina extends Component {
   }
 
   save = () => {
-    this.props.onAddVacina({
+    this.props.onAddFamyli({
       id: Math.random(),
       imagem: this.state.imagem,
-      nome : this.state.nome,
-      texto: this.state.texto,
-      tempoDuracao: this.state.tempoDuracao,
+      nomeFamiliar : this.state.nome,
+      vacina: this.state.texto,
+      dtAplicacao: this.state.dtVacina,
+      dtRenovacao: this.state.dtRenovacao,
     });
 
-    this.setState({imagem: null, nome: null, texto: null, tempoDuracao: null});
-    Actions.listaVacina();
+    this.setState({imagem: null, nomeFamiliar: null, vacina: null, dtAplicacao: null,dtRenovacao: null});
+    Actions.listaCalendario();
   };
 
   render(){
@@ -45,28 +46,32 @@ class AddVacina extends Component {
       <Modal transparent={true} visible={this.props.isVisible}
       onRequestClose= {this.props.onCancel}
       animationType= {'slide'}>
-      <KeyboardAvoidingView style={styles.background}>
+        <KeyboardAvoidingView style={styles.background}>
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
         <ScrollView style={styles.scroll}>
           <View style={styles.container}>
-            <Text style={styles.header}>Nova Vacina</Text>
+            <Text style={styles.header}>Novo Familiar</Text>
             <View style={styles.containerImagem}>
                 <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
-              placeholder="Nome da Vacina"
-              onChangeText={nome => this.setState({nome})}
-              value={this.state.nome}/>
+              placeholder="Nome do Familiar"
+              onChangeText={nomeFamiliar => this.setState({nomeFamiliar})}
+              value={this.state.nomeFamiliar}/>
             <TextInput style={styles.input}
               placeholder="Informação sobre a Vacina"
-              onChangeText={texto => this.setState({texto})}
-              value={this.state.texto}/>
+              onChangeText={vacina => this.setState({vacina})}
+              value={this.state.vacina}/>
             <TextInput style={styles.input}
-              placeholder="Tempo de Duração"
-              onChangeText={tempoDuracao => this.setState({tempoDuracao})}
-              value={this.state.tempoDuracao}/>
+              placeholder="Data da Vacina"
+              onChangeText={dtAplicacao => this.setState({dtAplicacao})}
+              value={this.state.dtAplicacao}/>
+            <TextInput style={styles.input}
+              placeholder="Data Renovação"
+              onChangeText={dtRenovacao => this.setState({dtRenovacao})}
+              value={this.state.dtRenovacao}/>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -83,7 +88,7 @@ class AddVacina extends Component {
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
       </Modal>
     );
   }
@@ -182,8 +187,8 @@ const mapStateToProps = ({user}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddVacina: vacina => dispatch(addVacina(vacina)),
+    onAddFamyli: familia => dispatch(addFamilia(familia)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddVacina);
+export default connect(mapStateToProps,mapDispatchToProps)(AddFamily);

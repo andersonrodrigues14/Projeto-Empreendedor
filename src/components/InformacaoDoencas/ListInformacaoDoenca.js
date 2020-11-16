@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import 'react-native-gesture-handler';
 import {
   View,
@@ -14,35 +15,22 @@ import {
 import InformacaoDoenca from './InformacaoDoenca';
 import {style} from './StyleListInformacaoDoenca';
 import Menu from '../Main/Main';
+import AddDoenca from './AddInfoDoenca';
 
-export default class ListInformacaoDoenca extends Component {
+class ListInformacaoDoenca extends Component {
   state = {
-    doenca: [{
-      id: Math.random(),
-      imagem: require('../../assets/teste.png'),
-      titulo : 'Titulo Informação 1',
-      texto: 'Texto primeira informação',
-      dataPublicacao: '14/11/1998',
-    },{
-    id:Math.random(),
-      imagem: require('../../assets/ListCampanha.png'),
-      titulo : 'Titulo Informação 2',
-      texto: 'Texto segunda informação',
-      dataPublicacao: '14/11/1998',
-    },
-    {
-      id:Math.random(),
-        imagem: require('../../assets/ListCampanha.png'),
-        titulo : 'Titulo Informação 3',
-        texto: 'Texto terceira informação',
-        dataPublicacao: '14/11/1998',
-      },
-  ],
+    showAddDoenca: false,
   }
-
   render(){
+    const addDoenca = this.props.adm ?
+    <View style={style.containerInfo}>
+      <TouchableOpacity style={style.btnInsert} onPress={() => this.setState({showAddDoenca: true})}>
+        <Text style={style.textInsert}>Adicionar Informação</Text>
+      </TouchableOpacity>
+    </View> : null;
     return (
       <KeyboardAvoidingView style={style.background}>
+        <AddDoenca isVisible={this.state.showAddDoenca} onCancel={()=> this.setState({showAddDoenca: false})}/>
       <ImageBackground
         source={require('../../assets/fundo.png')}
         style={style.image}>
@@ -54,14 +42,10 @@ export default class ListInformacaoDoenca extends Component {
         <Text style={style.textTitulo}>Informações Sobre Doenças</Text>
         </View>
 
-        <View style={style.containerInfo}>
-            <TouchableOpacity style={style.btnInsert}>
-              <Text style={style.textInsert}>Adicionar Informação</Text>
-            </TouchableOpacity>
-          </View>
+        {addDoenca}
 
       <View style={style.container}>
-      <FlatList  data={this.state.doenca}
+      <FlatList  data={this.props.doenca}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({item}) => <InformacaoDoenca key={item.id} {...item} />} />
       </View>
@@ -73,3 +57,13 @@ export default class ListInformacaoDoenca extends Component {
     );
   }
 }
+
+//retorna dados para a tela
+const mapStateToProps = ({user,doenca}) => {
+  return {
+    adm : user.adm,
+    doenca: doenca.doenca,
+  };
+};
+
+export default connect(mapStateToProps)(ListInformacaoDoenca);

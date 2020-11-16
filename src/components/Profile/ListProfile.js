@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {
   View,
   FlatList,
@@ -17,62 +18,16 @@ import Profile from './Profile';
 import {style} from './StyleListProfile';
 import {ScrollView} from 'react-native-gesture-handler';
 import Menu from '../Main/Main';
+import AddProfile from './AddProfile';
 
-export default class ListProfile extends Component {
+class ListProfile extends Component {
   state = {
-    profiles: [
-      {
-        id: Math.random(),
-        imagem: require('../../assets/pink.png'),
-        nome: 'pink',
-        cpf: '02676215078',
-        sus: '102030',
-        email: 'pink_feia@hotmail.com',
-        dtnascimento: '14/11/1940',
-        sangue: 'O-',
-        obs: 'alienigena',
-      },
-      {
-        id: Math.random(),
-        imagem: require('../../assets/moto.jpg'),
-        nome: 'Anderson',
-        cpf: '02676215078',
-        sus: '1512326487',
-        email: 'anderson.rodrigues@hotmail.com',
-        dtnascimento: '14/11/1998',
-        sangue: 'O-',
-        obs: 'astro',
-      },
-      {
-        id: Math.random(),
-        imagem: require('../../assets/keyte.jpg'),
-        nome: 'Kayte',
-        cpf: '0264658948',
-        sus: '265854984',
-        email: 'keyte_linda@hotmail.com',
-        dtnascimento: '14/11/2019',
-        sangue: 'O-',
-        obs: 'gata',
-      },
-    ],
+    showAddProfile: false,
   };
 
   render() {
-    return (
-      <KeyboardAvoidingView style={style.background}>
-        <ImageBackground
-          source={require('../../assets/fundo.png')}
-          style={style.image}>
-          <ScrollView style={style.scroll}>
-            <View style={style.containerLogo}>
-              <Image
-                source={require('../../assets/dados.png')}
-                style={{width: 100, height: 95}}
-              />
-              <Text style={style.textTitulo}>Dados</Text>
-            </View>
-
-            <View style={style.containerAdministrador}>
+    const addProfile = this.props.adm ?
+    <View style={style.containerAdministrador}>
               <View style={style.searchContainer}>
                 <TextInput style={style.input} placeholder="CPF" />
                 <Icon
@@ -85,18 +40,42 @@ export default class ListProfile extends Component {
 
               <TouchableOpacity
                 style={style.btnRegister}
-                onPress={() => Actions.createUser()}>
+                onPress={() => this.setState({showAddProfile: true})}>
                 <Text style={style.textRegister}>Adicionar Usuário</Text>
               </TouchableOpacity>
-            </View>
-          </ScrollView>
-          <View style={style.container}>
+            </View> : null;
+     const containerPadrao = this.props.adm ?
+     <View style={style.container}>
             <FlatList
-              data={this.state.profiles}
+              data={this.props.profile}
               keyExtractor={(item) => `${item.id}`}
               renderItem={({item}) => <Profile key={item.id} {...item} />}
             />
-          </View>
+          </View> : <View style={style.containerUser}>
+            <FlatList
+              data={this.props.profile}
+              keyExtractor={(item) => `${item.id}`}
+              renderItem={({item}) => <Profile key={item.id} {...item} />}
+            />
+          </View>;
+    return (
+      <KeyboardAvoidingView style={style.background}>
+         <AddProfile isVisible={this.state.showAddProfile} onCancel={()=> this.setState({showAddProfile: false})}/>
+        <ImageBackground
+          source={require('../../assets/fundo.png')}
+          style={style.image}>
+          <ScrollView style={style.scroll}>
+            <View style={style.containerLogo}>
+              <Image
+                source={require('../../assets/dados.png')}
+                style={{width: 100, height: 95}}
+              />
+              <Text style={style.textTitulo}>Dados</Text>
+            </View>
+
+            {addProfile}
+          </ScrollView>
+            {containerPadrao}
           <View>
             <Menu/>
           </View>
@@ -105,3 +84,15 @@ export default class ListProfile extends Component {
     );
   }
 }
+
+//retorna dados para a tela
+const mapStateToProps = ({user, profile}) => {
+  return {
+    nome: user.nome,
+    imagem: user.imagem,
+    adm : user.adm,
+    profile: profile.profile,
+  };
+};
+
+export default connect(mapStateToProps,null)(ListProfile);

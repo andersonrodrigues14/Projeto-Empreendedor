@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {
   View,
   FlatList,
@@ -14,39 +15,22 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Campanha from './CampanhaVacinacao';
 import Menu from '../Main/Main';
 import {style} from './StyleListCampanha';
+import AddCampanha from './AddCampanha';
 
-
-export default class ListCamapanha extends Component {
+class ListCamapanha extends Component {
   state = {
-    campanhas: [{
-      id: Math.random(),
-      imagem: require('../../assets/dados.png'),
-      nome : 'Primeira Campanha',
-      texto: 'Texto primeira Camapanha',
-      dtInicio: '10/10/2020',
-      dtCadastro: '10/10/2222',
-    },{
-    id:Math.random(),
-      imagem: require('../../assets/ListCampanha.png'),
-      nome : 'Segunda Campanha',
-      texto: 'Segunda primeira Camapanha',
-      dtInicio: '10/10/2020',
-      dtCadastro: '10/10/2222',
-    },
-    {
-      id:Math.random(),
-        imagem: require('../../assets/ListCampanha.png'),
-        nome : 'Terceira Campanha',
-        texto: 'Terceira primeira Camapanha',
-        dtInicio: '10/10/2020',
-        dtCadastro: '10/10/2222',
-      },
-  ],
+    showAddCampanha: false,
   }
-
   render(){
+    const addCampanha = this.props.adm ?
+    <TouchableOpacity style={style.btnAdicionar} onPress={() => this.setState({showAddCampanha: true})}>
+      <View style={style.containerInfoRow}>
+        <Text style={style.textRegister}>Adicionar Campanha</Text>
+      </View>
+    </TouchableOpacity> : null;
     return (
       <KeyboardAvoidingView style={style.background}>
+        <AddCampanha isVisible={this.state.showAddCampanha} onCancel={()=> this.setState({showAddCampanha: false})}/>
       <ImageBackground
         source={require('../../assets/fundo.png')}
         style={style.image}>
@@ -59,11 +43,7 @@ export default class ListCamapanha extends Component {
         </View>
 
         <View style={style.containerInfo}>
-        <TouchableOpacity style={style.btnAdicionar}>
-            <View style={style.containerInfoRow}>
-              <Text style={style.textRegister}>Adicionar Campanha</Text>
-            </View>
-        </TouchableOpacity>
+        {addCampanha}
 
             <TouchableOpacity
               style={style.btnRegister}
@@ -82,7 +62,7 @@ export default class ListCamapanha extends Component {
           </View>
 
       <View style={style.container}>
-      <FlatList  data={this.state.campanhas}
+      <FlatList  data={this.props.campanha}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({item}) => <Campanha key={item.id} {...item} />} />
       </View>
@@ -94,3 +74,14 @@ export default class ListCamapanha extends Component {
     );
   }
 }
+
+//retorna dados para a tela
+const mapStateToProps = ({user,campanha}) => {
+  return {
+    adm : user.adm,
+    campanha: campanha.campanha,
+  };
+};
+
+
+export default connect(mapStateToProps)(ListCamapanha);

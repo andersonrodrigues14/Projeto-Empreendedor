@@ -8,6 +8,12 @@ export const style = StyleSheet.create({
     alignItems:'center',
   },
 
+  containerUser1:{
+    flex:2,
+    justifyContent:'center',
+    alignItems:'center',
+  },
+
   scroll: {
     flex: 0.1,
     width:'100%',
@@ -41,6 +47,15 @@ export const style = StyleSheet.create({
     marginTop:1,
   },
   containerInfo: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '90%',
+    borderRadius: 12,
+    flexDirection: 'column',
+    marginLeft:'5%',
+  },
+
+  esconde:{
     alignItems: 'center',
     justifyContent: 'center',
     width: '90%',

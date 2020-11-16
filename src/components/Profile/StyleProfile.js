@@ -58,6 +58,10 @@ export const style = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  searchIconInfo2: {
+    paddingHorizontal:18,
+  },
+
   editContainer: {
 
     width: '80%',

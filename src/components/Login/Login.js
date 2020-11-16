@@ -28,9 +28,10 @@ import { login } from '../../store/actions/userActions';
 //Criar o component
 class Login extends Component {
   state = {
-    nome:'Anderson Teste',
+    nome:'Anderson',
     cpf: '',
     imagem: require('../../assets/foto.jpg'),
+    adm: true,
     password: '',
   };
 
