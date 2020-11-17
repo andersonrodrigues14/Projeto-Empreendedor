@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "carteiradevacinacaodigital",
+  "private_key_id": "bac25a7b998f6765766011012a6fb1fba3855112",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC7U1Qw7ID/KoaO\nMJWlG6+JZhCZQWIFl6Fg/+ub+NQ5araN7KW5gsX42v0vsJxtk4P78R8z6ecPaMsN\n/P4HhYnezxcV7Dcrvrq1E3R7dKqOBUMVCYrqnhOlCSp0KIa7UzitMYY2ihf3ya53\n+NQxklkfA2L7I7tU5mkudr+BPrKNg7BSHVLCPSGNrXIVc7PTaxagmbQ8DpEUrudW\n24AGyp8PXuZv+YKo2ZNC+N5a5F2Kz0EF+4Z1XomkdmZyzAaHRf8flQ/vMmeMoOy7\nRkUi28+SXkk6yRJrUAxG+CozU5YI2+YNHg6wvMrCBhuHFoOiG83uwEaxMY8/AtTO\nr14RePtRAgMBAAECggEAGFPeQLZORb/WQVwXlcg5LU0Mhc1jIgUgXQe6J649PYcE\nK1KwQ8iIgQ+g8ahsQEzNR2h38WwvPlCRN6wDVPhnldXrkm90IMxrKf4F/XcteTaU\nu4QwPtUFtG6yzUAVc07VCE/AtY+Mmk5ecqU68C8olNRXQ/SkLQakDU04WgbJoIK1\nkf7tiRZS4uJIQJ58dH34sLZKpwDl0Gnzo4XztcL4S0pYRYnwQ/9kgh75sHLJd+8j\nLRKALc33/ECZzMM4lu+4N5lud+jTlvmMU/5o7bYZ5FccKUUvkQHWx4WmlvpLFfv4\nSh39YSgDBNNDve481iI3MMeTdvKS4AiClhm7EHRm6wKBgQD3kHDNEnPG0CEIBE2e\nwFgeqFevW9xPPlw93/UvHyvHFPpfAsJxeBzJhaf/ijKkEV9D8ASe6kxjYK8VbY8t\nzSq1aghnHi7gxFelpyaxtW/Krcii6ch5lVMX/5P82woZQUXf4NUFZoP4EsTeBiB/\nw3fdwsTYUOSHePTxfgtmlI9TywKBgQDBtWmAjtHz3KjE1fKkN40SAcNb7ZRfXVNb\ncUmRHXrg6dsGY9HDzmhDZ7gS+6bLKecVrasR53TaJ8nNJuofAoPx93iiqQVi57a3\nxSQa4CoDugTZNlPfjH1xw5YF9CU7OJPvez89roAu37t18ctyT3jPuQAe+q5HPs0l\nbGSglOVh0wKBgQCYsWhBtE3gpGKbNTxC3FP9pMtgh4IdBlOSfl4V0F4KDrBWhbc0\nkWcADQYPoUeW1ngxyQqwkcbHzMxwpQCYuWDMQDgqkf1L+Q4uSCifl076bbHAef2C\nsE1uEd9PKDLUXOQiL+RzzkU7bygp4RGOfBuklgsfeNVbkYlSofGaNaspfQKBgGIE\nc/AzVJW7EEMZp3/lBCMadUos+6kNxkI9HuapLiZk7wlatSgJZ8TD1Ob2I74l4+Ka\nUDftELna7Eg86rbqRO3JNWfJcwpLCbAPt2dKCrh8BjwLO4Ggy1EnkOBOXBCNXn4N\ntUB27jHJ0EesJDAhepZRnHgQjONMKe5H3NtMvI01AoGBANwsiMbbYLxGUbXnlyUY\neMPJI6EVx7ZsBcNRa2Oq9ZbBBceRvLx8h305XH2cb+GvUTjJqUeVOtcqm0onP2xh\nrIPuPGl0upBpfCVWzHtaognf1MXRBqlmQ+LspgQE6OmwrpQEK2orqyoZIlLwdm+q\nXUyfgqTlRx0Gew8KhbNY+2aW\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-xywde@carteiradevacinacaodigital.iam.gserviceaccount.com",
+  "client_id": "114821263692038947131",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-xywde%40carteiradevacinacaodigital.iam.gserviceaccount.com"
+}

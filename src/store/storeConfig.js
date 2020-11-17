@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
 import userReducer from './reducers/userReducers';
 import vacinaReducer from './reducers/vacina';
 import calendarioReducer from './reducers/calendario';
@@ -21,7 +22,7 @@ const reducers = combineReducers({
 });
 
 const storeConfig = () => {
-  return createStore(reducers);
+  return createStore(reducers, compose(applyMiddleware(thunk)));
 };
 
 export default storeConfig;
