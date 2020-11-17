@@ -31,14 +31,14 @@ class AddFamily extends Component {
     this.props.onAddFamyli({
       id: Math.random(),
       imagem: this.state.imagem,
-      nomeFamiliar : this.state.nome,
-      vacina: this.state.texto,
-      dtAplicacao: this.state.dtVacina,
+      nomeFamiliar : this.state.nomeFamiliar,
+      vacina: this.state.vacina,
+      dtAplicacao: this.state.dtAplicacao,
       dtRenovacao: this.state.dtRenovacao,
     });
 
     this.setState({imagem: null, nomeFamiliar: null, vacina: null, dtAplicacao: null,dtRenovacao: null});
-    Actions.listaCalendario();
+    Actions.listafamily();
   };
 
   render(){

@@ -5,7 +5,6 @@ import axios from 'axios';
 
 export const addVacina = vacina => {
   return dispatch => {
-    //https://us-central1-carteiradevacinacaodigital.cloudfunctions.net/uploadImage
     axios({
       url:'uploadImage',
       baseURL:'https://us-central1-carteiradevacinacaodigital.cloudfunctions.net',
