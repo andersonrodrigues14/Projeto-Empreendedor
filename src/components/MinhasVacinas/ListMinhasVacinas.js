@@ -18,11 +18,14 @@ import MinhasVacina from './MinhasVacinas';
 import Menu from '../Main/Main';
 import {style} from './StyleListMinhasVacinas';
 import AddMinhasVacinas from './AddMinhasVacinas';
-
+import {fetchMinhasVacinas} from '../../store/actions/minhasVacinas';
 
 class ListMinhasVacinas extends Component {
   state = {
     showAddMinhasVacinas: false,
+  }
+  componentDidMount = () => {
+    this.props.onFetchMinhasVacinas();
   }
   render(){
     const addMinhasVacinas = this.props.adm ?
@@ -94,4 +97,10 @@ const mapStateToProps = ({user, minhasVacinas}) => {
   };
 };
 
-export default connect(mapStateToProps,null)(ListMinhasVacinas);
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchMinhasVacinas: () => dispatch(fetchMinhasVacinas()),
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(ListMinhasVacinas);

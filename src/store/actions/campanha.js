@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import  {ADD_CAMPANHA, DLT_VACINA} from './actionTypes';
+import  {SET_CAMPANHA, DLT_VACINA} from './actionTypes';
 import axios from 'axios';
 
 export const addCampanha = campanha => {
@@ -18,10 +18,32 @@ export const addCampanha = campanha => {
         .catch(err => console.log(err))
         .then(res => console.log(res.data));});
   };
-  //return {
-  //  type: ADD_CAMPANHA,
-  //  payload: campanha,
-  //};
+};
+
+export const setCampanha = campanha => {
+  return {
+    type:SET_CAMPANHA,
+    payload: campanha,
+  };
+};
+//busca dados do banco
+export const fetchCampanha = () => {
+  return dispatch => {
+    axios.get('/campanhas.json')
+      .catch(err => console.log(err))
+      .then(res => {
+        const rawCampanhas = res.data;
+        const campanha = [];
+        for (let key in rawCampanhas){
+          campanha.push({
+            ...rawCampanhas[key],
+            id: key,
+          });
+        }
+
+        dispatch(setCampanha(campanha));
+      });
+  };
 };
 
 export const dltVacina = campanha => {

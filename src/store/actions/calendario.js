@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import  {ADD_CALENDARIO, DLT_VACINA} from './actionTypes';
+import  {SET_CALENDARIO, DLT_VACINA} from './actionTypes';
 import axios from 'axios';
 
 export const addCalendario = calendario => {
@@ -18,10 +18,32 @@ export const addCalendario = calendario => {
         .catch(err => console.log(err))
         .then(res => console.log(res.data));});
   };
-  //return {
-   // type: ADD_CALENDARIO,
-   // payload: calendario,
-  //};
+};
+
+export const setCalendario = calendario => {
+  return {
+    type:SET_CALENDARIO,
+    payload: calendario,
+  };
+};
+//busca dados do banco
+export const fetchCalendario = () => {
+  return dispatch => {
+    axios.get('/calendarios.json')
+      .catch(err => console.log(err))
+      .then(res => {
+        const rawCalendarios = res.data;
+        const calendario = [];
+        for (let key in rawCalendarios){
+          calendario.push({
+            ...rawCalendarios[key],
+            id: key,
+          });
+        }
+
+        dispatch(setCalendario(calendario));
+      });
+  };
 };
 
 export const dltVacina = calendario => {

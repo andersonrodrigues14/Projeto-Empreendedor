@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import  {ADD_FAMILIA, DLT_VACINA} from './actionTypes';
+import  {SET_FAMILIA, DLT_VACINA} from './actionTypes';
 import axios from 'axios';
 
 export const addFamilia = familia => {
@@ -18,11 +18,34 @@ export const addFamilia = familia => {
         .catch(err => console.log(err))
         .then(res => console.log(res.data));});
   };
-  //return {
-  //  type: ADD_FAMILIA,
-   // payload: familia,
-  //};
 };
+
+export const setFamilia = familia => {
+  return {
+    type:SET_FAMILIA,
+    payload: familia,
+  };
+};
+//busca dados do banco
+export const fetchFamilia = () => {
+  return dispatch => {
+    axios.get('/familias.json')
+      .catch(err => console.log(err))
+      .then(res => {
+        const rawFamilia = res.data;
+        const familia = [];
+        for (let key in rawFamilia){
+          familia.push({
+            ...rawFamilia[key],
+            id: key,
+          });
+        }
+
+        dispatch(setFamilia(familia));
+      });
+  };
+};
+
 
 export const dltVacina = familia => {
   return {

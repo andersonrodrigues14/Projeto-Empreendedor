@@ -16,10 +16,15 @@ import Vacina from './Vacina';
 import {style} from './StyleListVacina';
 import Menu from '../Main/Main';
 import AddVacina from './AddVacina';
+import {fetchVacina} from '../../store/actions/vacina';
 
 class ListVacina extends Component {
   state = {
     showAddVacina: false,
+  }
+
+  componentDidMount = () => {
+    this.props.onFetchVacina();
   }
 
   render(){
@@ -67,5 +72,11 @@ const mapStateToProps = ({user,vacina}) => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchVacina: () => dispatch(fetchVacina()),
+  };
+};
 
-export default connect(mapStateToProps)(ListVacina);
+
+export default connect(mapStateToProps,mapDispatchToProps)(ListVacina);

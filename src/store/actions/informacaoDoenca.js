@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import  {ADD_INFORMACAODOENCA, DLT_VACINA} from './actionTypes';
+import  {SET_INFORMACAODOENCA, DLT_VACINA} from './actionTypes';
 import axios from 'axios';
 export const addDoenca = doenca => {
   return dispatch => {
@@ -17,11 +17,34 @@ export const addDoenca = doenca => {
         .catch(err => console.log(err))
         .then(res => console.log(res.data));});
   };
-  //return {
-  //  type: ADD_INFORMACAODOENCA,
-  //  payload: doenca,
-  //};
 };
+
+export const setDoenca = doenca => {
+  return {
+    type:SET_INFORMACAODOENCA,
+    payload: doenca,
+  };
+};
+//busca dados do banco
+export const fetchDoenca = () => {
+  return dispatch => {
+    axios.get('/doencas.json')
+      .catch(err => console.log(err))
+      .then(res => {
+        const rawDoencas = res.data;
+        const doenca = [];
+        for (let key in rawDoencas){
+          doenca.push({
+            ...rawDoencas[key],
+            id: key,
+          });
+        }
+
+        dispatch(setDoenca(doenca));
+      });
+  };
+};
+
 
 export const dltVacina = doenca => {
   return {

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import  {ADD_VACINA, DLT_VACINA} from './actionTypes';
+import  {SET_VACINAS} from './actionTypes';
 import axios from 'axios';
 
 
@@ -17,19 +17,36 @@ export const addVacina = vacina => {
         vacina.imagem = resp.data.imageUrl;
         axios.post('/vacinas.json',{...vacina})
         .catch(err => console.log(err))
-        .then(res => console.log(res.data));});
+        .then(res => {
+          dispatch(fetchVacina());
+        });
+      });
   };
-
-
-  //return {
-  //  type: ADD_VACINA,
-  //  payload: vacina,
-  //};
 };
 
-export const dltVacina = vacina => {
+export const setVacina = vacina => {
   return {
-    type: DLT_VACINA,
+    type:SET_VACINAS,
     payload: vacina,
   };
 };
+//busca dados do banco
+export const fetchVacina = () => {
+  return dispatch => {
+    axios.get('/vacinas.json')
+      .catch(err => console.log(err))
+      .then(res => {
+        const rawVacinas = res.data;
+        const vacina = [];
+        for (let key in rawVacinas){
+          vacina.push({
+            ...rawVacinas[key],
+            id: key,
+          });
+        }
+
+        dispatch(setVacina(vacina.reverse()));
+      });
+  };
+};
+

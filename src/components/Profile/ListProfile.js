@@ -19,12 +19,16 @@ import {style} from './StyleListProfile';
 import {ScrollView} from 'react-native-gesture-handler';
 import Menu from '../Main/Main';
 import AddProfile from './AddProfile';
+import {fetchProfile} from '../../store/actions/profile';
+
 
 class ListProfile extends Component {
   state = {
     showAddProfile: false,
   };
-
+  componentDidMount = () => {
+    this.props.onFetchProfile();
+  }
   render() {
     const addProfile = this.props.adm ?
     <View style={style.containerAdministrador}>
@@ -88,11 +92,15 @@ class ListProfile extends Component {
 //retorna dados para a tela
 const mapStateToProps = ({user, profile}) => {
   return {
-    nome: user.nome,
-    imagem: user.imagem,
     adm : user.adm,
     profile: profile.profile,
   };
 };
 
-export default connect(mapStateToProps,null)(ListProfile);
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchProfile: () => dispatch(fetchProfile()),
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(ListProfile);

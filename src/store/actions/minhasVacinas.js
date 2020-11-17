@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import  {ADD_MINHASVACINAS, DLT_VACINA} from './actionTypes';
+import  {SET_MINHASVACINAS, DLT_VACINA} from './actionTypes';
 import axios from 'axios';
 
 export const addMinhasVacinas = minhasVacinas => {
@@ -18,10 +18,33 @@ export const addMinhasVacinas = minhasVacinas => {
         .catch(err => console.log(err))
         .then(res => console.log(res.data));});
   };
-  //return {
-  //  type: ADD_MINHASVACINAS,
-  //  payload: minhasVacinas,
-  //};
+};
+
+export const setMinhasVacinas = minhasVacinas => {
+  return {
+    type:SET_MINHASVACINAS,
+    payload: minhasVacinas,
+  };
+};
+
+//busca dados do banco
+export const fetchMinhasVacinas = () => {
+  return dispatch => {
+    axios.get('/minhasVacinas.json')
+      .catch(err => console.log(err))
+      .then(res => {
+        const rawMinhasVacinas = res.data;
+        const minhasVacinas = [];
+        for (let key in rawMinhasVacinas){
+          minhasVacinas.push({
+            ...rawMinhasVacinas[key],
+            id: key,
+          });
+        }
+
+        dispatch(setMinhasVacinas(minhasVacinas));
+      });
+  };
 };
 
 export const dltVacina = minhasVacinas => {

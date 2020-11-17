@@ -17,7 +17,7 @@ class Familia extends Component {
   render() {
     const admFamilia = this.props.adm ?
     <View style={style.editContainer}>
-          <Image source={this.props.imagem} style={style.imagem} />
+          <Image source={{uri:this.props.imagem}} style={style.imagem} />
           <Icon
             style={style.searchIconInfo}
             name="save"
@@ -37,7 +37,7 @@ class Familia extends Component {
             color="#35AAFF"
           />
         </View> :  <View style={style.editContainer}>
-          <Image source={this.props.imagem} style={style.imagem} />
+          <Image source={{uri:this.props.imagem}} style={style.imagem} />
           <Icon
             style={style.searchIconInfo2}
             size={23}

@@ -16,10 +16,14 @@ import InformacaoDoenca from './InformacaoDoenca';
 import {style} from './StyleListInformacaoDoenca';
 import Menu from '../Main/Main';
 import AddDoenca from './AddInfoDoenca';
+import {fetchDoenca} from '../../store/actions/informacaoDoenca';
 
 class ListInformacaoDoenca extends Component {
   state = {
     showAddDoenca: false,
+  }
+  componentDidMount = () => {
+    this.props.onFetchDoenca();
   }
   render(){
     const addDoenca = this.props.adm ?
@@ -66,4 +70,10 @@ const mapStateToProps = ({user,doenca}) => {
   };
 };
 
-export default connect(mapStateToProps)(ListInformacaoDoenca);
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchDoenca: () => dispatch(fetchDoenca()),
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(ListInformacaoDoenca);

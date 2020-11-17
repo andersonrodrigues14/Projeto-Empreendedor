@@ -18,13 +18,15 @@ import Family from './Family';
 import Menu from '../Main/Main';
 import {style} from './StyleListFamily';
 import AddFamily from './AddFamily';
-
+import {fetchFamilia} from '../../store/actions/family';
 
 class ListFamily extends Component {
   state = {
     showAddFamilia: false,
   }
-
+  componentDidMount = () => {
+    this.props.onFetchFamilia();
+  }
   render(){
     const addFamilia = this.props.adm ?
     <View style={style.esconde}>
@@ -95,4 +97,10 @@ const mapStateToProps = ({user, familia}) => {
   };
 };
 
-export default connect(mapStateToProps,null)(ListFamily);
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchFamilia: () => dispatch(fetchFamilia()),
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(ListFamily);

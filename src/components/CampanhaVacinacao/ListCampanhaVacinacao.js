@@ -16,10 +16,16 @@ import Campanha from './CampanhaVacinacao';
 import Menu from '../Main/Main';
 import {style} from './StyleListCampanha';
 import AddCampanha from './AddCampanha';
+import {fetchCampanha} from '../../store/actions/campanha';
+
 
 class ListCamapanha extends Component {
   state = {
     showAddCampanha: false,
+  }
+
+  componentDidMount = () => {
+    this.props.onFetchCampanha();
   }
   render(){
     const addCampanha = this.props.adm ?
@@ -83,5 +89,10 @@ const mapStateToProps = ({user,campanha}) => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchCampanha: () => dispatch(fetchCampanha()),
+  };
+};
 
-export default connect(mapStateToProps)(ListCamapanha);
+export default connect(mapStateToProps,mapDispatchToProps)(ListCamapanha);

@@ -9,7 +9,7 @@ class Calendario extends Component {
   render() {
     const admCalendario = this.props.adm ?
     <View style={style.editContainer}>
-          <Image source={this.props.imagem} style={style.imagem} />
+          <Image source={{uri :this.props.imagem}} style={style.imagem} />
           <Icon
             style={style.searchIconInfo}
             name="save"
@@ -29,7 +29,7 @@ class Calendario extends Component {
             color="#35AAFF"
           />
         </View> :  <View style={style.editContainer}>
-          <Image source={this.props.imagem} style={style.imagem} />
+          <Image source={{uri :this.props.imagem}} style={style.imagem} />
           <Icon
             style={style.searchIconInfo2}
             size={23}

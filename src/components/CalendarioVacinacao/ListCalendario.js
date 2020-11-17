@@ -16,11 +16,15 @@ import Calendario from './Calendario';
 import Menu from '../Main/Main';
 import {style} from './StyleListCalendario';
 import AddCalendario from './AddCalendario';
-
+import {fetchCalendario} from '../../store/actions/calendario';
 
 class ListCalendario extends Component {
   state = {
     showAddCalendario: false,
+  }
+
+  componentDidMount = () => {
+    this.props.onFetchCalendario();
   }
 
   render(){
@@ -77,4 +81,11 @@ const mapStateToProps = ({user,calendario}) => {
   };
 };
 
-export default connect(mapStateToProps)(ListCalendario);
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchCalendario: () => dispatch(fetchCalendario()),
+  };
+};
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(ListCalendario);

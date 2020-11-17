@@ -31,9 +31,9 @@ class AddInfoDoenca extends Component {
     this.props.onAddDoenca({
       id: Math.random(),
       imagem: this.state.imagem,
-      titulo : this.state.nome,
+      titulo : this.state.titulo,
       texto: this.state.texto,
-      dataPublicacao: this.state.dtVacina,
+      dataPublicacao: this.state.dataPublicacao,
     });
 
     this.setState({imagem: null, titulo: null, texto: null, dataPublicacao: null});

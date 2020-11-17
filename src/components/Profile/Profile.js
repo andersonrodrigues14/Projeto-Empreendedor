@@ -55,7 +55,7 @@ class Profile extends Component {
       <View style={style.InfoUser}>
         {admProfile}
         <View style={style.editContainer}>
-          <Image source={this.props.imagem} style={style.imageUser} />
+          <Image source={{uri:this.props.imagem}} style={style.imageUser} />
         </View>
 
         <TextInput style={style.input} placeholder="Nome" editable={false}>

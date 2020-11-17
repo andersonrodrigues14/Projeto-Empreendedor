@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({user,vacina}) => {
   return {
     email: user.email,
     nome : user.nome,
