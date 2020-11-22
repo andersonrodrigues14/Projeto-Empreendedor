@@ -1,82 +1,46 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Modal,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
+import {Modal,Platform,FlatList, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {addVacina} from '../../store/actions/vacina';
+import {addMinhasVacinas} from '../../store/actions/minhasVacinas';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
+import {fetchMinhasVacinas} from '../../store/actions/minhasVacinas';
+import AddMinhasVacinas from './AddMinhasVacinas';
+import MinhasVacina from '../MinhasVacinas/MinhasVacinas';
 
-const initialState = {imagem:null,nome:'',texto:'',tempoDuracao:''};
-
-class AddVacina extends Component {
-
+class ModalVacinas extends Component {
   state = {
-    ...initialState,
+    showAddMinhasVacinas: false,
   }
-
-  pickImage = () => {
-    ImagePicker.showImagePicker({
-      title: 'Escolha a imagem',
-      maxHeight:600,
-      maxWidth:800,
-    }, res => {
-      if (!res.didCancel){
-        this.setState({imagem: {uri: res.uri, base64: res.data}});
-      }
-    });
+  componentDidMount = () => {
+    this.props.onFetchMinhasVacinas({userId : this.props.userId});
   }
-
-  save = () => {
-    this.props.onAddVacina({
-      id: Math.random(),
-      imagem: this.state.imagem,
-      nome : this.state.nome,
-      texto: this.state.texto,
-      tempoDuracao: this.state.tempoDuracao,
-    });
-
-    this.setState({imagem: null, nome: null, texto: null, tempoDuracao: null});
-    this.props.onCancel();
-    Actions.home();
-  };
 
   render(){
     return (
       <Modal transparent={true} visible={this.props.isVisible}
       onRequestClose= {this.props.onCancel}
       animationType= {'slide'}>
-      <KeyboardAvoidingView style={styles.background}>
+       <KeyboardAvoidingView style={styles.background}>
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
         <ScrollView style={styles.scroll}>
           <View style={styles.container}>
-            <Text style={styles.header}>Nova Vacina</Text>
-            <View style={styles.containerImagem}>
-                <Image source={this.state.imagem} style={styles.imagem}/>
-            </View>
-            <TextInput style={styles.input}
-              placeholder="Nome da Vacina"
-              onChangeText={nome => this.setState({nome})}
-              value={this.state.nome}/>
-            <TextInput style={styles.input}
-              placeholder="Informação sobre a Vacina"
-              onChangeText={texto => this.setState({texto})}
-              value={this.state.texto}/>
-            <TextInput style={styles.input}
-              placeholder="Tempo de Duração"
-              onChangeText={tempoDuracao => this.setState({tempoDuracao})}
-              value={this.state.tempoDuracao}/>
+          <AddMinhasVacinas isVisible={this.state.showAddMinhasVacinas} userId={this.props.userId} onCancel={()=> this.setState({showAddMinhasVacinas: false})}/>
+            <Text style={styles.header}>Vacinas Usuário</Text>
+            <FlatList  data={this.props.minhasVacinas}
+                keyExtractor={item => `${item.id}`}
+                renderItem={({item}) => <MinhasVacina key={item.id} {...item} minhasVacinasEdt={item} minhasVacinasId={item.id}/>} />
+
+
             <View style={styles.buttons}>
-              <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
-                  <Text style={styles.button}>Escolha a foto</Text>
-              </TouchableOpacity>
               <TouchableOpacity style={styles.delete} onPress={this.props.onCancel}>
                 <Text style={styles.button}>Cancelar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.insert}onPress={this.save}>
-                <Text style={styles.button}>Salvar</Text>
+              <TouchableOpacity style={styles.insert}onPress={() => this.setState({showAddMinhasVacinas: true})}>
+                <Text style={styles.button}>Adicionar</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -84,7 +48,7 @@ class AddVacina extends Component {
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
       </Modal>
     );
   }
@@ -93,7 +57,7 @@ class AddVacina extends Component {
 
 const styles = StyleSheet.create({
   backgtoundFundo: {
-      flex: 0.31,
+      flex: 0.21,
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   background: {
@@ -171,20 +135,38 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       marginHorizontal:10,
   },
+  dateComponente:{
+    width:230,
+    margin: 15,
+  },
+  dateComponenteMaior:{
+    width:220,
+    margin: 15,
+  },
+  texto:{
+    marginLeft:15,
+    fontSize:15,
+  },
+  linha:{
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 
 });
 
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({user,minhasVacinas}) => {
   return {
     email: user.email,
     nome : user.nome,
+    minhasVacinas: minhasVacinas.minhasVacinas,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddVacina: vacina => dispatch(addVacina(vacina)),
+    onAddMinhasVacinas: minhasVacinas => dispatch(addMinhasVacinas(minhasVacinas)),
+    onFetchMinhasVacinas: userId => dispatch(fetchMinhasVacinas(userId)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddVacina);
+export default connect(mapStateToProps,mapDispatchToProps)(ModalVacinas);

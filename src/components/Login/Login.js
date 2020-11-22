@@ -2,7 +2,7 @@
 
 //import
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
-import React, {useState, useEffect, Component} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {
@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
   Text,
   Animated,
-  Keyboard,
   YellowBox,
   LogBox,
   ImageBackground,
@@ -28,58 +27,21 @@ import { login } from '../../store/actions/userActions';
 //Criar o component
 class Login extends Component {
   state = {
-    nome:'Anderson',
-    cpf: '',
-    imagem: require('../../assets/foto.jpg'),
-    adm: true,
-    password: '',
+    nome: '1',
+    email: '',
+    senha: '',
   };
+
+  componentDidUpdate = prevProps => {
+    if (prevProps.isLoading && !this.props.isLoading){
+      Actions.home();
+    }
+  }
 
   login = () => {
     this.props.onLogin({...this.state});
-    Actions.home();
   };
 
-  //useEffect(() => {
-  //  YellowBox.ignoreWarnings(['Animated: `useNativeDriver`']);
-  //  LogBox.ignoreAllLogs(); /*Ignorar worning do NativeDrive*/
-    // eslint-disable-next-line no-undef
-  //  keyboardDidShowListener = Keyboard.addListener(
-  //    'keyboardDidShow',
-  //    keyboardDidShow,
-   // );
-
-    // eslint-disable-next-line no-undef
-  //  KeyboardDidHideListener = Keyboard.addListener(
-  ///    'keyboardDidHide',
-  //    keyboardDidHide,
-  //  );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
- // }, []);
- // function keyboardDidShow() {
- //   Animated.parallel([
- ///     Animated.timing(logo.x, {
-  //      toValue: 60,
-  //      duration: 100,
-  //    }),
-   //   Animated.timing(logo.y, {
-  //      toValue: 55,
-   //     duration: 100,
-   //   }),
-   // ]).start();
-  //}
- // function keyboardDidHide() {
-  //  Animated.parallel([
-   //   Animated.timing(logo.x, {
-   //     toValue: 150,
-   //     duration: 100,
-   //   }),
-   //   Animated.timing(logo.y, {
-   //     toValue: 145,
-   //     duration: 100,
-   //   }),
-   // ]).start();
-  //}
 render(){
   YellowBox.ignoreWarnings(['Animated: `useNativeDriver`']);
   LogBox.ignoreAllLogs(); /*Ignorar worning do NativeDrive*/
@@ -94,10 +56,13 @@ render(){
 
       <View style={style.container}>
         <Text style={style.textTitulo}>Carteira Digital de Vacinação</Text>
-        <TextInputMask style={style.input} placeholder="CPF" mask={'[000] . [000] . [000] - [00]'} keyboardType="numeric"
-        onChangeText={cpf => this.setState({ cpf })}/>
+        <TextInputMask style={style.input}
+             keyboardType="email-address"
+              placeholder="EMAIL"
+              onChangeText={email => this.setState({email})}
+              value={this.state.email}/>
         <TextInput secureTextEntry ={true} style={style.input} placeholder="Senha"
-        onChangeText={password => this.setState({ password })} />
+        onChangeText={senha => this.setState({ senha })} />
       </View>
 
       <View style={style.buttons}>
@@ -119,11 +84,17 @@ render(){
 }
 }
 
+const mapStateToProps = ({user}) => {
+  return {
+    isLoading: user.isLoading,
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
       onLogin: user => dispatch(login(user)),
   };
 };
 
-export default connect(null,mapDispatchToProps)(Login);
+export default connect(mapStateToProps,mapDispatchToProps)(Login);
 

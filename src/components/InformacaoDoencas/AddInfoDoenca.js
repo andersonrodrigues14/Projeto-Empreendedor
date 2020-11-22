@@ -7,7 +7,9 @@ import {connect} from 'react-redux';
 import {addDoenca} from '../../store/actions/informacaoDoenca';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 
-const initialState = {imagem:null,titulo:'',texto:'',dataPublicacao:''};
+var dataAtual = new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear();
+
+const initialState = {imagem:null,titulo:'',texto:'',dataPublicacao:dataAtual};
 
 class AddInfoDoenca extends Component {
 
@@ -37,7 +39,8 @@ class AddInfoDoenca extends Component {
     });
 
     this.setState({imagem: null, titulo: null, texto: null, dataPublicacao: null});
-    Actions.listainformacaodoenca();
+    this.props.onCancel();
+    Actions.home();
   };
 
   render(){
@@ -63,10 +66,10 @@ class AddInfoDoenca extends Component {
               placeholder="Informação sobre a Doença"
               onChangeText={texto => this.setState({texto})}
               value={this.state.texto}/>
-            <TextInput style={styles.input}
-              placeholder="Data da Publicação"
-              onChangeText={dataPublicacao => this.setState({dataPublicacao})}
-              value={this.state.dataPublicacao}/>
+            <View style={styles.linha}>
+              <Text style= {styles.texto}>Data da Publicação: </Text>
+              <Text> {this.state.dataPublicacao}</Text>
+            </View>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -92,7 +95,7 @@ class AddInfoDoenca extends Component {
 
 const styles = StyleSheet.create({
   backgtoundFundo: {
-      flex: 0.2,
+      flex: 0.38,
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   background: {
@@ -143,6 +146,7 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection:'row',
     justifyContent:'center',
+    marginTop:10,
   },
   button:{
     alignItems:'center',
@@ -169,6 +173,14 @@ const styles = StyleSheet.create({
       borderRadius: 30,
       flexDirection: 'row',
       marginHorizontal:10,
+  },
+  texto:{
+    marginLeft:15,
+    fontSize:15,
+  },
+  linha:{
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
 });

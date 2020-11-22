@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import  {SET_INFORMACAODOENCA, DLT_VACINA} from './actionTypes';
+import  {SET_INFORMACAODOENCA} from './actionTypes';
 import axios from 'axios';
 export const addDoenca = doenca => {
   return dispatch => {
@@ -45,10 +45,27 @@ export const fetchDoenca = () => {
   };
 };
 
+export const edtDoenca = doenca => {
+  return dispatch => {
+    axios.get(`/doencas/${doenca.id}.json`)
+      .catch(err => console.log(err))
+      .then(resp => {
+         console.log(doenca);
+         console.log(doenca.id);
+         const nome = doenca.nome
+          .then(res => {
+             dispatch(fetchDoenca(nome));
+          });
+        });
+    };
+};
 
-export const dltVacina = doenca => {
-  return {
-    type: DLT_VACINA,
-    payload: doenca,
+export const delDoenca = doenca => {
+  return dispatch => {
+    axios.delete(`/doencas/${doenca.doencaId}.json`)
+      .catch(err=>console.log(err))
+      .then(res => {
+        dispatch(setDoenca());
+      });
   };
 };

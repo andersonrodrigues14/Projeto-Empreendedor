@@ -29,6 +29,7 @@ class ListProfile extends Component {
   componentDidMount = () => {
     this.props.onFetchProfile();
   }
+
   render() {
     const addProfile = this.props.adm ?
     <View style={style.containerAdministrador}>
@@ -53,7 +54,7 @@ class ListProfile extends Component {
             <FlatList
               data={this.props.profile}
               keyExtractor={(item) => `${item.id}`}
-              renderItem={({item}) => <Profile key={item.id} {...item} />}
+              renderItem={({item}) => <Profile key={item.id} {...item} profileEdt={item} profileId={item.id}/>}
             />
           </View> : <View style={style.containerUser}>
             <FlatList

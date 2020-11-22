@@ -1,18 +1,39 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Modal,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
+import {Modal,
+        Platform,
+        Image,
+        View,
+        StyleSheet,
+        TouchableWithoutFeedback,
+        Text,TouchableOpacity,
+        TextInput,
+        KeyboardAvoidingView,
+        Dimensions,
+      } from 'react-native';
+
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
+import DatePicker from 'react-native-datepicker';
 import {addCampanha} from '../../store/actions/campanha';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 
-const initialState = {imagem:null,nome:'',texto:'',dtInicio:null,dtCadastro:''};
+
+var dataAtual = new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear();
+
+const initialState = {imagem:null,nome:'',texto:'',dtInicio:'',dtCadastro:dataAtual};
 
 class AddCampanha extends Component {
 
   state = {
     ...initialState,
+  }
+
+  changeDate = (valor) => {
+    this.setState({
+      dtInicio: valor,
+    });
   }
 
   pickImage = () => {
@@ -37,8 +58,9 @@ class AddCampanha extends Component {
       dtCadastro: this.state.dtCadastro,
     });
 
-    this.setState({imagem: null, nome: null, texto: null, dtInicio:null, dtCadastro: ''});
-    Actions.listaCampanha();
+    this.setState({imagem: null, nome: null, texto: null, dtInicio:'', dtCadastro: ''});
+    this.props.onCancel();
+    Actions.home();
   };
 
   render(){
@@ -64,14 +86,19 @@ class AddCampanha extends Component {
               placeholder="Informação sobre a Vacina"
               onChangeText={texto => this.setState({texto})}
               value={this.state.texto}/>
-            <TextInput style={styles.input}
-              placeholder="Data de Inicio"
-              onChangeText={dtInicio => this.setState({dtInicio})}
-              value={this.state.dtInicio}/>
-              <TextInput style={styles.input}
-              placeholder="Data de Cadastro"
-              onChangeText={dtCadastro => this.setState({dtCadastro})}
-              value={this.state.dtCadastro}/>
+            <View style={styles.linha}>
+            <Text style= {styles.texto}>Data de Inicio</Text>
+            <DatePicker
+              format = "DD/MM/YYYY"
+              style = {styles.dateComponente}
+              date = {this.state.dtInicio}
+              onDateChange = {this.changeDate}
+            />
+            </View>
+            <View style={styles.linha}>
+              <Text style= {styles.texto}>Data de Cadastro: </Text>
+              <Text> {this.state.dtCadastro}</Text>
+            </View>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -79,7 +106,7 @@ class AddCampanha extends Component {
               <TouchableOpacity style={styles.delete} onPress={this.props.onCancel}>
                 <Text style={styles.button}>Cancelar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.insert}onPress={this.save}>
+              <TouchableOpacity style={styles.insert}onPress={() => this.save()}>
                 <Text style={styles.button}>Salvar</Text>
               </TouchableOpacity>
             </View>
@@ -97,7 +124,7 @@ class AddCampanha extends Component {
 
 const styles = StyleSheet.create({
   backgtoundFundo: {
-      flex: 0.1,
+      flex: 0.26,
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   background: {
@@ -148,6 +175,7 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection:'row',
     justifyContent:'center',
+    marginTop:10,
   },
   button:{
     alignItems:'center',
@@ -174,6 +202,22 @@ const styles = StyleSheet.create({
       borderRadius: 30,
       flexDirection: 'row',
       marginHorizontal:10,
+  },
+  dateComponente:{
+    width:250,
+    margin: 15,
+  },
+  dateComponenteMaior:{
+    width:220,
+    margin: 15,
+  },
+  texto:{
+    marginLeft:15,
+    fontSize:15,
+  },
+  linha:{
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
 });

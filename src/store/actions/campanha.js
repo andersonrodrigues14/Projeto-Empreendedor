@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import  {SET_CAMPANHA, DLT_VACINA} from './actionTypes';
+import  {SET_CAMPANHA} from './actionTypes';
 import axios from 'axios';
 
 export const addCampanha = campanha => {
@@ -46,9 +46,27 @@ export const fetchCampanha = () => {
   };
 };
 
-export const dltVacina = campanha => {
-  return {
-    type: DLT_VACINA,
-    payload: campanha,
+export const edtCampanha = campanha => {
+  return dispatch => {
+    axios.get(`/campanhas/${campanha.id}.json`)
+      .catch(err => console.log(err))
+      .then(resp => {
+         console.log(campanha);
+         console.log(campanha.id);
+         const nome = campanha.nome
+          .then(res => {
+             dispatch(fetchCampanha(nome));
+          });
+        });
+    };
+};
+
+export const delCamapanha = campanha => {
+  return dispatch => {
+    axios.delete(`/campanhas/${campanha.campanhaId}.json`)
+      .catch(err=>console.log(err))
+      .then(res => {
+        dispatch(fetchCampanha());
+      });
   };
 };

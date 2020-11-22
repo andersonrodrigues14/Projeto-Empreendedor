@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import  {SET_PROFILE, DLT_VACINA} from '../actions/actionTypes';
+import  {SET_PROFILE} from '../actions/actionTypes';
 
 const initialState = {
   profile: [],
@@ -11,14 +11,6 @@ const reducer = (state = initialState, action) => {
         return {
           ...state,
           profile:action.payload,
-        };
-      case DLT_VACINA:
-        return {
-          ...state,
-          profile: state.profile.map(profile =>{
-
-
-          }),
         };
       default:
         return state;

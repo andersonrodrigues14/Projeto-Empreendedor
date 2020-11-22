@@ -1,18 +1,39 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Modal,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
+import {Modal,
+        Platform,
+        Image,
+        View,
+        StyleSheet,
+        TouchableWithoutFeedback,
+        Text,
+        TouchableOpacity,
+        TextInput,
+        KeyboardAvoidingView,
+        Dimensions,
+      } from 'react-native';
+//import {Picker} from '@react-native-picker/picker';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {addProfile} from '../../store/actions/profile';
+import {createUser} from '../../store/actions/userActions';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
+import DatePicker from 'react-native-datepicker';
+import TextInputMask from 'react-native-text-input-mask';
 
-const initialState = {imagem: null, nome: null, cpf: null, sus:null, email: null,dtnascimento:null,sangue:null,obs:null};
+const initialState = {imagem:null, nome:null, cpf:null, sus:null, email:null
+  ,dtnascimento:'',senha:null,sangue:null,obs:null,adm:false};
 
-class AddMinhasVacinas extends Component {
+class AddProfile extends Component {
 
   state = {
     ...initialState,
+  }
+
+  changeDate = (valor) => {
+    this.setState({
+      dtnascimento: valor,
+    });
   }
 
   pickImage = () => {
@@ -28,8 +49,7 @@ class AddMinhasVacinas extends Component {
   }
 
   save = () => {
-    this.props.onAddProfile({
-      id: Math.random(),
+    this.props.onCreateUser({
       imagem: this.state.imagem,
       nome : this.state.nome,
       cpf: this.state.cpf,
@@ -38,10 +58,11 @@ class AddMinhasVacinas extends Component {
       dtnascimento: this.state.dtnascimento,
       sangue:this.state.sangue,
       obs:this.state.obs,
+      adm:false,
     });
 
     this.setState({imagem: null, nome: null, cpf: null, sus:null, email: null,dtnascimento:null,sangue:null,obs:null});
-    Actions.dados();
+    Actions.home();
   };
 
   render(){
@@ -63,22 +84,32 @@ class AddMinhasVacinas extends Component {
               placeholder="Nome"
               onChangeText={nome => this.setState({nome})}
               value={this.state.nome}/>
-            <TextInput style={styles.input}
+            <TextInputMask style={styles.input}
+              keyboardType="numeric"
+              mask={'[000] . [000] . [000] - [00]'}
               placeholder="CPF"
               onChangeText={cpf => this.setState({cpf})}
               value={this.state.cpf}/>
-            <TextInput style={styles.input}
+            <TextInputMask style={styles.input}
+              keyboardType="numeric"
+              mask={'[00000000000] [0000] [0]'}
               placeholder="N° SUS"
               onChangeText={sus => this.setState({sus})}
               value={this.state.sus}/>
-              <TextInput style={styles.input}
+              <TextInputMask style={styles.input}
+              keyboardType="email-address"
               placeholder="EMAIL"
               onChangeText={email => this.setState({email})}
               value={this.state.email}/>
-              <TextInput style={styles.input}
-              placeholder="Dt Nasc."
-              onChangeText={dtnascimento => this.setState({dtnascimento})}
-              value={this.state.dtnascimento}/>
+            <View style={styles.linha}>
+              <Text style= {styles.texto}>Dt Nasc.</Text>
+              <DatePicker
+                format = "DD/MM/YYYY"
+                style = {styles.dateComponente}
+                date = {this.state.dtnascimento}
+                onDateChange = {this.changeDate}
+              />
+            </View>
               <TextInput style={styles.input}
               placeholder="Sangue"
               onChangeText={sangue => this.setState({sangue})}
@@ -87,6 +118,9 @@ class AddMinhasVacinas extends Component {
               placeholder="OBS"
               onChangeText={obs => this.setState({obs})}
               value={this.state.obs}/>
+            <TextInput style={styles.input} placeholder="Senha"
+        value={this.state.senha}
+        onChangeText={senha => this.setState({senha})}/>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -94,7 +128,7 @@ class AddMinhasVacinas extends Component {
               <TouchableOpacity style={styles.delete} onPress={this.props.onCancel}>
                 <Text style={styles.button}>Cancelar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.insert}onPress={this.save}>
+              <TouchableOpacity style={styles.insert} onPress={() => {this.props.onCreateUser(this.state); this.props.onCancel(); Actions.home();}}>
                 <Text style={styles.button}>Salvar</Text>
               </TouchableOpacity>
             </View>
@@ -191,20 +225,36 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       marginHorizontal:10,
   },
+  dateComponente:{
+    width:230,
+    margin: 15,
+  },
+  dateComponenteMaior:{
+    width:220,
+    margin: 15,
+  },
+  texto:{
+    marginLeft:15,
+    fontSize:15,
+  },
+  linha:{
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 
 });
 
-const mapStateToProps = ({user}) => {
-  return {
-    email: user.email,
-    nome : user.nome,
-  };
-};
+//const mapStateToProps = ({user}) => {
+//  return {
+//    email: user.email,
+//    nome : user.nome,
+//  };
+//};
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddProfile: profile => dispatch(addProfile(profile)),
+    onCreateUser: user => dispatch(createUser(user)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddMinhasVacinas);
+export default connect(null,mapDispatchToProps)(AddProfile);

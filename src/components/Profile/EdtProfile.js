@@ -1,30 +1,43 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Modal,Platform,KeyboardAvoidingView,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, Alert, Dimensions} from 'react-native';
+import {Modal,
+        Platform,
+        Image,
+        View,
+        StyleSheet,
+        TouchableWithoutFeedback,
+        Text,
+        TouchableOpacity,
+        TextInput,
+        KeyboardAvoidingView,
+        Dimensions,
+      } from 'react-native';
+//import {Picker} from '@react-native-picker/picker';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {addFamilia} from '../../store/actions/family';
+import {edtProfile} from '../../store/actions/userActions';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 import DatePicker from 'react-native-datepicker';
+import TextInputMask from 'react-native-text-input-mask';
 
-const initialState = {imagem:null,nome:'',texto:'',dtAplicacao:'',dtRenovacao: ''};
-
-class AddFamily extends Component {
+class EdtProfile extends Component {
 
   state = {
-    ...initialState,
+    imagem:this.props.profileEdt.imagem,
+    nome:this.props.profileEdt.nome,
+    cpf:this.props.profileEdt.cpf,
+    sus:this.props.profileEdt.sus,
+    email:this.props.profileEdt.email,
+    dtnascimento:this.props.profileEdt.dtnascimento,
+    senha:this.props.profileEdt.senha,
+    sangue:this.props.profileEdt.sangue,
+    obs:this.props.profileEdt.obs,
   }
 
   changeDate = (valor) => {
     this.setState({
-      dtAplicacao: valor,
-    });
-  }
-
-  changeDate2 = (valor) => {
-    this.setState({
-      dtRenovacao: valor,
+      dtnascimento: valor,
     });
   }
 
@@ -41,17 +54,19 @@ class AddFamily extends Component {
   }
 
   save = () => {
-    this.props.onAddFamyli({
-      id: Math.random(),
+    this.props.onCreateUser({
       imagem: this.state.imagem,
-      nomeFamiliar : this.state.nomeFamiliar,
-      vacina: this.state.vacina,
-      dtAplicacao: this.state.dtAplicacao,
-      dtRenovacao: this.state.dtRenovacao,
+      nome : this.state.nome,
+      cpf: this.state.cpf,
+      sus: this.state.sus,
+      email: this.state.email,
+      dtnascimento: this.state.dtnascimento,
+      sangue:this.state.sangue,
+      obs:this.state.obs,
+      adm:false,
     });
 
-    this.setState({imagem: null, nomeFamiliar: null, vacina: null, dtAplicacao: '',dtRenovacao: ''});
-    this.props.onCancel();
+    this.setState({imagem: null, nome: null, cpf: null, sus:null, email: null,dtnascimento:null,sangue:null,obs:null});
     Actions.home();
   };
 
@@ -66,36 +81,50 @@ class AddFamily extends Component {
         </TouchableWithoutFeedback>
         <ScrollView style={styles.scroll}>
           <View style={styles.container}>
-            <Text style={styles.header}>Novo Familiar</Text>
+            <Text style={styles.header}>Novo Usuário</Text>
             <View style={styles.containerImagem}>
-                <Image source={this.state.imagem} style={styles.imagem}/>
+                <Image source={{uri:this.state.imagem}} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
-              placeholder="Nome do Familiar"
-              onChangeText={nomeFamiliar => this.setState({nomeFamiliar})}
-              value={this.state.nomeFamiliar}/>
-            <TextInput style={styles.input}
-              placeholder="Informação sobre a Vacina"
-              onChangeText={vacina => this.setState({vacina})}
-              value={this.state.vacina}/>
+              placeholder="Nome"
+              onChangeText={nome => this.setState({nome})}
+              value={this.state.nome}/>
+            <TextInputMask style={styles.input}
+              keyboardType="numeric"
+              mask={'[000] . [000] . [000] - [00]'}
+              placeholder="CPF"
+              onChangeText={cpf => this.setState({cpf})}
+              value={this.state.cpf}/>
+            <TextInputMask style={styles.input}
+              keyboardType="numeric"
+              mask={'[00000000000] [0000] [0]'}
+              placeholder="N° SUS"
+              onChangeText={sus => this.setState({sus})}
+              value={this.state.sus}/>
+              <TextInput style={styles.input}
+              placeholder="EMAIL"
+              onChangeText={email => this.setState({email})}
+              value={this.state.email}/>
             <View style={styles.linha}>
-            <Text style= {styles.texto}>Data de Aplicação</Text>
-            <DatePicker
-              format = "DD/MM/YYYY"
-              style = {styles.dateComponente}
-              date = {this.state.dtAplicacao}
-              onDateChange = {this.changeDate}
-            />
+              <Text style= {styles.texto}>Dt Nasc.</Text>
+              <DatePicker
+                format = "DD/MM/YYYY"
+                style = {styles.dateComponente}
+                date = {this.state.dtnascimento}
+                onDateChange = {this.changeDate}
+              />
             </View>
-            <View style={styles.linha}>
-            <Text style= {styles.texto}>Data de Renovação</Text>
-            <DatePicker
-              format = "DD/MM/YYYY"
-              style = {styles.dateComponenteMaior}
-              date = {this.state.dtRenovacao}
-              onDateChange = {this.changeDate2}
-            />
-            </View>
+              <TextInput style={styles.input}
+              placeholder="Sangue"
+              onChangeText={sangue => this.setState({sangue})}
+              value={this.state.sangue}/>
+              <TextInput style={styles.input}
+              placeholder="OBS"
+              onChangeText={obs => this.setState({obs})}
+              value={this.state.obs}/>
+            <TextInput style={styles.input} placeholder="Senha"
+        value={this.state.senha}
+        onChangeText={senha => this.setState({senha})}/>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -103,7 +132,7 @@ class AddFamily extends Component {
               <TouchableOpacity style={styles.delete} onPress={this.props.onCancel}>
                 <Text style={styles.button}>Cancelar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.insert}onPress={this.save}>
+              <TouchableOpacity style={styles.insert} onPress={() => this.save()}>
                 <Text style={styles.button}>Salvar</Text>
               </TouchableOpacity>
             </View>
@@ -112,6 +141,7 @@ class AddFamily extends Component {
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
+
         </KeyboardAvoidingView>
       </Modal>
     );
@@ -121,7 +151,7 @@ class AddFamily extends Component {
 
 const styles = StyleSheet.create({
   backgtoundFundo: {
-      flex: 0.21,
+      flex: 0.1,
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   background: {
@@ -218,17 +248,10 @@ const styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = ({user}) => {
-  return {
-    email: user.email,
-    nome : user.nome,
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
-    onAddFamyli: familia => dispatch(addFamilia(familia)),
+    onEdtUser: profile => dispatch(edtProfile(profile)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddFamily);
+export default connect(null,mapDispatchToProps)(EdtProfile);

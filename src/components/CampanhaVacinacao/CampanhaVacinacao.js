@@ -3,9 +3,20 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {View, Image, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {delCamapanha} from '../../store/actions/campanha';
 import {style} from './StyleCampanha';
+import { Actions } from 'react-native-router-flux';
+import EdtCampanha from './EdtCampanha';
 
 class CamapanhaVacinacao extends Component {
+  state = {
+    showEdtCampanha: false,
+  }
+
+  delete =() =>{
+    this.props.onDltCampanha({campanhaId: this.props.campanhaId});
+    Actions.home();
+  }
   render() {
     const admCampanha = this.props.adm ?
     <View style={style.editContainer}>
@@ -21,30 +32,29 @@ class CamapanhaVacinacao extends Component {
             name="pencil-alt"
             size={20}
             color="#35AAFF"
+            onPress={()=> this.setState({showEdtCampanha: true})}
           />
           <Icon
             style={style.searchIconInfo}
             name="trash"
             size={20}
             color="#35AAFF"
+            onPress={(this.delete)}
           />
         </View> :  <View style={style.editContainer}>
           <Image source={{uri: this.props.imagem}} style={style.imagem} />
           <Icon
             style={style.searchIconInfo2}
-            //name="save"
             size={23}
             color="#35AAFF"
           />
           <Icon
             style={style.searchIconInfo2}
-            //name="pencil-alt"
             size={20}
             color="#35AAFF"
           />
           <Icon
             style={style.searchIconInfo}
-            //name="trash"
             size={20}
             color="#35AAFF"
           />
@@ -64,6 +74,7 @@ class CamapanhaVacinacao extends Component {
             Data de cadastro: {this.props.dtCadastro}
           </Text>
         </View>
+        <EdtCampanha isVisible={this.state.showEdtCampanha} campanhaEdt={this.props.campanhaEdt} onCancel={()=> this.setState({showEdtCampanha: false})}/>
       </View>
     );
   }
@@ -76,4 +87,10 @@ const mapStateToProps = ({user}) => {
   };
 };
 
-export default connect(mapStateToProps,null)(CamapanhaVacinacao);
+const mapDispatchToProps = dispatch => {
+  return {
+    onDltCampanha: campanha => dispatch(delCamapanha(campanha)),
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(CamapanhaVacinacao);

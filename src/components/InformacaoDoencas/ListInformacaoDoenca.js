@@ -51,7 +51,7 @@ class ListInformacaoDoenca extends Component {
       <View style={style.container}>
       <FlatList  data={this.props.doenca}
                 keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <InformacaoDoenca key={item.id} {...item} />} />
+                renderItem={({item}) => <InformacaoDoenca key={item.id} {...item} doencaId={item.id} doencaEdt={item}/>} />
       </View>
       <View>
         <Menu/>

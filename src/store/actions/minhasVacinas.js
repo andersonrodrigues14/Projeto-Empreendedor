@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import  {SET_MINHASVACINAS, DLT_VACINA} from './actionTypes';
+import  {SET_MINHASVACINAS} from './actionTypes';
 import axios from 'axios';
 
 export const addMinhasVacinas = minhasVacinas => {
@@ -47,9 +47,48 @@ export const fetchMinhasVacinas = () => {
   };
 };
 
-export const dltVacina = minhasVacinas => {
-  return {
-    type: DLT_VACINA,
-    payload: minhasVacinas,
+//busca dados do banco
+export const fetchMinhasVacinas2 = userId => {
+  return dispatch => {
+    console.log(userId);
+    axios.get(`/minhasVacinas/${userId.userId}.json`)
+      .catch(err => console.log(err))
+      .then(res => {
+        const rawMinhasVacinas = res.data;
+        const minhasVacinas = [];
+        for (let key in rawMinhasVacinas){
+          minhasVacinas.push({
+            ...rawMinhasVacinas[key],
+            id: key,
+          });
+        }
+
+        dispatch(setMinhasVacinas(minhasVacinas));
+      });
+  };
+};
+
+export const edtMinhasVacinas = minhasVacinas => {
+  return dispatch => {
+    axios.get(`/minhasVacinas/${minhasVacinas.id}.json`)
+      .catch(err => console.log(err))
+      .then(resp => {
+         console.log(minhasVacinas);
+         console.log(minhasVacinas.id);
+         const nome = minhasVacinas.nome
+          .then(res => {
+             dispatch(fetchMinhasVacinas(nome));
+          });
+        });
+    };
+};
+
+export const delMinhasVacinas = minhasVacinas => {
+  return dispatch => {
+    axios.delete(`/minhasVacinas/${minhasVacinas.minhasVacinasId}.json`)
+      .catch(err=>console.log(err))
+      .then(res => {
+        dispatch(setMinhasVacinas());
+      });
   };
 };

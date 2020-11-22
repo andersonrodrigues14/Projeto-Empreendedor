@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import {Modal,Platform,KeyboardAvoidingView,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, Alert, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import DatePicker from 'react-native-datepicker';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import {addCalendario} from '../../store/actions/calendario';
@@ -13,6 +14,12 @@ class AddCalendario extends Component {
 
   state = {
     ...initialState,
+  }
+
+  changeDate = (valor) => {
+    this.setState({
+      dtVacina: valor,
+    });
   }
 
   pickImage = () => {
@@ -37,7 +44,8 @@ class AddCalendario extends Component {
     });
 
     this.setState({imagem: null, nome: null, texto: null, dtVacina: null});
-    Actions.listaCalendario();
+    this.props.onCancel();
+    Actions.home();
   };
 
   render(){
@@ -63,10 +71,15 @@ class AddCalendario extends Component {
               placeholder="Informação sobre a Vacina"
               onChangeText={texto => this.setState({texto})}
               value={this.state.texto}/>
-            <TextInput style={styles.input}
-              placeholder="Data da Vacina"
-              onChangeText={dtVacina => this.setState({dtVacina})}
-              value={this.state.dtVacina}/>
+            <View style={styles.linha}>
+            <Text style= {styles.texto}>Data Vacina</Text>
+            <DatePicker
+              format = "DD/MM/YYYY"
+              style = {styles.dateComponente}
+              date = {this.state.dtVacina}
+              onDateChange = {this.changeDate}
+            />
+            </View>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -92,7 +105,7 @@ class AddCalendario extends Component {
 
 const styles = StyleSheet.create({
   backgtoundFundo: {
-      flex: 0.2,
+      flex: 0.31,
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   background: {
@@ -169,6 +182,18 @@ const styles = StyleSheet.create({
       borderRadius: 30,
       flexDirection: 'row',
       marginHorizontal:10,
+  },
+  dateComponente:{
+    width:250,
+    margin: 15,
+  },
+  texto:{
+    marginLeft:15,
+    fontSize:15,
+  },
+  linha:{
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
 });

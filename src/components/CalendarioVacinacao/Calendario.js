@@ -1,11 +1,22 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
 import {View, Image, Text} from 'react-native';
+import {delCalendario} from '../../store/actions/calendario';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import {style} from './StyleCalendario';
+import { Actions } from 'react-native-router-flux';
+import EdtCalendario from './EdtCalendario';
 
 class Calendario extends Component {
+  state = {
+    showEdtVacina: false,
+  }
+
+  delete =() =>{
+    this.props.onDltCalendario({calendarioId: this.props.calendarioId});
+    Actions.home();
+  }
   render() {
     const admCalendario = this.props.adm ?
     <View style={style.editContainer}>
@@ -21,12 +32,14 @@ class Calendario extends Component {
             name="pencil-alt"
             size={20}
             color="#35AAFF"
+            onPress={()=> this.setState({showEdtVacina: true})}
           />
           <Icon
             style={style.searchIconInfo}
             name="trash"
             size={20}
             color="#35AAFF"
+            onPress={(this.delete)}
           />
         </View> :  <View style={style.editContainer}>
           <Image source={{uri :this.props.imagem}} style={style.imagem} />
@@ -59,6 +72,7 @@ class Calendario extends Component {
             Data da Vacina: {this.props.dtVacina}
           </Text>
         </View>
+        <EdtCalendario isVisible={this.state.showEdtVacina} calendarioEdt={this.props.calendarioEdt} onCancel={()=> this.setState({showEdtVacina: false})}/>
       </View>
     );
   }
@@ -71,4 +85,10 @@ const mapStateToProps = ({user}) => {
   };
 };
 
-export default connect(mapStateToProps,null)(Calendario);
+const mapDispatchToProps = dispatch => {
+  return {
+    onDltCalendario: calendario => dispatch(delCalendario(calendario)),
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Calendario);

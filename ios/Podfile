@@ -14,6 +14,8 @@ target 'CarteiradeVacinacaoDigital' do
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
+  pod 'RNCPicker', :path => '../node_modules/@react-native-picker/picker'
+
   target 'CarteiradeVacinacaoDigitalTests' do
     inherit! :complete
     # Pods for testing

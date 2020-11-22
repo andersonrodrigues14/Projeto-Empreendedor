@@ -43,6 +43,7 @@ export const style = StyleSheet.create({
   textStyle:{
     fontSize:14,
     color:'#000',
+    padding:20,
   },
 
   textTitulo:{

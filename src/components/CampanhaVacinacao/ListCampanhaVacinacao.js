@@ -70,7 +70,7 @@ class ListCamapanha extends Component {
       <View style={style.container}>
       <FlatList  data={this.props.campanha}
                 keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <Campanha key={item.id} {...item} />} />
+                renderItem={({item}) => <Campanha key={item.id} {...item} campanhaId={item.id} campanhaEdt={item}/>} />
       </View>
       <View>
         <Menu/>

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import  {SET_PROFILE, DLT_VACINA} from './actionTypes';
+import  {SET_PROFILE} from './actionTypes';
 import axios from 'axios';
 
 export const addProfile = profile => {
@@ -41,15 +41,45 @@ export const fetchProfile = () => {
             id: key,
           });
         }
-
         dispatch(setProfile(profile));
       });
   };
 };
 
-export const dltVacina = profile => {
-  return {
-    type: DLT_VACINA,
-    payload: profile,
+//busca dados do banco
+export const fetchProfile2 = user => {
+  return dispatch => {
+    console.log(user.userId);
+    axios.get(`/users/${user.userId}.json`)
+      .catch(err => console.log(err))
+      .then(res => {
+        const profile = [res.data];
+        dispatch(setProfile(profile));
+      });
+  };
+};
+
+export const edtProfile = profile => {
+  return dispatch => {
+    axios.get(`/users/${profile.id}.json`)
+      .catch(err => console.log(err))
+      .then(resp => {
+         console.log(profile);
+         console.log(profile.id);
+         const nome = profile.nome
+          .then(res => {
+             dispatch(fetchProfile(nome));
+          });
+        });
+    };
+};
+
+export const delProfile = profile => {
+  return dispatch => {
+    axios.delete(`/users/${profile.profileId}.json`)
+      .catch(err=>console.log(err))
+      .then(res => {
+        dispatch(setProfile());
+      });
   };
 };

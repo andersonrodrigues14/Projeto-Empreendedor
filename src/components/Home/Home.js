@@ -25,6 +25,13 @@ import {style} from './StyleHome';
  class Home extends Component {
 
   render(){
+    const admTela = this.props.adm ?
+    <TouchableOpacity style={style.btnContainer} onPress = {() => Actions.listaMinhasVacinasadm()}>
+      <Image source={require('../../assets/vacina.png') } style={style.imageButton}/>
+    </TouchableOpacity> :
+    <TouchableOpacity style={style.btnContainer} onPress = {() => Actions.listaMinhasVacinas()}>
+    <Image source={require('../../assets/vacina.png') } style={style.imageButton}/>
+  </TouchableOpacity>;
   return (
     <KeyboardAvoidingView style={style.background} onReady =  {() => Keyboard.dismiss}>
       <ImageBackground  source={require('../../assets/fundo.png')} style={style.image}>
@@ -36,7 +43,7 @@ import {style} from './StyleHome';
       </View>
 
       <View style={style.InfoUser}>
-        <Image source={this.props.imagem} style={style.imagemUser}/>
+        <Image source={{uri:this.props.imagem}} style={style.imagemUser}/>
         <Text style={style.textTitulo}>{this.props.nome}</Text>
       </View>
 
@@ -58,9 +65,7 @@ import {style} from './StyleHome';
         <Image source={require('../../assets/informacao.png') } style={style.imageButton}/>
         </TouchableOpacity>
 
-        <TouchableOpacity style={style.btnContainer} onPress = {() => Actions.listaMinhasVacinas()}>
-          <Image source={require('../../assets/vacina.png') } style={style.imageButton}/>
-        </TouchableOpacity>
+        {admTela}
 
       </View>
 
@@ -86,6 +91,7 @@ import {style} from './StyleHome';
 const mapStateToProps = ({user}) => {
   return {
     nome: user.nome,
+    adm: user.adm,
     imagem: user.imagem,
   };
 };

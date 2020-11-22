@@ -4,7 +4,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {logout} from '../../store/actions/userActions';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
-import {View, KeyboardAvoidingView, ScrollView, ImageBackground, Image, TextInput, TouchableOpacity,Text} from 'react-native';
+import {View, KeyboardAvoidingView, ScrollView, ImageBackground, Image, TouchableOpacity,Text} from 'react-native';
+import {version} from '../../../package.json';
 
 //Import Styles
 import {style} from './StyleMore';
@@ -29,7 +30,7 @@ class Mais extends Component {
       </View>
       <View style={style.InfoUser}>
         <View style={style.editContainer}>
-          <Image source={this.props.imagem} style={style.imageUser} />
+          <Image source={{uri:this.props.imagem}} style={style.imageUser} />
         </View>
     <Text style={style.textTitulo}>{this.props.nome}</Text>
         <TouchableOpacity style={style.btnInsert} onPress = {() => Actions.senha()}>
@@ -38,7 +39,7 @@ class Mais extends Component {
         <TouchableOpacity onPress={this.logout} style={style.btnSair}>
             <Text style={style.textInsert}>Sair</Text>
         </TouchableOpacity>
-        <Text style={style.textVersao}>Versão do App</Text>
+    <Text style={style.textVersao}>Versão do App: {version}</Text>
       </View>
       </ScrollView>
       <View>

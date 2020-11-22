@@ -1,30 +1,40 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Modal,Platform,KeyboardAvoidingView,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, Alert, Dimensions} from 'react-native';
+import {Modal,
+        Platform,
+        Image,
+        View,
+        StyleSheet,
+        TouchableWithoutFeedback,
+        Text,TouchableOpacity,
+        TextInput,
+        KeyboardAvoidingView,
+        Dimensions,
+      } from 'react-native';
+
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {addFamilia} from '../../store/actions/family';
-import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
+import {edtCampanha} from '../../store/actions/campanha';
 import DatePicker from 'react-native-datepicker';
+import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 
-const initialState = {imagem:null,nome:'',texto:'',dtAplicacao:'',dtRenovacao: ''};
 
-class AddFamily extends Component {
+var dataAtual = new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear();
+
+class EdtCampanha extends Component {
 
   state = {
-    ...initialState,
+    imagem:this.props.campanhaEdt.imagem,
+    nome:this.props.campanhaEdt.nome,
+    texto:this.props.campanhaEdt.texto,
+    dtInicio:this.props.campanhaEdt.dtInicio,
+    dtCadastro:dataAtual,
   }
 
   changeDate = (valor) => {
     this.setState({
-      dtAplicacao: valor,
-    });
-  }
-
-  changeDate2 = (valor) => {
-    this.setState({
-      dtRenovacao: valor,
+      dtInicio: valor,
     });
   }
 
@@ -41,16 +51,16 @@ class AddFamily extends Component {
   }
 
   save = () => {
-    this.props.onAddFamyli({
+    this.props.onEdtCampanha({
       id: Math.random(),
       imagem: this.state.imagem,
-      nomeFamiliar : this.state.nomeFamiliar,
-      vacina: this.state.vacina,
-      dtAplicacao: this.state.dtAplicacao,
-      dtRenovacao: this.state.dtRenovacao,
+      nome : this.state.nome,
+      texto: this.state.texto,
+      dtInicio: this.state.dtInicio,
+      dtCadastro: this.state.dtCadastro,
     });
 
-    this.setState({imagem: null, nomeFamiliar: null, vacina: null, dtAplicacao: '',dtRenovacao: ''});
+    this.setState({imagem: null, nome: null, texto: null, dtInicio:'', dtCadastro: ''});
     this.props.onCancel();
     Actions.home();
   };
@@ -60,41 +70,36 @@ class AddFamily extends Component {
       <Modal transparent={true} visible={this.props.isVisible}
       onRequestClose= {this.props.onCancel}
       animationType= {'slide'}>
-        <KeyboardAvoidingView style={styles.background}>
+      <KeyboardAvoidingView style={styles.background}>
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
         <ScrollView style={styles.scroll}>
           <View style={styles.container}>
-            <Text style={styles.header}>Novo Familiar</Text>
+            <Text style={styles.header}>Nova Data</Text>
             <View style={styles.containerImagem}>
-                <Image source={this.state.imagem} style={styles.imagem}/>
+                <Image source={{uri:this.state.imagem}} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
-              placeholder="Nome do Familiar"
-              onChangeText={nomeFamiliar => this.setState({nomeFamiliar})}
-              value={this.state.nomeFamiliar}/>
+              placeholder="Nome da Vacina"
+              onChangeText={nome => this.setState({nome})}
+              value={this.state.nome}/>
             <TextInput style={styles.input}
               placeholder="Informação sobre a Vacina"
-              onChangeText={vacina => this.setState({vacina})}
-              value={this.state.vacina}/>
+              onChangeText={texto => this.setState({texto})}
+              value={this.state.texto}/>
             <View style={styles.linha}>
-            <Text style= {styles.texto}>Data de Aplicação</Text>
+            <Text style= {styles.texto}>Data de Inicio</Text>
             <DatePicker
               format = "DD/MM/YYYY"
               style = {styles.dateComponente}
-              date = {this.state.dtAplicacao}
+              date = {this.state.dtInicio}
               onDateChange = {this.changeDate}
             />
             </View>
             <View style={styles.linha}>
-            <Text style= {styles.texto}>Data de Renovação</Text>
-            <DatePicker
-              format = "DD/MM/YYYY"
-              style = {styles.dateComponenteMaior}
-              date = {this.state.dtRenovacao}
-              onDateChange = {this.changeDate2}
-            />
+              <Text style= {styles.texto}>Data de Cadastro: </Text>
+              <Text> {this.state.dtCadastro}</Text>
             </View>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
@@ -103,7 +108,7 @@ class AddFamily extends Component {
               <TouchableOpacity style={styles.delete} onPress={this.props.onCancel}>
                 <Text style={styles.button}>Cancelar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.insert}onPress={this.save}>
+              <TouchableOpacity style={styles.insert}onPress={console.log(this.props.vacina)}>
                 <Text style={styles.button}>Salvar</Text>
               </TouchableOpacity>
             </View>
@@ -121,7 +126,7 @@ class AddFamily extends Component {
 
 const styles = StyleSheet.create({
   backgtoundFundo: {
-      flex: 0.21,
+      flex: 0.26,
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   background: {
@@ -172,6 +177,7 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection:'row',
     justifyContent:'center',
+    marginTop:10,
   },
   button:{
     alignItems:'center',
@@ -200,7 +206,7 @@ const styles = StyleSheet.create({
       marginHorizontal:10,
   },
   dateComponente:{
-    width:230,
+    width:250,
     margin: 15,
   },
   dateComponenteMaior:{
@@ -218,17 +224,10 @@ const styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = ({user}) => {
-  return {
-    email: user.email,
-    nome : user.nome,
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
-    onAddFamyli: familia => dispatch(addFamilia(familia)),
+    onEdtCampanha: campanha => dispatch(edtCampanha(campanha)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddFamily);
+export default connect(null,mapDispatchToProps)(EdtCampanha);

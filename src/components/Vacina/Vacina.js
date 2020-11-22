@@ -1,17 +1,22 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {dltVacina} from '../../store/actions/vacina';
+import {delVacina} from '../../store/actions/vacina';
 import {View, Image, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {style} from './StyleVacina';
+import { Actions } from 'react-native-router-flux';
+import EdtVacina from './EdtVacina';
 
 class Vacina extends Component {
-  delete = () =>{
-      this.props.onDltVacina({
-        vacinaId: this.props.id,
-      });
+state = {
+  showEdtVacina: false,
+}
+  delete =() =>{
+    this.props.onDltVacina({vacinaId: this.props.vacinaId});
+    Actions.home();
   }
+
   render() {
     const admVacinas = this.props.adm ?
     <View style={style.editContainer}>
@@ -27,6 +32,7 @@ class Vacina extends Component {
       name="pencil-alt"
       size={20}
       color="#35AAFF"
+      onPress={()=> this.setState({showEdtVacina: true})}
     />
     <Icon
       style={style.searchIconInfo}
@@ -35,7 +41,7 @@ class Vacina extends Component {
       color="#35AAFF"
       onPress={(this.delete)}/>
   </View> :  <View style={style.editContainer}>
-          <Image source={{uri: this.props.imagem}} style={style.imagem} />
+          <Image source={{uri: this.props.imagem}} style={style.imagem} onPress={() => this.setState({showEdtVacina: true})} />
           <Icon
             style={style.searchIconInfo2}
             size={23}
@@ -50,7 +56,7 @@ class Vacina extends Component {
             style={style.searchIconInfo2}
             size={20}
             color="#35AAFF"
-            onPress={(this.delete)}/>
+            />
         </View>;
 
     return (
@@ -64,6 +70,7 @@ class Vacina extends Component {
             Tempo de Duração: {this.props.tempoDuracao}
           </Text>
         </View>
+        <EdtVacina isVisible={this.state.showEdtVacina} vacinaEdt={this.props.vacinaEdt} onCancel={()=> this.setState({showEdtVacina: false})}/>
       </View>
     );
   }
@@ -78,7 +85,7 @@ const mapStateToProps = ({user}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onDltVacina: payload => dispatch(dltVacina(payload)),
+    onDltVacina: vacina => dispatch(delVacina(vacina)),
   };
 };
 

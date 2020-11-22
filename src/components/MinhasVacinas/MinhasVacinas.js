@@ -4,8 +4,18 @@ import {View, Image, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {style} from './StyleMinhasVacinas';
 import {connect} from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+import {delMinhasVacinas} from '../../store/actions/minhasVacinas';
+import EdtMinhasVacinas from './EdtMinhasVacinas';
 
 class MinhasVacinas extends Component {
+  state = {
+    showEdtMinhasVacina: false,
+  }
+  delete =() =>{
+    this.props.onDltMinhasVacina({minhasVacinasId: this.props.minhasVacinasId});
+    Actions.home();
+  }
   render() {
     const admMinhasVacinas = this.props.adm ?
     <View style={style.editContainer}>
@@ -21,12 +31,14 @@ class MinhasVacinas extends Component {
             name="pencil-alt"
             size={20}
             color="#35AAFF"
+            onPress={()=> this.setState({showEdtMinhasVacina: true})}
           />
           <Icon
             style={style.searchIconInfo}
             name="trash"
             size={20}
             color="#35AAFF"
+            onPress={(this.delete)}
           />
         </View> :  <View style={style.editContainer}>
           <Image source={{uri:this.props.imagem}} style={style.imagem} />
@@ -60,6 +72,7 @@ class MinhasVacinas extends Component {
             Data Renovação: {this.props.dtRenovacao}
           </Text>
         </View>
+        <EdtMinhasVacinas isVisible={this.state.showEdtMinhasVacina} minhasVacinasEdt={this.props.minhasVacinasEdt} onCancel={()=> this.setState({showEdtMinhasVacina: false})}/>
       </View>
     );
   }
@@ -73,4 +86,11 @@ const mapStateToProps = ({user}) => {
   };
 };
 
-export default connect(mapStateToProps,null)(MinhasVacinas);
+const mapDispatchToProps = dispatch => {
+  return {
+    onDltMinhasVacina: minhasVacinas => dispatch(delMinhasVacinas(minhasVacinas)),
+  };
+};
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(MinhasVacinas);

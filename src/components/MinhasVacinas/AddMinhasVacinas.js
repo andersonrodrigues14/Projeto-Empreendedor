@@ -5,14 +5,27 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import {addMinhasVacinas} from '../../store/actions/minhasVacinas';
+import DatePicker from 'react-native-datepicker';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 
-const initialState = {imagem:null,nome:'',texto:'',dtAplicacao:null,dtRenovacao:''};
+const initialState = {imagem:null,nome:'',texto:'',dtAplicacao:'',dtRenovacao:''};
 
 class AddMinhasVacinas extends Component {
 
   state = {
     ...initialState,
+  }
+
+  changeDate = (valor) => {
+    this.setState({
+      dtAplicacao: valor,
+    });
+  }
+
+  changeDate2 = (valor) => {
+    this.setState({
+      dtRenovacao: valor,
+    });
   }
 
   pickImage = () => {
@@ -30,15 +43,17 @@ class AddMinhasVacinas extends Component {
   save = () => {
     this.props.onAddMinhasVacinas({
       id: Math.random(),
+      userId: this.props.userId,
       imagem: this.state.imagem,
       nome : this.state.nome,
       texto: this.state.texto,
       dtAplicacao: this.state.dtAplicacao,
       dtRenovacao: this.state.dtRenovacao,
     });
-
-    this.setState({imagem: null, nome: null, texto: null, dtAplicacao:null, dtRenovacao: ''});
-    Actions.listaMinhasVacinas();
+    this.setState({imagem: null, nome: null, texto: null, dtAplicacao:'', dtRenovacao: ''});
+    //this.setState(this.props.onCancel = false);
+    this.props.onCancel();
+    Actions.home();
   };
 
   render(){
@@ -52,7 +67,7 @@ class AddMinhasVacinas extends Component {
         </TouchableWithoutFeedback>
         <ScrollView style={styles.scroll}>
           <View style={styles.container}>
-            <Text style={styles.header}>Nova Data</Text>
+            <Text style={styles.header}>Nova Vacina</Text>
             <View style={styles.containerImagem}>
                 <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
@@ -64,14 +79,24 @@ class AddMinhasVacinas extends Component {
               placeholder="Informação sobre a Vacina"
               onChangeText={texto => this.setState({texto})}
               value={this.state.texto}/>
-            <TextInput style={styles.input}
-              placeholder="Data de Aplicação"
-              onChangeText={dtAplicacao => this.setState({dtAplicacao})}
-              value={this.state.dtAplicacao}/>
-              <TextInput style={styles.input}
-              placeholder="Data de Renovação"
-              onChangeText={dtRenovacao => this.setState({dtRenovacao})}
-              value={this.state.dtRenovacao}/>
+            <View style={styles.linha}>
+            <Text style= {styles.texto}>Data de Aplicação</Text>
+            <DatePicker
+              format = "DD/MM/YYYY"
+              style = {styles.dateComponente}
+              date = {this.state.dtAplicacao}
+              onDateChange = {this.changeDate}
+            />
+            </View>
+            <View style={styles.linha}>
+            <Text style= {styles.texto}>Data de Renovação</Text>
+            <DatePicker
+              format = "DD/MM/YYYY"
+              style = {styles.dateComponenteMaior}
+              date = {this.state.dtRenovacao}
+              onDateChange = {this.changeDate2}
+            />
+            </View>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -97,7 +122,7 @@ class AddMinhasVacinas extends Component {
 
 const styles = StyleSheet.create({
   backgtoundFundo: {
-      flex: 0.1,
+      flex: 0.21,
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   background: {
@@ -174,6 +199,22 @@ const styles = StyleSheet.create({
       borderRadius: 30,
       flexDirection: 'row',
       marginHorizontal:10,
+  },
+  dateComponente:{
+    width:230,
+    margin: 15,
+  },
+  dateComponenteMaior:{
+    width:220,
+    margin: 15,
+  },
+  texto:{
+    marginLeft:15,
+    fontSize:15,
+  },
+  linha:{
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
 });

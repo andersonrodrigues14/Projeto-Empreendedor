@@ -17,12 +17,35 @@ export const addVacina = vacina => {
         vacina.imagem = resp.data.imageUrl;
         axios.post('/vacinas.json',{...vacina})
         .catch(err => console.log(err))
-        .then(res => {
-          dispatch(fetchVacina());
+        .then(res => console.log(res.data));});
+  };
+};
+
+export const edtVacina = vacina => {
+  return dispatch => {
+    axios.get(`/vacinas/${vacina.id}.json`)
+      .catch(err => console.log(err))
+      .then(resp => {
+         console.log(vacina);
+         console.log(vacina.id);
+         const nome = vacina.nome
+          .then(res => {
+             dispatch(fetchVacina(nome));
+          });
         });
+    };
+};
+
+export const delVacina = vacina => {
+  return dispatch => {
+    axios.delete(`/vacinas/${vacina.vacinaId}.json`)
+      .catch(err=>console.log(err))
+      .then(res => {
+        dispatch(fetchVacina());
       });
   };
 };
+
 
 export const setVacina = vacina => {
   return {
@@ -49,4 +72,24 @@ export const fetchVacina = () => {
       });
   };
 };
+
+export const fetchVacina2 = vacina => {
+  return dispatch => {
+    axios.get(`/vacinas/${vacina.vacinaId}.json`)
+      .catch(err => console.log(err))
+      .then(res => {
+        const rawVacinas = res.data;
+        const vacina = [];
+        for (let key in rawVacinas){
+          vacina.push({
+            ...rawVacinas[key],
+            id: key,
+          });
+        }
+
+        dispatch(setVacina(vacina.reverse()));
+      });
+  };
+};
+
 

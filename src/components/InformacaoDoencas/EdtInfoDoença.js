@@ -1,31 +1,21 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Modal,Platform,KeyboardAvoidingView,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, Alert, Dimensions} from 'react-native';
+import {Modal,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {addFamilia} from '../../store/actions/family';
+import {edtDoenca} from '../../store/actions/informacaoDoenca';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
-import DatePicker from 'react-native-datepicker';
 
-const initialState = {imagem:null,nome:'',texto:'',dtAplicacao:'',dtRenovacao: ''};
+var dataAtual = new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear();
 
-class AddFamily extends Component {
+class EdtInfoDoenca extends Component {
 
   state = {
-    ...initialState,
-  }
-
-  changeDate = (valor) => {
-    this.setState({
-      dtAplicacao: valor,
-    });
-  }
-
-  changeDate2 = (valor) => {
-    this.setState({
-      dtRenovacao: valor,
-    });
+    imagem:this.props.doencaEdt.imagem,
+    titulo:this.props.doencaEdt.titulo,
+    texto:this.props.doencaEdt.texto,
+    dataPublicacao:dataAtual,
   }
 
   pickImage = () => {
@@ -41,16 +31,14 @@ class AddFamily extends Component {
   }
 
   save = () => {
-    this.props.onAddFamyli({
-      id: Math.random(),
+    this.props.onEdtDoenca({
       imagem: this.state.imagem,
-      nomeFamiliar : this.state.nomeFamiliar,
-      vacina: this.state.vacina,
-      dtAplicacao: this.state.dtAplicacao,
-      dtRenovacao: this.state.dtRenovacao,
+      titulo : this.state.titulo,
+      texto: this.state.texto,
+      dataPublicacao: this.state.dataPublicacao,
     });
 
-    this.setState({imagem: null, nomeFamiliar: null, vacina: null, dtAplicacao: '',dtRenovacao: ''});
+    this.setState({imagem: null, titulo: null, texto: null, dataPublicacao: null});
     this.props.onCancel();
     Actions.home();
   };
@@ -66,35 +54,21 @@ class AddFamily extends Component {
         </TouchableWithoutFeedback>
         <ScrollView style={styles.scroll}>
           <View style={styles.container}>
-            <Text style={styles.header}>Novo Familiar</Text>
+            <Text style={styles.header}>Nova Doença</Text>
             <View style={styles.containerImagem}>
-                <Image source={this.state.imagem} style={styles.imagem}/>
+                <Image source={{uri:this.state.imagem}} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
-              placeholder="Nome do Familiar"
-              onChangeText={nomeFamiliar => this.setState({nomeFamiliar})}
-              value={this.state.nomeFamiliar}/>
+              placeholder="Titudo da Doença"
+              onChangeText={titulo => this.setState({titulo})}
+              value={this.state.titulo}/>
             <TextInput style={styles.input}
-              placeholder="Informação sobre a Vacina"
-              onChangeText={vacina => this.setState({vacina})}
-              value={this.state.vacina}/>
+              placeholder="Informação sobre a Doença"
+              onChangeText={texto => this.setState({texto})}
+              value={this.state.texto}/>
             <View style={styles.linha}>
-            <Text style= {styles.texto}>Data de Aplicação</Text>
-            <DatePicker
-              format = "DD/MM/YYYY"
-              style = {styles.dateComponente}
-              date = {this.state.dtAplicacao}
-              onDateChange = {this.changeDate}
-            />
-            </View>
-            <View style={styles.linha}>
-            <Text style= {styles.texto}>Data de Renovação</Text>
-            <DatePicker
-              format = "DD/MM/YYYY"
-              style = {styles.dateComponenteMaior}
-              date = {this.state.dtRenovacao}
-              onDateChange = {this.changeDate2}
-            />
+              <Text style= {styles.texto}>Data da Publicação: </Text>
+              <Text> {this.state.dataPublicacao}</Text>
             </View>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
@@ -121,7 +95,7 @@ class AddFamily extends Component {
 
 const styles = StyleSheet.create({
   backgtoundFundo: {
-      flex: 0.21,
+      flex: 0.38,
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   background: {
@@ -172,6 +146,7 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection:'row',
     justifyContent:'center',
+    marginTop:10,
   },
   button:{
     alignItems:'center',
@@ -199,14 +174,6 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       marginHorizontal:10,
   },
-  dateComponente:{
-    width:230,
-    margin: 15,
-  },
-  dateComponenteMaior:{
-    width:220,
-    margin: 15,
-  },
   texto:{
     marginLeft:15,
     fontSize:15,
@@ -217,18 +184,10 @@ const styles = StyleSheet.create({
   },
 
 });
-
-const mapStateToProps = ({user}) => {
-  return {
-    email: user.email,
-    nome : user.nome,
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
-    onAddFamyli: familia => dispatch(addFamilia(familia)),
+    onAddDoenca: doenca => dispatch(edtDoenca(doenca)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddFamily);
+export default connect(null,mapDispatchToProps)(EdtInfoDoenca);

@@ -4,12 +4,22 @@ import React, {Component} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import {View, Image, TextInput} from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import {delProfile} from '../../store/actions/profile';
+import EdtProfile from './EdtProfile';
 
 //Import Styles
 import {style} from './StyleProfile';
 
 //Criar o component
 class Profile extends Component {
+  state = {
+    showEdtProfile: false,
+  }
+  delete =() =>{
+    this.props.onDltProfile({profileId: this.props.profileId});
+    Actions.home();
+  }
   render() {
     const admProfile = this.props.adm ?
     <View style={style.editContainerMenu}>
@@ -25,12 +35,14 @@ class Profile extends Component {
             name="pencil-alt"
             size={20}
             color="#35AAFF"
+            onPress={()=> this.setState({showEdtProfile: true})}
           />
           <Icon
             style={style.searchIconInfo}
             name="trash"
             size={20}
             color="#35AAFF"
+            onPress={(this.delete)}
           />
         </View> :  <View style={style.editContainerMenu}>
 
@@ -89,6 +101,7 @@ class Profile extends Component {
         <TextInput style={style.input} placeholder="OBS" editable={false}>
           {this.props.obs}
         </TextInput>
+        <EdtProfile isVisible={this.state.showEdtProfile} profileEdt={this.props.profileEdt} onCancel={()=> this.setState({showEdtProfile: false})}/>
       </View>
     );
   }
@@ -101,4 +114,10 @@ const mapStateToProps = ({user}) => {
   };
 };
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = dispatch => {
+  return {
+    onDltProfile: profile => dispatch(delProfile(profile)),
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Profile);

@@ -4,16 +4,18 @@ import {Modal,Platform,KeyboardAvoidingView,Image, View, StyleSheet, TouchableWi
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {addFamilia} from '../../store/actions/family';
+import {edtFamilia} from '../../store/actions/family';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 import DatePicker from 'react-native-datepicker';
 
-const initialState = {imagem:null,nome:'',texto:'',dtAplicacao:'',dtRenovacao: ''};
-
-class AddFamily extends Component {
+class EdtFamily extends Component {
 
   state = {
-    ...initialState,
+    imagem:this.props.familiaEdt.imagem,
+    nomeFamiliar:this.props.familiaEdt.nomeFamiliar,
+    vacina:this.props.familiaEdt.vacina,
+    dtAplicacao:this.props.familiaEdt.dtAplicacao,
+    dtRenovacao: this.props.familiaEdt.dtRenovacao,
   }
 
   changeDate = (valor) => {
@@ -41,8 +43,7 @@ class AddFamily extends Component {
   }
 
   save = () => {
-    this.props.onAddFamyli({
-      id: Math.random(),
+    this.props.onEdtFamily({
       imagem: this.state.imagem,
       nomeFamiliar : this.state.nomeFamiliar,
       vacina: this.state.vacina,
@@ -68,7 +69,7 @@ class AddFamily extends Component {
           <View style={styles.container}>
             <Text style={styles.header}>Novo Familiar</Text>
             <View style={styles.containerImagem}>
-                <Image source={this.state.imagem} style={styles.imagem}/>
+                <Image source={{uri:this.state.imagem}} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
               placeholder="Nome do Familiar"
@@ -218,17 +219,10 @@ const styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = ({user}) => {
-  return {
-    email: user.email,
-    nome : user.nome,
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
-    onAddFamyli: familia => dispatch(addFamilia(familia)),
+    onEdtFamily: familia => dispatch(edtFamilia(familia)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddFamily);
+export default connect(null,mapDispatchToProps)(EdtFamily);

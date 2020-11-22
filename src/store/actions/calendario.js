@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import  {SET_CALENDARIO, DLT_VACINA} from './actionTypes';
+import  {SET_CALENDARIO} from './actionTypes';
 import axios from 'axios';
 
 export const addCalendario = calendario => {
@@ -46,9 +46,27 @@ export const fetchCalendario = () => {
   };
 };
 
-export const dltVacina = calendario => {
-  return {
-    type: DLT_VACINA,
-    payload: calendario,
+export const edtCalendario = calendario => {
+  return dispatch => {
+    axios.get(`/calendarios/${calendario.id}.json`)
+      .catch(err => console.log(err))
+      .then(resp => {
+         console.log(calendario);
+         console.log(calendario.id);
+         const nome = calendario.nome
+          .then(res => {
+             dispatch(fetchCalendario(nome));
+          });
+        });
+    };
+};
+
+export const delCalendario = calendario => {
+  return dispatch => {
+    axios.delete(`/calendarios/${calendario.calendarioId}.json`)
+      .catch(err=>console.log(err))
+      .then(res => {
+        dispatch(fetchCalendario());
+      });
   };
 };

@@ -2,29 +2,24 @@
 import React, {Component} from 'react';
 import {Modal,Platform,KeyboardAvoidingView,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, Alert, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import DatePicker from 'react-native-datepicker';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {addFamilia} from '../../store/actions/family';
+import {edtCalendario} from '../../store/actions/calendario';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
-import DatePicker from 'react-native-datepicker';
 
-const initialState = {imagem:null,nome:'',texto:'',dtAplicacao:'',dtRenovacao: ''};
-
-class AddFamily extends Component {
+class EdtCalendario extends Component {
 
   state = {
-    ...initialState,
+    imagem:this.props.calendarioEdt.imagem,
+    nome:this.props.calendarioEdt.nome,
+    texto:this.props.calendarioEdt.texto,
+    dtVacina:this.props.calendarioEdt.dtVacina,
   }
 
   changeDate = (valor) => {
     this.setState({
-      dtAplicacao: valor,
-    });
-  }
-
-  changeDate2 = (valor) => {
-    this.setState({
-      dtRenovacao: valor,
+      dtVacina: valor,
     });
   }
 
@@ -41,16 +36,15 @@ class AddFamily extends Component {
   }
 
   save = () => {
-    this.props.onAddFamyli({
+    this.props.onEdtCalendario({
       id: Math.random(),
       imagem: this.state.imagem,
-      nomeFamiliar : this.state.nomeFamiliar,
-      vacina: this.state.vacina,
-      dtAplicacao: this.state.dtAplicacao,
-      dtRenovacao: this.state.dtRenovacao,
+      nome : this.state.nome,
+      texto: this.state.texto,
+      dtVacina: this.state.dtVacina,
     });
 
-    this.setState({imagem: null, nomeFamiliar: null, vacina: null, dtAplicacao: '',dtRenovacao: ''});
+    this.setState({imagem: null, nome: null, texto: null, dtVacina: null});
     this.props.onCancel();
     Actions.home();
   };
@@ -66,34 +60,25 @@ class AddFamily extends Component {
         </TouchableWithoutFeedback>
         <ScrollView style={styles.scroll}>
           <View style={styles.container}>
-            <Text style={styles.header}>Novo Familiar</Text>
+            <Text style={styles.header}>Nova Data</Text>
             <View style={styles.containerImagem}>
-                <Image source={this.state.imagem} style={styles.imagem}/>
+                <Image source={{uri:this.state.imagem}} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
-              placeholder="Nome do Familiar"
-              onChangeText={nomeFamiliar => this.setState({nomeFamiliar})}
-              value={this.state.nomeFamiliar}/>
+              placeholder="Nome da Vacina"
+              onChangeText={nome => this.setState({nome})}
+              value={this.state.nome}/>
             <TextInput style={styles.input}
               placeholder="Informação sobre a Vacina"
-              onChangeText={vacina => this.setState({vacina})}
-              value={this.state.vacina}/>
+              onChangeText={texto => this.setState({texto})}
+              value={this.state.texto}/>
             <View style={styles.linha}>
-            <Text style= {styles.texto}>Data de Aplicação</Text>
+            <Text style= {styles.texto}>Data Vacina</Text>
             <DatePicker
               format = "DD/MM/YYYY"
               style = {styles.dateComponente}
-              date = {this.state.dtAplicacao}
+              date = {this.state.dtVacina}
               onDateChange = {this.changeDate}
-            />
-            </View>
-            <View style={styles.linha}>
-            <Text style= {styles.texto}>Data de Renovação</Text>
-            <DatePicker
-              format = "DD/MM/YYYY"
-              style = {styles.dateComponenteMaior}
-              date = {this.state.dtRenovacao}
-              onDateChange = {this.changeDate2}
             />
             </View>
             <View style={styles.buttons}>
@@ -121,7 +106,7 @@ class AddFamily extends Component {
 
 const styles = StyleSheet.create({
   backgtoundFundo: {
-      flex: 0.21,
+      flex: 0.31,
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   background: {
@@ -200,11 +185,7 @@ const styles = StyleSheet.create({
       marginHorizontal:10,
   },
   dateComponente:{
-    width:230,
-    margin: 15,
-  },
-  dateComponenteMaior:{
-    width:220,
+    width:250,
     margin: 15,
   },
   texto:{
@@ -218,17 +199,10 @@ const styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = ({user}) => {
-  return {
-    email: user.email,
-    nome : user.nome,
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
-    onAddFamyli: familia => dispatch(addFamilia(familia)),
+    onEdtCalendario: calendario => dispatch(edtCalendario(calendario)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddFamily);
+export default connect(null,mapDispatchToProps)(EdtCalendario);

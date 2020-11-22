@@ -62,7 +62,7 @@ class ListCalendario extends Component {
       <View style={style.container}>
       <FlatList  data={this.props.calendario}
                 keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <Calendario key={item.id} {...item} />} />
+                renderItem={({item}) => <Calendario key={item.id} {...item}  calendarioId={item.id} calendarioEdt={item}/>} />
       </View>
       <View>
         <Menu/>

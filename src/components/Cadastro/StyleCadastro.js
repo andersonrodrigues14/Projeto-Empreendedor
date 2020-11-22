@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {StyleSheet,Platform} from 'react-native';
+import {StyleSheet,Platform,Dimensions} from 'react-native';
 
 export const style = StyleSheet.create({
   btnInsert: {
@@ -12,6 +12,31 @@ export const style = StyleSheet.create({
     marginTop : 10,
     marginBottom:10,
     flexDirection: 'row',
+  },
+  btnFoto: {
+    backgroundColor: '#28ABE3',
+    width: '70%',
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    marginTop : 10,
+    marginBottom:10,
+    flexDirection: 'row',
+  },
+  containerImagem:{
+    marginTop:15,
+    width:'40%',
+    height: Dimensions.get('window').width  / 3,
+    backgroundColor: '#eee',
+    marginBottom:20,
+  },
+  imagem:{
+    width: '100%',
+    height: Dimensions.get('window').width  / 3,
+    alignItems:'center',
+    justifyContent:'center',
+    resizeMode: 'center',
   },
   textInsert: {
     color: '#FFF',
@@ -39,6 +64,22 @@ export const style = StyleSheet.create({
     flex: 1,
     marginTop: Platform.OS === 'ios' ? 20 : 0,
 
+  },
+  dateComponente:{
+    width:230,
+    margin: 15,
+  },
+  dateComponenteMaior:{
+    width:220,
+    margin: 15,
+  },
+  texto:{
+    marginLeft:15,
+    fontSize:15,
+  },
+  linha:{
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   textTitulo: {
     color: '#28ABE3',

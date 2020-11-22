@@ -1,19 +1,21 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Modal,Platform,KeyboardAvoidingView,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, Alert, Dimensions} from 'react-native';
+import {Modal,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {addFamilia} from '../../store/actions/family';
-import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
+import {edtMinhasVacinas} from '../../store/actions/minhasVacinas';
 import DatePicker from 'react-native-datepicker';
+import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 
-const initialState = {imagem:null,nome:'',texto:'',dtAplicacao:'',dtRenovacao: ''};
-
-class AddFamily extends Component {
+class AddMinhasVacinas extends Component {
 
   state = {
-    ...initialState,
+    imagem:this.props.minhasVacinasEdt.imagem,
+    nome:this.props.minhasVacinasEdt.nome,
+    texto:this.props.minhasVacinasEdt.texto,
+    dtAplicacao:this.props.minhasVacinasEdt.dtAplicacao,
+    dtRenovacao:this.props.minhasVacinasEdt.dtRenovacao,
   }
 
   changeDate = (valor) => {
@@ -41,16 +43,15 @@ class AddFamily extends Component {
   }
 
   save = () => {
-    this.props.onAddFamyli({
-      id: Math.random(),
+    this.props.onEdtMinhasVacinas({
       imagem: this.state.imagem,
-      nomeFamiliar : this.state.nomeFamiliar,
-      vacina: this.state.vacina,
+      nome : this.state.nome,
+      texto: this.state.texto,
       dtAplicacao: this.state.dtAplicacao,
       dtRenovacao: this.state.dtRenovacao,
     });
-
-    this.setState({imagem: null, nomeFamiliar: null, vacina: null, dtAplicacao: '',dtRenovacao: ''});
+    this.setState({imagem: null, nome: null, texto: null, dtAplicacao:'', dtRenovacao: ''});
+    //this.setState(this.props.onCancel = false);
     this.props.onCancel();
     Actions.home();
   };
@@ -60,24 +61,24 @@ class AddFamily extends Component {
       <Modal transparent={true} visible={this.props.isVisible}
       onRequestClose= {this.props.onCancel}
       animationType= {'slide'}>
-        <KeyboardAvoidingView style={styles.background}>
+       <KeyboardAvoidingView style={styles.background}>
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
         <ScrollView style={styles.scroll}>
           <View style={styles.container}>
-            <Text style={styles.header}>Novo Familiar</Text>
+            <Text style={styles.header}>Nova Vacina</Text>
             <View style={styles.containerImagem}>
-                <Image source={this.state.imagem} style={styles.imagem}/>
+                <Image source={{uri:this.state.imagem}} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
-              placeholder="Nome do Familiar"
-              onChangeText={nomeFamiliar => this.setState({nomeFamiliar})}
-              value={this.state.nomeFamiliar}/>
+              placeholder="Nome da Vacina"
+              onChangeText={nome => this.setState({nome})}
+              value={this.state.nome}/>
             <TextInput style={styles.input}
               placeholder="Informação sobre a Vacina"
-              onChangeText={vacina => this.setState({vacina})}
-              value={this.state.vacina}/>
+              onChangeText={texto => this.setState({texto})}
+              value={this.state.texto}/>
             <View style={styles.linha}>
             <Text style= {styles.texto}>Data de Aplicação</Text>
             <DatePicker
@@ -218,17 +219,10 @@ const styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = ({user}) => {
-  return {
-    email: user.email,
-    nome : user.nome,
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
-    onAddFamyli: familia => dispatch(addFamilia(familia)),
+    onEdtMinhasVacinas: minhasVacinas => dispatch(edtMinhasVacinas(minhasVacinas)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(AddFamily);
+export default connect(null,mapDispatchToProps)(AddMinhasVacinas);

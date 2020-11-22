@@ -47,7 +47,7 @@ class ListMinhasVacinas extends Component {
     <View style={style.container}>
       <FlatList  data={this.props.minhasVacinas}
                 keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <MinhasVacina key={item.id} {...item} />} />
+                renderItem={({item}) => <MinhasVacina key={item.id} {...item} minhasVacinasId={item.id} minhasVacinasEdt={item}/>} />
       </View> : <View style={style.containerUser1}>
       <FlatList  data={this.props.minhasVacinas}
                 keyExtractor={item => `${item.id}`}
@@ -71,7 +71,7 @@ class ListMinhasVacinas extends Component {
       <View style={style.containerInfo}>
         {addMinhasVacinas}
         <View style={style.InfoUser}>
-         <Image source={this.props.imagem} style={{width:75,height:75,resizeMode: 'contain'}}/>
+         <Image source={{uri:this.props.imagem}} style={{width:75,height:75,resizeMode: 'contain'}}/>
     <Text style={style.textTitulo}>{this.props.nome}</Text>
         </View>
 

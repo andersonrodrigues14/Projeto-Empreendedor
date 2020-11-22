@@ -40,14 +40,14 @@ class ListFamily extends Component {
                 />
           </View>
           <TouchableOpacity style={style.btnInsert} onPress={() => this.setState({showAddFamilia: true})}>
-            <Text style={style.textInsert}>Adicionar Vacina</Text>
+            <Text style={style.textInsert}>Adicionar Familiar</Text>
           </TouchableOpacity>
         </View> : null;
     const containerPadrao = this.props.adm ?
       <View style={style.container}>
           <FlatList  data={this.props.familia}
                 keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <Family key={item.id} {...item} />}/>
+                renderItem={({item}) => <Family key={item.id} {...item}  familiaId={item.id} familiaEdt={item}/>}/>
           </View> : <View style={style.containerUser1}>
             <FlatList  data={this.props.familia}
                 keyExtractor={item => `${item.id}`}
@@ -71,7 +71,7 @@ class ListFamily extends Component {
       <View style={style.containerInfo}>
         {addFamilia}
         <View style={style.InfoUser}>
-          <Image source={this.props.imagem } style={style.imagemUser}/>
+          <Image source={{uri:this.props.imagem}} style={style.imagemUser}/>
           <Text style={style.textTitulo}>{this.props.nome}</Text>
         </View>
 
