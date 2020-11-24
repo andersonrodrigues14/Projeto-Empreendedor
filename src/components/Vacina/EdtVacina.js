@@ -9,7 +9,7 @@ import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 
 class EdtVacina extends Component {
   state = {
-    imagem:this.props.vacinaEdt.imagem,
+    imagem:{uri:this.props.vacinaEdt.imagem},
     nome:this.props.vacinaEdt.nome,
     texto:this.props.vacinaEdt.texto,
     tempoDuracao:this.props.vacinaEdt.tempoDuracao,
@@ -54,7 +54,7 @@ class EdtVacina extends Component {
           <View style={styles.container}>
             <Text style={styles.header}>Editar Vacina</Text>
             <View style={styles.containerImagem}>
-                <Image source={{uri:this.state.imagem}} style={styles.imagem}/>
+                <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
               placeholder="Nome da Vacina"

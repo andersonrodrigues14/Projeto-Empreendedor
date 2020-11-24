@@ -41,24 +41,52 @@ export const fetchCalendario = () => {
           });
         }
 
-        dispatch(setCalendario(calendario));
+        dispatch(setCalendario(calendario.reverse()));
       });
   };
 };
 
 export const edtCalendario = calendario => {
   return dispatch => {
-    axios.get(`/calendarios/${calendario.id}.json`)
-      .catch(err => console.log(err))
-      .then(resp => {
-         console.log(calendario);
-         console.log(calendario.id);
-         const nome = calendario.nome
+    if (calendario.imagem.base64 != null){
+    axios({
+      url:'uploadImage',
+      baseURL:'https://us-central1-carteiradevacinacaodigital.cloudfunctions.net',
+      method:'post',
+      data:{
+        image: calendario.imagem.base64,
+      },
+    }) .catch(err => console.log(err))
+    .then(respo => {
+        axios.get(`/calendarios/${calendario.id}.json`)
+          .catch(err => console.log(err))
+          .then(resp => {
+          calendario.imagem = respo.data.imageUrl;
+         const imagem = calendario.imagem;
+         const nome = calendario.nome;
+         const texto = calendario.texto;
+         const dtVacina = calendario.dtVacina;
+         axios.patch(`/calendarios/${calendario.id}.json`,{imagem,nome,texto,dtVacina})
+          .catch(err=>console.log(err))
           .then(res => {
-             dispatch(fetchCalendario(nome));
+             dispatch(fetchCalendario());
+          });
+        });});
+    } else {
+      axios.get(`/calendarios/${calendario.id}.json`)
+          .catch(err => console.log(err))
+          .then(resp => {
+         const nome = calendario.nome;
+         const texto = calendario.texto;
+         const dtVacina = calendario.dtVacina;
+         axios.patch(`/calendarios/${calendario.id}.json`,{nome,texto,dtVacina})
+          .catch(err=>console.log(err))
+          .then(res => {
+             dispatch(fetchCalendario());
           });
         });
-    };
+    }
+  };
 };
 
 export const delCalendario = calendario => {

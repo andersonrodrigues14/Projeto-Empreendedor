@@ -40,23 +40,51 @@ export const fetchDoenca = () => {
           });
         }
 
-        dispatch(setDoenca(doenca));
+        dispatch(setDoenca(doenca.reverse()));
       });
   };
 };
 
 export const edtDoenca = doenca => {
   return dispatch => {
-    axios.get(`/doencas/${doenca.id}.json`)
-      .catch(err => console.log(err))
-      .then(resp => {
-         console.log(doenca);
-         console.log(doenca.id);
-         const nome = doenca.nome
-          .then(res => {
-             dispatch(fetchDoenca(nome));
+    if (doenca.imagem.base64 != null){
+      axios({
+        url:'uploadImage',
+        baseURL:'https://us-central1-carteiradevacinacaodigital.cloudfunctions.net',
+        method:'post',
+        data:{
+          image: doenca.imagem.base64,
+        },
+      }) .catch(err => console.log(err))
+      .then(respo => {
+          axios.get(`/doencas/${doenca.id}.json`)
+            .catch(err => console.log(err))
+            .then(resp => {
+           doenca.imagem = respo.data.imageUrl;
+           const imagem = doenca.imagem;
+           const titulo = doenca.titulo;
+           const texto = doenca.texto;
+           const dataPublicacao = doenca.dataPublicacao;
+           axios.patch(`/doencas/${doenca.id}.json`,{imagem,titulo,texto,dataPublicacao})
+            .catch(err=>console.log(err))
+            .then(res => {
+               dispatch(fetchDoenca());
+            });
+          });});
+      } else {
+        axios.get(`/doencas/${doenca.id}.json`)
+            .catch(err => console.log(err))
+            .then(resp => {
+              const titulo = doenca.titulo;
+              const texto = doenca.texto;
+              const dataPublicacao = doenca.dataPublicacao;
+              axios.patch(`/doencas/${doenca.id}.json`,{titulo,texto,dataPublicacao})
+            .catch(err=>console.log(err))
+            .then(res => {
+               dispatch(fetchDoenca());
+            });
           });
-        });
+      }
     };
 };
 

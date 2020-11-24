@@ -25,7 +25,7 @@ var dataAtual = new Date().getDate() + '/' + new Date().getMonth() + '/' + new D
 class EdtCampanha extends Component {
 
   state = {
-    imagem:this.props.campanhaEdt.imagem,
+    imagem:{uri:this.props.campanhaEdt.imagem},
     nome:this.props.campanhaEdt.nome,
     texto:this.props.campanhaEdt.texto,
     dtInicio:this.props.campanhaEdt.dtInicio,
@@ -52,7 +52,7 @@ class EdtCampanha extends Component {
 
   save = () => {
     this.props.onEdtCampanha({
-      id: Math.random(),
+      id: this.props.campanhaEdt.id,
       imagem: this.state.imagem,
       nome : this.state.nome,
       texto: this.state.texto,
@@ -78,7 +78,7 @@ class EdtCampanha extends Component {
           <View style={styles.container}>
             <Text style={styles.header}>Nova Data</Text>
             <View style={styles.containerImagem}>
-                <Image source={{uri:this.state.imagem}} style={styles.imagem}/>
+                <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
               placeholder="Nome da Vacina"
@@ -108,7 +108,7 @@ class EdtCampanha extends Component {
               <TouchableOpacity style={styles.delete} onPress={this.props.onCancel}>
                 <Text style={styles.button}>Cancelar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.insert}onPress={console.log(this.props.vacina)}>
+              <TouchableOpacity style={styles.insert}onPress={() => this.save()}>
                 <Text style={styles.button}>Salvar</Text>
               </TouchableOpacity>
             </View>

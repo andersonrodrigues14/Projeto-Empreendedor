@@ -23,17 +23,45 @@ export const addVacina = vacina => {
 
 export const edtVacina = vacina => {
   return dispatch => {
-    axios.get(`/vacinas/${vacina.id}.json`)
-      .catch(err => console.log(err))
-      .then(resp => {
-         console.log(vacina);
-         console.log(vacina.id);
-         const nome = vacina.nome
+    if (vacina.imagem.base64 != null){
+    axios({
+      url:'uploadImage',
+      baseURL:'https://us-central1-carteiradevacinacaodigital.cloudfunctions.net',
+      method:'post',
+      data:{
+        image: vacina.imagem.base64,
+      },
+    }) .catch(err => console.log(err))
+    .then(respo => {
+        axios.get(`/vacinas/${vacina.id}.json`)
+          .catch(err => console.log(err))
+          .then(resp => {
+         vacina.imagem = respo.data.imageUrl;
+         const imagem = vacina.imagem;
+         const nome = vacina.nome;
+         const texto = vacina.texto;
+         const tempoDuracao = vacina.tempoDuracao;
+         axios.patch(`/vacinas/${vacina.id}.json`,{imagem,nome,texto,tempoDuracao})
+          .catch(err=>console.log(err))
           .then(res => {
-             dispatch(fetchVacina(nome));
+             dispatch(fetchVacina());
+          });
+        });});
+    } else {
+      axios.get(`/vacinas/${vacina.id}.json`)
+          .catch(err => console.log(err))
+          .then(resp => {
+         const nome = vacina.nome;
+         const texto = vacina.texto;
+         const tempoDuracao = vacina.tempoDuracao;
+         axios.patch(`/vacinas/${vacina.id}.json`,{nome,texto,tempoDuracao})
+          .catch(err=>console.log(err))
+          .then(res => {
+             dispatch(fetchVacina());
           });
         });
-    };
+    }
+  };
 };
 
 export const delVacina = vacina => {

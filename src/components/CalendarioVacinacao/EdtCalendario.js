@@ -11,7 +11,7 @@ import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 class EdtCalendario extends Component {
 
   state = {
-    imagem:this.props.calendarioEdt.imagem,
+    imagem:{uri:this.props.calendarioEdt.imagem},
     nome:this.props.calendarioEdt.nome,
     texto:this.props.calendarioEdt.texto,
     dtVacina:this.props.calendarioEdt.dtVacina,
@@ -37,7 +37,7 @@ class EdtCalendario extends Component {
 
   save = () => {
     this.props.onEdtCalendario({
-      id: Math.random(),
+      id: this.props.calendarioEdt.id,
       imagem: this.state.imagem,
       nome : this.state.nome,
       texto: this.state.texto,
@@ -62,7 +62,7 @@ class EdtCalendario extends Component {
           <View style={styles.container}>
             <Text style={styles.header}>Nova Data</Text>
             <View style={styles.containerImagem}>
-                <Image source={{uri:this.state.imagem}} style={styles.imagem}/>
+                <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
               placeholder="Nome da Vacina"

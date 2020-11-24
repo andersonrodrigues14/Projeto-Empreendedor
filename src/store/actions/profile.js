@@ -41,7 +41,7 @@ export const fetchProfile = () => {
             id: key,
           });
         }
-        dispatch(setProfile(profile));
+        dispatch(setProfile(profile.reverse()));
       });
   };
 };
@@ -61,16 +61,58 @@ export const fetchProfile2 = user => {
 
 export const edtProfile = profile => {
   return dispatch => {
-    axios.get(`/users/${profile.id}.json`)
-      .catch(err => console.log(err))
-      .then(resp => {
-         console.log(profile);
-         console.log(profile.id);
-         const nome = profile.nome
-          .then(res => {
-             dispatch(fetchProfile(nome));
+    if (profile.imagem.base64 != null){
+      axios({
+        url:'uploadImage',
+        baseURL:'https://us-central1-carteiradevacinacaodigital.cloudfunctions.net',
+        method:'post',
+        data:{
+          image: profile.imagem.base64,
+        },
+      }) .catch(err => console.log(err))
+      .then(respo => {
+          axios.get(`/users/${profile.id}.json`)
+            .catch(err => console.log(err))
+            .then(resp => {
+           profile.imagem = respo.data.imageUrl;
+           const imagem = profile.imagem;
+           const nome = profile.nome;
+           const texto = profile.texto;
+           const cpf = profile.cpf;
+           const sus = profile.sus;
+           const email = profile.email;
+           const dtnascimento = profile.dtnascimento;
+           const sangue = profile.sangue;
+           const obs = profile.obs;
+           const senha = profile.senha;
+           axios.patch(`/users/${profile.id}.json`,{imagem,nome,texto,cpf,sus,email,
+            dtnascimento,sangue,obs,senha})
+            .catch(err=>console.log(err))
+            .then(res => {
+               dispatch(fetchProfile());
+            });
+          });});
+      } else {
+        axios.get(`/users/${profile.id}.json`)
+            .catch(err => console.log(err))
+            .then(resp => {
+           const nome = profile.nome;
+           const texto = profile.texto;
+           const cpf = profile.cpf;
+           const sus = profile.sus;
+           const email = profile.email;
+           const dtnascimento = profile.dtnascimento;
+           const sangue = profile.sangue;
+           const obs = profile.obs;
+           const senha = profile.senha;
+           axios.patch(`/users/${profile.id}.json`,{nome,texto,cpf,sus,email,
+            dtnascimento,sangue,obs,senha})
+            .catch(err=>console.log(err))
+            .then(res => {
+               dispatch(fetchProfile());
+            });
           });
-        });
+      }
     };
 };
 

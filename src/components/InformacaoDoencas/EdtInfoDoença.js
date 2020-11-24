@@ -12,7 +12,7 @@ var dataAtual = new Date().getDate() + '/' + new Date().getMonth() + '/' + new D
 class EdtInfoDoenca extends Component {
 
   state = {
-    imagem:this.props.doencaEdt.imagem,
+    imagem:{uri:this.props.doencaEdt.imagem},
     titulo:this.props.doencaEdt.titulo,
     texto:this.props.doencaEdt.texto,
     dataPublicacao:dataAtual,
@@ -32,6 +32,7 @@ class EdtInfoDoenca extends Component {
 
   save = () => {
     this.props.onEdtDoenca({
+      id: this.props.doencaEdt.id,
       imagem: this.state.imagem,
       titulo : this.state.titulo,
       texto: this.state.texto,
@@ -56,7 +57,7 @@ class EdtInfoDoenca extends Component {
           <View style={styles.container}>
             <Text style={styles.header}>Nova Doença</Text>
             <View style={styles.containerImagem}>
-                <Image source={{uri:this.state.imagem}} style={styles.imagem}/>
+                <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
               placeholder="Titudo da Doença"
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
 });
 const mapDispatchToProps = dispatch => {
   return {
-    onAddDoenca: doenca => dispatch(edtDoenca(doenca)),
+    onEdtDoenca: doenca => dispatch(edtDoenca(doenca)),
   };
 };
 

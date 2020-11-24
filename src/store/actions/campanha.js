@@ -41,23 +41,53 @@ export const fetchCampanha = () => {
           });
         }
 
-        dispatch(setCampanha(campanha));
+        dispatch(setCampanha(campanha.reverse()));
       });
   };
 };
 
 export const edtCampanha = campanha => {
   return dispatch => {
-    axios.get(`/campanhas/${campanha.id}.json`)
-      .catch(err => console.log(err))
-      .then(resp => {
-         console.log(campanha);
-         console.log(campanha.id);
-         const nome = campanha.nome
-          .then(res => {
-             dispatch(fetchCampanha(nome));
+    if (campanha.imagem.base64 != null){
+      axios({
+        url:'uploadImage',
+        baseURL:'https://us-central1-carteiradevacinacaodigital.cloudfunctions.net',
+        method:'post',
+        data:{
+          image: campanha.imagem.base64,
+        },
+      }) .catch(err => console.log(err))
+      .then(respo => {
+          axios.get(`/campanhas/${campanha.id}.json`)
+            .catch(err => console.log(err))
+            .then(resp => {
+           campanha.imagem = respo.data.imageUrl;
+           const imagem = campanha.imagem;
+           const nome = campanha.nome;
+           const texto = campanha.texto;
+           const dtInicio = campanha.dtInicio;
+           const dtCadastro = campanha.dtCadastro;
+           axios.patch(`/campanhas/${campanha.id}.json`,{imagem,nome,texto,dtInicio,dtCadastro})
+            .catch(err=>console.log(err))
+            .then(res => {
+               dispatch(fetchCampanha());
+            });
+          });});
+      } else {
+        axios.get(`/campanhas/${campanha.id}.json`)
+            .catch(err => console.log(err))
+            .then(resp => {
+              const nome = campanha.nome;
+              const texto = campanha.texto;
+              const dtInicio = campanha.dtInicio;
+              const dtCadastro = campanha.dtCadastro;
+           axios.patch(`/campanhas/${campanha.id}.json`,{nome,texto,dtInicio,dtCadastro})
+            .catch(err=>console.log(err))
+            .then(res => {
+               dispatch(fetchCampanha());
+            });
           });
-        });
+      }
     };
 };
 

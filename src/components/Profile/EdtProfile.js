@@ -16,7 +16,7 @@ import {Modal,
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {edtProfile} from '../../store/actions/userActions';
+import {edtProfile} from '../../store/actions/profile';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 import DatePicker from 'react-native-datepicker';
 import TextInputMask from 'react-native-text-input-mask';
@@ -54,7 +54,8 @@ class EdtProfile extends Component {
   }
 
   save = () => {
-    this.props.onCreateUser({
+    this.props.onEdtUser({
+      id: this.props.profileEdt.id,
       imagem: this.state.imagem,
       nome : this.state.nome,
       cpf: this.state.cpf,
@@ -63,10 +64,11 @@ class EdtProfile extends Component {
       dtnascimento: this.state.dtnascimento,
       sangue:this.state.sangue,
       obs:this.state.obs,
-      adm:false,
+      senha: this.state.senha,
     });
 
     this.setState({imagem: null, nome: null, cpf: null, sus:null, email: null,dtnascimento:null,sangue:null,obs:null});
+    this.props.onCancel();
     Actions.home();
   };
 
@@ -101,7 +103,7 @@ class EdtProfile extends Component {
               placeholder="N° SUS"
               onChangeText={sus => this.setState({sus})}
               value={this.state.sus}/>
-              <TextInput style={styles.input}
+              <TextInput style={styles.input} editable={false}
               placeholder="EMAIL"
               onChangeText={email => this.setState({email})}
               value={this.state.email}/>
@@ -122,7 +124,7 @@ class EdtProfile extends Component {
               placeholder="OBS"
               onChangeText={obs => this.setState({obs})}
               value={this.state.obs}/>
-            <TextInput style={styles.input} placeholder="Senha"
+            <TextInput style={styles.input} placeholder="Senha" editable={false}
         value={this.state.senha}
         onChangeText={senha => this.setState({senha})}/>
             <View style={styles.buttons}>
