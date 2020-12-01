@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import  {SET_FAMILIA, DLT_VACINA} from '../actions/actionTypes';
+import  {SET_FAMILIA} from '../actions/actionTypes';
 
 const initialState = {
   familia: [],
@@ -11,14 +11,6 @@ const reducer = (state = initialState, action) => {
         return {
           ...state,
           familia:action.payload,
-        };
-      case DLT_VACINA:
-        return {
-          ...state,
-          familia: state.familia.map(familia =>{
-
-
-          }),
         };
       default:
         return state;

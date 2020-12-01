@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import {USER_LOGGED_IN,USER_LOGGED_OUT, LOADING_USER, USER_LOADED} from './actionTypes';
 import axios from 'axios';
+import { setMessage } from './message';
 
 const authBaseUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty';
 const API_KEY = 'AIzaSyCDG1dYmjLOtM2vIGNeggqYqK-KHoPi3QY';
@@ -53,7 +54,10 @@ export const createUser = (user) => {
           })
             .catch(err => console.log(err))
             .then(res => {
-              console.log('Usuário criado com sucesso');
+              dispatch(setMessage({
+                title: 'Usuário',
+                text: 'Usuário Criado com Sucesso!',
+            }));
             });
         }
       });
@@ -80,7 +84,10 @@ export const login = user => {
       password: user.senha,
       returnSecureToken:true,
     })
-      .catch(err => console.log(err))
+      .catch(err => dispatch(setMessage({
+          title: 'Erro',
+          text: 'Usuário ou senha Inválidos!',
+           })))
       .then(resp => {
         if (resp.data.localId){
           axios.get(`/users/${resp.data.localId}.json`)

@@ -33,9 +33,6 @@ class Mais extends Component {
           <Image source={{uri:this.props.imagem}} style={style.imageUser} />
         </View>
     <Text style={style.textTitulo}>{this.props.nome}</Text>
-        <TouchableOpacity style={style.btnInsert} onPress = {() => Actions.senha()}>
-            <Text style={style.textInsert}>Alterar Senha</Text>
-        </TouchableOpacity>
         <TouchableOpacity onPress={this.logout} style={style.btnSair}>
             <Text style={style.textInsert}>Sair</Text>
         </TouchableOpacity>

@@ -14,6 +14,7 @@ import {
   YellowBox,
   LogBox,
   ImageBackground,
+  Alert,
 } from 'react-native';
 import TextInputMask from 'react-native-text-input-mask';
 
@@ -27,7 +28,7 @@ import { login } from '../../store/actions/userActions';
 //Criar o component
 class Login extends Component {
   state = {
-    nome: '1',
+    nome: '',
     email: '',
     senha: '',
   };
@@ -39,7 +40,13 @@ class Login extends Component {
   }
 
   login = () => {
-    this.props.onLogin({...this.state});
+    if (!this.state.email.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Email é obrigatório!');
+    } else if (!this.state.senha.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Senha é obrigatório!');
+    } else {this.props.onLogin({...this.state});}
   };
 
 render(){
@@ -73,10 +80,6 @@ render(){
 
         <TouchableOpacity style={style.btnRegister} onPress = {() => Actions.cadastro()}>
           <Text style={style.textRegister}>Cadastrar-se</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={style.btnAlterPasswor} onPress = {() => Actions.senha()}>
-          <Text style={style.textAlterPasswor}>Esqueci minha senha</Text>
         </TouchableOpacity>
       </View>
       </ImageBackground>

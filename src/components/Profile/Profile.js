@@ -26,7 +26,6 @@ class Profile extends Component {
 
         <Icon
             style={style.searchIconInfo}
-            name="save"
             size={23}
             color="#35AAFF"
           />

@@ -42,44 +42,53 @@ export const fetchMinhasVacinas = () => {
           });
         }
 
-        dispatch(setMinhasVacinas(minhasVacinas));
-      });
-  };
-};
-
-//busca dados do banco
-export const fetchMinhasVacinas2 = userId => {
-  return dispatch => {
-    console.log(userId);
-    axios.get(`/minhasVacinas/${userId.userId}.json`)
-      .catch(err => console.log(err))
-      .then(res => {
-        const rawMinhasVacinas = res.data;
-        const minhasVacinas = [];
-        for (let key in rawMinhasVacinas){
-          minhasVacinas.push({
-            ...rawMinhasVacinas[key],
-            id: key,
-          });
-        }
-
-        dispatch(setMinhasVacinas(minhasVacinas));
+        dispatch(setMinhasVacinas(minhasVacinas.reverse()));
       });
   };
 };
 
 export const edtMinhasVacinas = minhasVacinas => {
   return dispatch => {
-    axios.get(`/minhasVacinas/${minhasVacinas.id}.json`)
-      .catch(err => console.log(err))
-      .then(resp => {
-         console.log(minhasVacinas);
-         console.log(minhasVacinas.id);
-         const nome = minhasVacinas.nome
-          .then(res => {
-             dispatch(fetchMinhasVacinas(nome));
+    if (minhasVacinas.imagem.base64 != null){
+      axios({
+        url:'uploadImage',
+        baseURL:'https://us-central1-carteiradevacinacaodigital.cloudfunctions.net',
+        method:'post',
+        data:{
+          image: minhasVacinas.imagem.base64,
+        },
+      }) .catch(err => console.log(err))
+      .then(respo => {
+          axios.get(`/minhasVacinas/${minhasVacinas.id}.json`)
+            .catch(err => console.log(err))
+            .then(resp => {
+           minhasVacinas.imagem = respo.data.imageUrl;
+           const imagem = minhasVacinas.imagem;
+           const nome = minhasVacinas.nome;
+           const texto = minhasVacinas.texto;
+           const dtAplicacao = minhasVacinas.dtAplicacao;
+           const dtRenovacao = minhasVacinas.dtRenovacao;
+           axios.patch(`/minhasVacinas/${minhasVacinas.id}.json`,{imagem,nome,texto,dtAplicacao,dtRenovacao})
+            .catch(err=>console.log(err))
+            .then(res => {
+               dispatch(fetchMinhasVacinas());
+            });
+          });});
+      } else {
+        axios.get(`/minhasVacinas/${minhasVacinas.id}.json`)
+            .catch(err => console.log(err))
+            .then(resp => {
+           const nome = minhasVacinas.nome;
+           const texto = minhasVacinas.texto;
+           const dtAplicacao = minhasVacinas.dtAplicacao;
+           const dtRenovacao = minhasVacinas.dtRenovacao;
+           axios.patch(`/minhasVacinas/${minhasVacinas.id}.json`,{nome,texto,dtAplicacao,dtRenovacao})
+            .catch(err=>console.log(err))
+            .then(res => {
+               dispatch(fetchMinhasVacinas());
+            });
           });
-        });
+      }
     };
 };
 
@@ -87,8 +96,7 @@ export const delMinhasVacinas = minhasVacinas => {
   return dispatch => {
     axios.delete(`/minhasVacinas/${minhasVacinas.minhasVacinasId}.json`)
       .catch(err=>console.log(err))
-      .then(res => {
-        dispatch(setMinhasVacinas());
+      .then(res => {(res.console.log(res));
       });
   };
 };

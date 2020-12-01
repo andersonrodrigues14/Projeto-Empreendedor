@@ -13,12 +13,14 @@ import ListaMinhasVacinas from './components/MinhasVacinas/ListMinhasVacinas';
 import ListaMinhasVacinasAdm from './components/MinhasVacinas/ListMinhasVacinasAdm';
 import ListaInformacaoDoenca from './components/InformacaoDoencas/ListInformacaoDoenca';
 import ListaFamily from './components/Family/ListFamily';
+import ListaFamilyAdm from './components/Family/ListFamilyAdm';
 import Profile from './components/Profile/ListProfile';
 import Mais from './components/More/More';
 import Senha from './components/Senha/senha';
 import Cadastro from './components/Cadastro/Cadastro';
 import EdtVacina from './components/Vacina/EdtVacina';
 import User from './components/Profile/ListUser';
+import ModalVacinas from './components/MinhasVacinas/ModalVacinasUser';
 
 
 export default class Routes extends Component{
@@ -34,6 +36,7 @@ export default class Routes extends Component{
     <Scene key="listaMinhasVacinas" component={ListaMinhasVacinas} title="Lista Minhas Vacinas" hideNavBar={true}/>
     <Scene key="listaMinhasVacinasadm" component={ListaMinhasVacinasAdm} title="Lista Minhas Vacinas Adm" hideNavBar={true}/>
     <Scene key="listafamily" component={ListaFamily} title="Familia" hideNavBar={true}/>
+    <Scene key="listafamilyadm" component={ListaFamilyAdm} title="ListaFamilyAdm" hideNavBar={true}/>
     <Scene key="listainformacaodoenca" component={ListaInformacaoDoenca} title="Informação Doença" hideNavBar={true}/>
     <Scene key="dados" component={Profile} title="Profile" hideNavBar={true}/>
     <Scene key="mais" component={Mais} title="Mais" hideNavBar={true}/>

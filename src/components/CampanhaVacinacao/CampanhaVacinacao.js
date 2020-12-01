@@ -23,7 +23,6 @@ class CamapanhaVacinacao extends Component {
           <Image source={{uri: this.props.imagem}} style={style.imagem} />
           <Icon
             style={style.searchIconInfo}
-            name="save"
             size={23}
             color="#35AAFF"
           />

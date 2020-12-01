@@ -33,16 +33,6 @@ class ListProfile extends Component {
   render() {
     const addProfile = this.props.adm ?
     <View style={style.containerAdministrador}>
-              <View style={style.searchContainer}>
-                <TextInput style={style.input} placeholder="CPF" />
-                <Icon
-                  style={style.searchIcon}
-                  name="sistrix"
-                  size={30}
-                  color="#35AAFF"
-                />
-              </View>
-
               <TouchableOpacity
                 style={style.btnRegister}
                 onPress={() => this.setState({showAddProfile: true})}>

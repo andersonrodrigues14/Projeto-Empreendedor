@@ -10,6 +10,7 @@ import {Modal,
         TextInput,
         KeyboardAvoidingView,
         Dimensions,
+        Alert,
       } from 'react-native';
 
 import { ScrollView } from 'react-native-gesture-handler';
@@ -51,6 +52,19 @@ class EdtCampanha extends Component {
   }
 
   save = () => {
+    if (!this.state.imagem){
+      Alert.alert('Campo não preenchido !',
+            'Campo Imagem é obrigatório!');
+    } else if (!this.state.nome.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Nome é obrigatório!');
+    } else if (!this.state.texto.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Informação é obrigatório!');
+    } else if (!this.state.dtInicio.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Data de Inicio é obrigatório!');
+    } else {
     this.props.onEdtCampanha({
       id: this.props.campanhaEdt.id,
       imagem: this.state.imagem,
@@ -63,7 +77,8 @@ class EdtCampanha extends Component {
     this.setState({imagem: null, nome: null, texto: null, dtInicio:'', dtCadastro: ''});
     this.props.onCancel();
     Actions.home();
-  };
+  }
+};
 
   render(){
     return (

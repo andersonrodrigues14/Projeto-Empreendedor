@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Modal,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
+import {Modal,Alert,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
@@ -41,8 +41,23 @@ class AddMinhasVacinas extends Component {
   }
 
   save = () => {
+    if (!this.state.imagem){
+      Alert.alert('Campo não preenchido !',
+            'Campo Imagem é obrigatório!');
+    } else if (!this.state.nome.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Nome é obrigatório!');
+    } else if (!this.state.texto.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Informação é obrigatório!');
+    } else if (!this.state.dtAplicacao.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Data Aplicação é obrigatório!');
+    } else if (!this.state.dtRenovacao.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Data Renovação é obrigatório!');
+    } else {
     this.props.onAddMinhasVacinas({
-      id: Math.random(),
       userId: this.props.userId,
       imagem: this.state.imagem,
       nome : this.state.nome,
@@ -51,10 +66,10 @@ class AddMinhasVacinas extends Component {
       dtRenovacao: this.state.dtRenovacao,
     });
     this.setState({imagem: null, nome: null, texto: null, dtAplicacao:'', dtRenovacao: ''});
-    //this.setState(this.props.onCancel = false);
     this.props.onCancel();
     Actions.home();
-  };
+  }
+};
 
   render(){
     return (
@@ -65,9 +80,9 @@ class AddMinhasVacinas extends Component {
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
-        <ScrollView style={styles.scroll}>
           <View style={styles.container}>
             <Text style={styles.header}>Nova Vacina</Text>
+            <ScrollView style={styles.scroll}>
             <View style={styles.containerImagem}>
                 <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
@@ -97,6 +112,7 @@ class AddMinhasVacinas extends Component {
               onDateChange = {this.changeDate2}
             />
             </View>
+            </ScrollView>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -109,7 +125,6 @@ class AddMinhasVacinas extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          </ScrollView>
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
@@ -137,6 +152,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#FFF',
+    flex:1,
   },
   containerImagem:{
     marginTop:15,
@@ -171,6 +187,7 @@ const styles = StyleSheet.create({
 
   },
   buttons: {
+    marginTop: 5,
     flexDirection:'row',
     justifyContent:'center',
   },

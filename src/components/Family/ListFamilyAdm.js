@@ -8,44 +8,54 @@ import {
   KeyboardAvoidingView,
   ImageBackground,
   Text,
-  TextInput,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import ProfileVacinas from '../Profile/ProfileVacinas';
+
+import Family from './Family';
+import ProfileFamily from '../Profile/ProfileFamily';
 import Menu from '../Main/Main';
-import {style} from './StyleListMinhasVacinas';
+import {style} from './StyleListFamily';
+import AddFamily from './AddFamily';
 import {fetchProfile} from '../../store/actions/profile';
 
-class ListMinhasVacinas extends Component {
+class ListFamilyAdm extends Component {
   state = {
-    showAddMinhasVacinas: false,
+    showAddFamilia: false,
   }
   componentDidMount = () => {
     this.props.onFetchProfile();
   }
   render(){
+    const containerPadrao = this.props.adm ?
+      <View style={style.container}>
+           <FlatList
+              data={this.props.profile}
+              keyExtractor={(item) => `${item.id}`}
+              renderItem={({item}) => <ProfileFamily  key={item.id} {...item} userId={item.id} familiaId={item.id}/>}
+            />
+          </View> : <View style={style.containerUser1}>
+            <FlatList  data={this.props.familia}
+                keyExtractor={item => `${item.id}`}
+                renderItem={({item}) => <Family key={item.id} {...item} />}/>
+            </View>;
     return (
       <KeyboardAvoidingView style={style.background}>
+        <AddFamily isVisible={this.state.showAddFamilia} onCancel={()=> this.setState({showAddFamilia: false})}/>
       <ImageBackground
         source={require('../../assets/fundo.png')}
         style={style.image}>
       <ScrollView style={style.scroll}>
       <View style={style.containerLogo}>
         <Image
-          source={require('../../assets/listMinhasVacinas.png')}
+          source={require('../../assets/listFamily.png')}
           style={{width: 80, height: 75, resizeMode: 'contain'}}
         />
-        <Text style={style.textTitulo}>Minhas Vacinas</Text>
+        <Text style={style.textTitulo}>Família</Text>
       </View>
       </ScrollView>
       <View style={style.containerUser1}>
-      <FlatList
-              data={this.props.profile}
-              keyExtractor={(item) => `${item.id}`}
-              renderItem={({item}) => <ProfileVacinas  key={item.id} {...item} userId={item.id} minhasVacinasId={item.id} minhasVacinasEdt={item}/>}
-            />
+        {containerPadrao}
       </View>
       <View>
         <Menu/>
@@ -61,7 +71,7 @@ const mapStateToProps = ({user, profile}) => {
   return {
     nome: user.nome,
     imagem: user.imagem,
-    adm : user.adm,
+    adm: user.adm,
     profile: profile.profile,
   };
 };
@@ -72,4 +82,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(ListMinhasVacinas);
+export default connect(mapStateToProps,mapDispatchToProps)(ListFamilyAdm);

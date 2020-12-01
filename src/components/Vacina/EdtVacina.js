@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Modal,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
+import {Modal,Alert,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
@@ -28,6 +28,19 @@ class EdtVacina extends Component {
   }
 
   save = () => {
+    if (!this.state.imagem){
+      Alert.alert('Campo não preenchido !',
+            'Campo Imagem é obrigatório!');
+    } else if (!this.state.nome.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Nome é obrigatório!');
+    } else if (!this.state.texto.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Informação é obrigatório!');
+    } else if (!this.state.tempoDuracao.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Tempo Duração é obrigatório!');
+    } else {
     this.props.onEdtVacina({
       id: this.props.vacinaEdt.id,
       imagem: this.state.imagem,
@@ -39,7 +52,8 @@ class EdtVacina extends Component {
     this.setState({imagem: null, nome: null, texto: null, tempoDuracao: null});
     this.props.onCancel();
     Actions.home();
-  };
+  }
+};
 
   render(){
     return (

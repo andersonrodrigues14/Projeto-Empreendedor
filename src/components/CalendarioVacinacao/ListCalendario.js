@@ -49,14 +49,6 @@ class ListCalendario extends Component {
 
         <View style={style.containerInfo}>
             {addCalendario}
-            <TouchableOpacity style={style.btnFilter}>
-              <Text style={style.textFilter}>Mês do Calendário</Text>
-              <Icon
-                name="angle-down"
-                size={20}
-                color="#020202"
-              />
-            </TouchableOpacity>
           </View>
 
       <View style={style.container}>

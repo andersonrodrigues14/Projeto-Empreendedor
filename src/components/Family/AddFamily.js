@@ -8,7 +8,7 @@ import {addFamilia} from '../../store/actions/family';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 import DatePicker from 'react-native-datepicker';
 
-const initialState = {imagem:null,nome:'',texto:'',dtAplicacao:'',dtRenovacao: ''};
+const initialState = {imagem:null,nome:'',vacina:'',dtNascimento:'',dtAplicacao:''};
 
 class AddFamily extends Component {
 
@@ -24,7 +24,7 @@ class AddFamily extends Component {
 
   changeDate2 = (valor) => {
     this.setState({
-      dtRenovacao: valor,
+      dtNascimento: valor,
     });
   }
 
@@ -42,15 +42,15 @@ class AddFamily extends Component {
 
   save = () => {
     this.props.onAddFamyli({
-      id: Math.random(),
       imagem: this.state.imagem,
+      userId: this.props.userId,
       nomeFamiliar : this.state.nomeFamiliar,
-      vacina: this.state.vacina,
-      dtAplicacao: this.state.dtAplicacao,
-      dtRenovacao: this.state.dtRenovacao,
+      vacinas: [ {vacina:this.state.vacina,
+                dtAplicacao:this.state.dtAplicacao}],
+      dtNascimento: this.state.dtNascimento,
     });
 
-    this.setState({imagem: null, nomeFamiliar: null, vacina: null, dtAplicacao: '',dtRenovacao: ''});
+    this.setState({imagem: null, nomeFamiliar: null, vacina: '', dtNascimento: '',dtAplicacao:''});
     this.props.onCancel();
     Actions.home();
   };
@@ -64,9 +64,9 @@ class AddFamily extends Component {
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
-        <ScrollView style={styles.scroll}>
           <View style={styles.container}>
             <Text style={styles.header}>Novo Familiar</Text>
+            <ScrollView style={styles.scroll}>
             <View style={styles.containerImagem}>
                 <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
@@ -74,28 +74,28 @@ class AddFamily extends Component {
               placeholder="Nome do Familiar"
               onChangeText={nomeFamiliar => this.setState({nomeFamiliar})}
               value={this.state.nomeFamiliar}/>
-            <TextInput style={styles.input}
-              placeholder="Informação sobre a Vacina"
+            <View style={styles.linha}>
+            <TextInput style={styles.input2}
+              placeholder="Vacina"
               onChangeText={vacina => this.setState({vacina})}
               value={this.state.vacina}/>
-            <View style={styles.linha}>
-            <Text style= {styles.texto}>Data de Aplicação</Text>
-            <DatePicker
+              <DatePicker
               format = "DD/MM/YYYY"
-              style = {styles.dateComponente}
+              style = {styles.dateComponente2}
               date = {this.state.dtAplicacao}
               onDateChange = {this.changeDate}
             />
             </View>
             <View style={styles.linha}>
-            <Text style= {styles.texto}>Data de Renovação</Text>
+            <Text style= {styles.texto}>Data de Nascimento</Text>
             <DatePicker
               format = "DD/MM/YYYY"
-              style = {styles.dateComponenteMaior}
-              date = {this.state.dtRenovacao}
+              style = {styles.dateComponente}
+              date = {this.state.dtNascimento}
               onDateChange = {this.changeDate2}
             />
             </View>
+            </ScrollView>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -108,7 +108,6 @@ class AddFamily extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          </ScrollView>
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
@@ -136,6 +135,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#FFF',
+    flex:1,
   },
   containerImagem:{
     marginTop:15,
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection:'row',
     justifyContent:'center',
+    marginTop:6,
   },
   button:{
     alignItems:'center',
@@ -203,9 +204,21 @@ const styles = StyleSheet.create({
     width:230,
     margin: 15,
   },
-  dateComponenteMaior:{
-    width:220,
+  dateComponente2:{
+    width:150,
     margin: 15,
+  },
+  input2:{
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor:'#35AAFF',
+    height: 40,
+    width:200,
+    margin: 15,
+    color: '#222',
+    fontSize: 17,
+    borderRadius: 7,
+
   },
   texto:{
     marginLeft:15,

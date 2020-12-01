@@ -55,7 +55,7 @@ export const edtFamilia = familia => {
          console.log(familia.id);
          const nome = familia.nome
           .then(res => {
-             dispatch(fetchFamilia(nome));
+             dispatch(fetchFamilia());
           });
         });
     };
@@ -67,7 +67,23 @@ export const delFamilia = familia => {
     axios.delete(`/familias/${familia.familiaId}.json`)
       .catch(err=>console.log(err))
       .then(res => {
-        dispatch(setFamilia());
+        console.log(res);
       });
+  };
+};
+
+export const addVacina = vacina => {
+  return (dispatch) => {
+      axios.get(`/familias/${vacina.vacinaId}.json`)
+          .catch(err => console.log(err))
+          .then(res => {
+              const vacinas = res.data.vacinas || [];
+              vacinas.push(vacina.vacina);
+              axios.patch(`/familias/${vacina.vacinaId}.json`, { vacinas })
+                  .catch(err => console.log(err))
+                  .then(res => {
+                    dispatch(fetchFamilia());
+                  });
+          });
   };
 };

@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 //import
 import React, {Component} from 'react';
-import {View, KeyboardAvoidingView, ScrollView, ImageBackground, Image, TextInput, TouchableOpacity,Text} from 'react-native';
+import {View, KeyboardAvoidingView, Alert, ScrollView, ImageBackground, Image, TextInput, TouchableOpacity,Text} from 'react-native';
 import TextInputMask from 'react-native-text-input-mask';
 //Import Styles
 import {style} from './StyleCadastro';
@@ -10,8 +10,8 @@ import {connect} from 'react-redux';
 import {createUser} from '../../store/actions/userActions';
 import DatePicker from 'react-native-datepicker';
 import { Actions } from 'react-native-router-flux';
-const initialState = {imagem:null, nome:null, cpf:null, sus:null, email:null
-  ,dtnascimento:'',senha:null,sangue:null,obs:null,adm:false};
+const initialState = {imagem:null, nome:'', cpf:'', sus:'', email:''
+  ,dtnascimento:'',senha:'',sangue:'',obs:'',adm:false};
 //Criar o component
 class Cadastro extends Component {
   state = {
@@ -19,8 +19,43 @@ class Cadastro extends Component {
   }
 
   save = () => {
+    if (!this.state.imagem){
+      Alert.alert('Campo não preenchido !',
+            'Campo Imagem é obrigatório!');
+    } else if (!this.state.nome.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Nome é obrigatório!');
+    } else if (!this.state.cpf.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo CPF é obrigatório!');
+    } else if (!this.state.sus.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo SUS é obrigatório!');
+    } else if (!this.state.email.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Email é obrigatório!');
+    } else if (!this.state.dtnascimento.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Data Nascimento é obrigatório!');
+    } else if (!this.state.senha.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Senha é obrigatório!');
+    } else {
+    this.props.onCreateUser({
+      imagem:this.state.imagem,
+      nome:this.state.nome,
+      cpf:this.state.cpf,
+      sus:this.state.sus,
+      email:this.state.email,
+      dtnascimento:this.state.dtnascimento,
+      senha:this.state.senha,
+      sangue:this.state.sangue,
+      obs:this.state.obs,
+      adm:false,
+    });
     this.setState({imagem: null, nome: null, cpf: null, sus:null, email: null,dtnascimento:'null',sangue:null,obs:null});
     Actions.login();
+  }
   }
 
   changeDate = (valor) => {
@@ -100,7 +135,7 @@ class Cadastro extends Component {
         <TextInput style={style.input} placeholder="Senha"
         value={this.state.senha}
         onChangeText={senha => this.setState({senha})}/>
-        <TouchableOpacity style={style.btnInsert} onPress={() => {this.props.onCreateUser(this.state); this.save();}}>
+        <TouchableOpacity style={style.btnInsert} onPress={() => {this.save();}}>
             <Text style={style.textInsert}>Cadastrar-se</Text>
         </TouchableOpacity>
         <TouchableOpacity style={style.btnFoto} onPress={this.pickImage}>

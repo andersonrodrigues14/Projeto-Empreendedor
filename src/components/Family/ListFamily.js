@@ -28,38 +28,12 @@ class ListFamily extends Component {
     this.props.onFetchFamilia();
   }
   render(){
-    const addFamilia = this.props.adm ?
-    <View style={style.esconde}>
-          <View style={style.searchContainer}>
-                <TextInput style={style.input} placeholder="CPF" />
-                <Icon
-                  style={style.searchIcon}
-                  name="sistrix"
-                  size={30}
-                  color="#35AAFF"
-                />
-          </View>
-          <TouchableOpacity style={style.btnInsert} onPress={() => this.setState({showAddFamilia: true})}>
-            <Text style={style.textInsert}>Adicionar Familiar</Text>
-          </TouchableOpacity>
-        </View> : null;
-    const containerPadrao = this.props.adm ?
-      <View style={style.container}>
-          <FlatList  data={this.props.familia}
-                keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <Family key={item.id} {...item}  familiaId={item.id} familiaEdt={item}/>}/>
-          </View> : <View style={style.containerUser1}>
-            <FlatList  data={this.props.familia}
-                keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <Family key={item.id} {...item} />}/>
-            </View>;
     return (
       <KeyboardAvoidingView style={style.background}>
         <AddFamily isVisible={this.state.showAddFamilia} onCancel={()=> this.setState({showAddFamilia: false})}/>
       <ImageBackground
         source={require('../../assets/fundo.png')}
         style={style.image}>
-      <ScrollView style={style.scroll}>
       <View style={style.containerLogo}>
         <Image
           source={require('../../assets/listFamily.png')}
@@ -67,17 +41,11 @@ class ListFamily extends Component {
         />
         <Text style={style.textTitulo}>Família</Text>
       </View>
-
-      <View style={style.containerInfo}>
-        {addFamilia}
-        <View style={style.InfoUser}>
-          <Image source={{uri:this.props.imagem}} style={style.imagemUser}/>
-          <Text style={style.textTitulo}>{this.props.nome}</Text>
-        </View>
-
-        </View>
-      </ScrollView>
-      {containerPadrao}
+      <View style={style.container}>
+      <FlatList  data={this.props.familia.filter(x => x.userId === this.props.id)}
+                keyExtractor={item => `${item.id}`}
+                renderItem={({item}) => <Family key={item.id} {...item} familiaEdt={item} familiaId={item.id}/>} />
+      </View>
       <View>
         <Menu/>
       </View>
@@ -94,6 +62,7 @@ const mapStateToProps = ({user, familia}) => {
     imagem: user.imagem,
     adm: user.adm,
     familia:familia.familia,
+    id: user.id,
   };
 };
 

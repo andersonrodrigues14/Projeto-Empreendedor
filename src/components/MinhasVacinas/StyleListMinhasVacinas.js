@@ -3,13 +3,13 @@ import {StyleSheet,Platform} from 'react-native';
 
 export const style = StyleSheet.create({
   container:{
-    flex:1,
+    flex:3,
     justifyContent:'center',
     alignItems:'center',
   },
 
   containerUser1:{
-    flex:2,
+    flex:4,
     justifyContent:'center',
     alignItems:'center',
   },

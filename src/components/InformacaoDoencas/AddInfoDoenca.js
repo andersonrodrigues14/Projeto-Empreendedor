@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Modal,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
+import {Modal,Alert,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
@@ -30,8 +30,17 @@ class AddInfoDoenca extends Component {
   }
 
   save = () => {
+    if (!this.state.imagem){
+      Alert.alert('Campo não preenchido !',
+            'Campo Imagem é obrigatório!');
+    } else if (!this.state.titulo.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Titulo é obrigatório!');
+    } else if (!this.state.texto.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Informação é obrigatório!');
+    } else {
     this.props.onAddDoenca({
-      id: Math.random(),
       imagem: this.state.imagem,
       titulo : this.state.titulo,
       texto: this.state.texto,
@@ -41,7 +50,8 @@ class AddInfoDoenca extends Component {
     this.setState({imagem: null, titulo: null, texto: null, dataPublicacao: null});
     this.props.onCancel();
     Actions.home();
-  };
+  }
+};
 
   render(){
     return (

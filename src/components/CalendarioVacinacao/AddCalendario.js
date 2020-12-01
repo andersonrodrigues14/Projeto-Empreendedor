@@ -35,8 +35,20 @@ class AddCalendario extends Component {
   }
 
   save = () => {
+    if (!this.state.imagem){
+      Alert.alert('Campo não preenchido !',
+            'Campo Imagem é obrigatório!');
+    } else if (!this.state.nome.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Nome é obrigatório!');
+    } else if (!this.state.texto.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Informação é obrigatório!');
+    } else if (!this.state.dtVacina.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Data da Vacina é obrigatório!');
+    } else {
     this.props.onAddCalendario({
-      id: Math.random(),
       imagem: this.state.imagem,
       nome : this.state.nome,
       texto: this.state.texto,
@@ -46,7 +58,8 @@ class AddCalendario extends Component {
     this.setState({imagem: null, nome: null, texto: null, dtVacina: null});
     this.props.onCancel();
     Actions.home();
-  };
+  }
+};
 
   render(){
     return (

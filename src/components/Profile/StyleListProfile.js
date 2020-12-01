@@ -3,7 +3,7 @@ import {StyleSheet,Platform} from 'react-native';
 
 export const style = StyleSheet.create({
   container:{
-    flex:1.5,
+    flex:2.5,
     justifyContent:'center',
     alignItems:'center',
     width:'100%',

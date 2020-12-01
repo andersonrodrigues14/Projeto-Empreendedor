@@ -9,6 +9,7 @@ import doencaReducer from './reducers/informacaoDoenca';
 import minhasVacinasReducer from './reducers/minhasVacinas';
 import familiaReducer from './reducers/family';
 import profileReducer from './reducers/profile';
+import messageReducer from './reducers/message';
 
 const reducers = combineReducers({
   user: userReducer,
@@ -19,6 +20,7 @@ const reducers = combineReducers({
   minhasVacinas : minhasVacinasReducer,
   familia : familiaReducer,
   profile : profileReducer,
+  message: messageReducer,
 });
 
 const storeConfig = () => {

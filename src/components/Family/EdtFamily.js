@@ -4,18 +4,18 @@ import {Modal,Platform,KeyboardAvoidingView,Image, View, StyleSheet, TouchableWi
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {edtFamilia} from '../../store/actions/family';
+import {addFamilia} from '../../store/actions/family';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 import DatePicker from 'react-native-datepicker';
+import Vacinas from './Vacinas';
 
 class EdtFamily extends Component {
 
   state = {
-    imagem:this.props.familiaEdt.imagem,
+    imagem:{uri:this.props.familiaEdt.imagem},
     nomeFamiliar:this.props.familiaEdt.nomeFamiliar,
-    vacina:this.props.familiaEdt.vacina,
-    dtAplicacao:this.props.familiaEdt.dtAplicacao,
-    dtRenovacao: this.props.familiaEdt.dtRenovacao,
+    vacinas:this.props.familiaEdt.vacinas,
+    dtNascimento:this.props.familiaEdt.dtNascimento,
   }
 
   changeDate = (valor) => {
@@ -26,7 +26,7 @@ class EdtFamily extends Component {
 
   changeDate2 = (valor) => {
     this.setState({
-      dtRenovacao: valor,
+      dtNascimento: valor,
     });
   }
 
@@ -45,13 +45,14 @@ class EdtFamily extends Component {
   save = () => {
     this.props.onEdtFamily({
       imagem: this.state.imagem,
+      userId: this.props.userId,
       nomeFamiliar : this.state.nomeFamiliar,
-      vacina: this.state.vacina,
-      dtAplicacao: this.state.dtAplicacao,
-      dtRenovacao: this.state.dtRenovacao,
+      vacinas: [ {vacina:this.state.vacina,
+                dtAplicacao:this.state.dtAplicacao}],
+      dtNascimento: this.state.dtNascimento,
     });
 
-    this.setState({imagem: null, nomeFamiliar: null, vacina: null, dtAplicacao: '',dtRenovacao: ''});
+    this.setState({imagem: null, nomeFamiliar: null, vacina: '', dtNascimento: '',dtAplicacao:''});
     this.props.onCancel();
     Actions.home();
   };
@@ -65,38 +66,27 @@ class EdtFamily extends Component {
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
-        <ScrollView style={styles.scroll}>
           <View style={styles.container}>
-            <Text style={styles.header}>Novo Familiar</Text>
+            <Text style={styles.header}>Editar Familiar</Text>
+            <ScrollView style={styles.scroll}>
             <View style={styles.containerImagem}>
-                <Image source={{uri:this.state.imagem}} style={styles.imagem}/>
+                <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
               placeholder="Nome do Familiar"
               onChangeText={nomeFamiliar => this.setState({nomeFamiliar})}
               value={this.state.nomeFamiliar}/>
-            <TextInput style={styles.input}
-              placeholder="Informação sobre a Vacina"
-              onChangeText={vacina => this.setState({vacina})}
-              value={this.state.vacina}/>
             <View style={styles.linha}>
-            <Text style= {styles.texto}>Data de Aplicação</Text>
+            <Text style= {styles.texto}>Data de Nascimento</Text>
             <DatePicker
               format = "DD/MM/YYYY"
               style = {styles.dateComponente}
-              date = {this.state.dtAplicacao}
-              onDateChange = {this.changeDate}
-            />
-            </View>
-            <View style={styles.linha}>
-            <Text style= {styles.texto}>Data de Renovação</Text>
-            <DatePicker
-              format = "DD/MM/YYYY"
-              style = {styles.dateComponenteMaior}
-              date = {this.state.dtRenovacao}
+              date = {this.state.dtNascimento}
               onDateChange = {this.changeDate2}
             />
             </View>
+            <Vacinas vacinas={this.state.vacinas} />
+            </ScrollView>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -109,7 +99,6 @@ class EdtFamily extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          </ScrollView>
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
@@ -137,6 +126,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#FFF',
+    flex:1,
   },
   containerImagem:{
     marginTop:15,
@@ -173,6 +163,7 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection:'row',
     justifyContent:'center',
+    marginTop:6,
   },
   button:{
     alignItems:'center',
@@ -204,9 +195,21 @@ const styles = StyleSheet.create({
     width:230,
     margin: 15,
   },
-  dateComponenteMaior:{
-    width:220,
+  dateComponente2:{
+    width:150,
     margin: 15,
+  },
+  input2:{
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor:'#35AAFF',
+    height: 40,
+    width:200,
+    margin: 15,
+    color: '#222',
+    fontSize: 17,
+    borderRadius: 7,
+
   },
   texto:{
     marginLeft:15,
@@ -219,10 +222,17 @@ const styles = StyleSheet.create({
 
 });
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = ({user}) => {
   return {
-    onEdtFamily: familia => dispatch(edtFamilia(familia)),
+    email: user.email,
+    nome : user.nome,
   };
 };
 
-export default connect(null,mapDispatchToProps)(EdtFamily);
+const mapDispatchToProps = dispatch => {
+  return {
+    onEdtFamily: familia => dispatch(addFamilia(familia)),
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(EdtFamily);

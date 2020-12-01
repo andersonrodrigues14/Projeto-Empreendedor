@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 class menu extends Component {
 
   render(){
-    const adm = this.props.adm ?
+    const admDados = this.props.adm ?
     <TouchableOpacity style={{alignItems: 'center', width:'25%'}} onPress = {() => Actions.dados()}>
         <Icon
             name="user"
@@ -31,6 +31,30 @@ class menu extends Component {
         />
         <Text style={{color:'#28ABE3'}}>Dados</Text>
       </TouchableOpacity>;
+
+    const admFamilia = this.props.adm ?
+    <TouchableOpacity style={{alignItems: 'center', width:'25%'}} onPress = {() => Actions.listafamilyadm()} tabBarOptions={{inactiveTintColor:'#C0C0C0',
+      activeTintColor:'#28ABE3'}}>
+        <Icon
+            //style={style.searchIconInfo}
+            name="users"
+            size={23}
+            color="#28ABE3"
+          />
+          <Text style={{color:'#28ABE3'}}>Familia</Text>
+        </TouchableOpacity>
+    :
+    <TouchableOpacity style={{alignItems: 'center', width:'25%'}} onPress = {() => Actions.listafamily()} tabBarOptions={{inactiveTintColor:'#C0C0C0',
+      activeTintColor:'#28ABE3'}}>
+        <Icon
+            //style={style.searchIconInfo}
+            name="users"
+            size={23}
+            color="#28ABE3"
+          />
+          <Text style={{color:'#28ABE3'}}>Familia</Text>
+        </TouchableOpacity>;
+
     return (
       <View style={{height:60,alignItems: 'center',justifyContent: 'center',flexDirection:'row', width:'100%',backgroundColor:'#fff'}}>
         <TouchableOpacity style={{alignItems: 'center', width:'25%'}} onPress = {() => Actions.home()} tabBarOptions={{inactiveTintColor:'#C0C0C0',
@@ -43,17 +67,8 @@ class menu extends Component {
           />
           <Text style={{color:'#28ABE3'}}>Menu</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{alignItems: 'center', width:'25%'}} onPress = {() => Actions.listafamily()} tabBarOptions={{inactiveTintColor:'#C0C0C0',
-      activeTintColor:'#28ABE3'}}>
-        <Icon
-            //style={style.searchIconInfo}
-            name="users"
-            size={23}
-            color="#28ABE3"
-          />
-          <Text style={{color:'#28ABE3'}}>Familia</Text>
-        </TouchableOpacity>
-        {adm}
+        {admFamilia}
+        {admDados}
         <TouchableOpacity style={{alignItems: 'center', width:'25%'}} onPress = {() => Actions.mais()} >
         <Icon
             //style={style.searchIconInfo}

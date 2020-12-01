@@ -8,6 +8,8 @@ import {connect} from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import {delFamilia} from '../../store/actions/family';
 import EdtFamily from './EdtFamily';
+import Vacinas from './Vacinas';
+import AddVacinaFamily from './AddVacinaFamily';
 
 //import Style
 import {style} from './StyleFamily';
@@ -24,12 +26,13 @@ class Familia extends Component {
     Actions.home();
   }
   render() {
+    const addVacina = this.props.adm ?
+            <AddVacinaFamily vacinaId={this.props.id} /> : null;
     const admFamilia = this.props.adm ?
     <View style={style.editContainer}>
           <Image source={{uri:this.props.imagem}} style={style.imagem} />
           <Icon
             style={style.searchIconInfo}
-            name="save"
             size={23}
             color="#35AAFF"
           />
@@ -69,7 +72,9 @@ class Familia extends Component {
       <View style={style.container}>
         {admFamilia}
         <Text style={style.textTitulo}>{this.props.nomeFamiliar}</Text>
-        <Text style={style.textStyle}>{this.props.vacina} /Data Aplicação: {this.props.dtAplicacao} / Data Renovação: {this.props.dtRenovacao}</Text>
+        <Text style={style.textStyle}>Data de Nascimento : {this.props.dtNascimento}</Text>
+        <Vacinas vacinas={this.props.vacinas} />
+        {addVacina}
         <EdtFamily isVisible={this.state.showEdtFamilia} familiaEdt={this.props.familiaEdt} onCancel={()=> this.setState({showEdtFamilia: false})}/>
       </View>
     );

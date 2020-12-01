@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Modal,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
+import {Modal,Alert,Platform,Image, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
@@ -11,7 +11,7 @@ import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 class AddMinhasVacinas extends Component {
 
   state = {
-    imagem:this.props.minhasVacinasEdt.imagem,
+    imagem:{uri:this.props.minhasVacinasEdt.imagem},
     nome:this.props.minhasVacinasEdt.nome,
     texto:this.props.minhasVacinasEdt.texto,
     dtAplicacao:this.props.minhasVacinasEdt.dtAplicacao,
@@ -43,7 +43,24 @@ class AddMinhasVacinas extends Component {
   }
 
   save = () => {
+    if (!this.state.imagem){
+      Alert.alert('Campo não preenchido !',
+            'Campo Imagem é obrigatório!');
+    } else if (!this.state.nome.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Nome é obrigatório!');
+    } else if (!this.state.texto.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Informação é obrigatório!');
+    } else if (!this.state.dtAplicacao.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Data Aplicação é obrigatório!');
+    } else if (!this.state.dtRenovacao.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Data Renovação é obrigatório!');
+    } else {
     this.props.onEdtMinhasVacinas({
+      id: this.props.minhasVacinasEdt.id,
       imagem: this.state.imagem,
       nome : this.state.nome,
       texto: this.state.texto,
@@ -51,15 +68,15 @@ class AddMinhasVacinas extends Component {
       dtRenovacao: this.state.dtRenovacao,
     });
     this.setState({imagem: null, nome: null, texto: null, dtAplicacao:'', dtRenovacao: ''});
-    //this.setState(this.props.onCancel = false);
     this.props.onCancel();
     Actions.home();
-  };
+  }
+};
 
   render(){
     return (
       <Modal transparent={true} visible={this.props.isVisible}
-      onRequestClose= {this.props.onCancel}
+      onRequestClose= {() => this.props.onCancel}
       animationType= {'slide'}>
        <KeyboardAvoidingView style={styles.background}>
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
@@ -67,9 +84,9 @@ class AddMinhasVacinas extends Component {
         </TouchableWithoutFeedback>
         <ScrollView style={styles.scroll}>
           <View style={styles.container}>
-            <Text style={styles.header}>Nova Vacina</Text>
+            <Text style={styles.header}>Editar Vacina</Text>
             <View style={styles.containerImagem}>
-                <Image source={{uri:this.state.imagem}} style={styles.imagem}/>
+                <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
             <TextInput style={styles.input}
               placeholder="Nome da Vacina"
@@ -101,16 +118,16 @@ class AddMinhasVacinas extends Component {
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.delete} onPress={this.props.onCancel}>
+              <TouchableOpacity style={styles.delete} onPress={() => this.props.onCancel}>
                 <Text style={styles.button}>Cancelar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.insert}onPress={this.save}>
+              <TouchableOpacity style={styles.insert}onPress={() => this.save()}>
                 <Text style={styles.button}>Salvar</Text>
               </TouchableOpacity>
             </View>
           </View>
           </ScrollView>
-        <TouchableWithoutFeedback onPress={this.props.onCancel}>
+        <TouchableWithoutFeedback onPress={() => this.props.onCancel}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
         </KeyboardAvoidingView>

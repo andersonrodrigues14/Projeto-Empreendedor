@@ -3,53 +3,52 @@ import React, {Component} from 'react';
 import {Modal,Platform,FlatList, View, StyleSheet, TouchableWithoutFeedback,Text,TouchableOpacity,TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
-import {addMinhasVacinas} from '../../store/actions/minhasVacinas';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
-import {fetchMinhasVacinas} from '../../store/actions/minhasVacinas';
-import AddMinhasVacinas from './AddMinhasVacinas';
-import MinhasVacina from '../MinhasVacinas/MinhasVacinas';
+import {fetchFamilia} from '../../store/actions/family';
+import AddFamily from './AddFamily';
+import Family from './Family';
 
-class ModalVacinas extends Component {
+class ModalFamilia extends Component {
   state = {
-    showAddMinhasVacinas: false,
+    showAddFamilia: false,
   }
   componentDidMount = () => {
-    this.props.onFetchMinhasVacinas();
+    this.props.onFetchFamilia();
   }
 
   render(){
-    const teste = this.props.minhasVacinas !== null ?
-    <FlatList  data={this.props.minhasVacinas.filter(x => x.userId === this.props.userId)}
+    const teste = this.props.familia !== null ?
+    <FlatList  data={this.props.familia.filter(x => x.userId === this.props.userId)}
                 keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <MinhasVacina key={item.id} {...item} minhasVacinasEdt={item} minhasVacinasId={item.id} onCancel={()=> this.setState({showAddMinhasVacinas: false})}/>} />
+                renderItem={({item}) => <Family key={item.id} {...item} familiaEdt={item} familiaId={item.id}/>} />
                 :
     <Text>Nenhum Registro Cadastrado</Text>;
 
     return (
       <Modal transparent={true} visible={this.props.isVisible}
-      onRequestClose= {this.props.onCancel}
+      onRequestClose= {()=> this.props.onCancel()}
       animationType= {'slide'}>
        <KeyboardAvoidingView style={styles.background}>
-        <TouchableWithoutFeedback onPress={this.props.onCancel}>
+        <TouchableWithoutFeedback onPress={() =>this.props.onCancel()}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
           <View style={styles.container}>
-          <AddMinhasVacinas isVisible={this.state.showAddMinhasVacinas} userId={this.props.userId} onCancel={()=> this.setState({showAddMinhasVacinas: false})}/>
-            <Text style={styles.header}>Vacinas Usuário</Text>
+          <AddFamily isVisible={this.state.showAddFamilia} userId={this.props.userId} onCancel={()=> this.setState({showAddFamilia: false})}/>
+            <Text style={styles.header}>Familiares Usuário</Text>
             <ScrollView style={styles.scroll}>
            {teste}
 
            </ScrollView>
             <View style={styles.buttons}>
-              <TouchableOpacity style={styles.delete} onPress={this.props.onCancel}>
+              <TouchableOpacity style={styles.delete} onPress={() => this.props.onCancel()}>
                 <Text style={styles.button}>Cancelar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.insert}onPress={() => this.setState({showAddMinhasVacinas: true})}>
+              <TouchableOpacity style={styles.insert}onPress={() => this.setState({showAddFamilia: true})}>
                 <Text style={styles.button}>Adicionar</Text>
               </TouchableOpacity>
             </View>
           </View>
-        <TouchableWithoutFeedback onPress={this.props.onCancel}>
+        <TouchableWithoutFeedback onPress={() =>this.props.onCancel()}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -160,19 +159,18 @@ const styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = ({user,minhasVacinas}) => {
+const mapStateToProps = ({user,familia}) => {
   return {
     email: user.email,
     nome : user.nome,
-    minhasVacinas: minhasVacinas.minhasVacinas,
+    familia: familia.familia,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddMinhasVacinas: minhasVacinas => dispatch(addMinhasVacinas(minhasVacinas)),
-    onFetchMinhasVacinas: () => dispatch(fetchMinhasVacinas()),
+    onFetchFamilia: () => dispatch(fetchFamilia()),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(ModalVacinas);
+export default connect(mapStateToProps,mapDispatchToProps)(ModalFamilia);
