@@ -69,7 +69,6 @@ class AddMinhasVacinas extends Component {
     });
     this.setState({imagem: null, nome: null, texto: null, dtAplicacao:'', dtRenovacao: ''});
     this.props.onCancel();
-    Actions.home();
   }
 };
 
@@ -82,9 +81,9 @@ class AddMinhasVacinas extends Component {
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
-        <ScrollView style={styles.scroll}>
           <View style={styles.container}>
             <Text style={styles.header}>Editar Vacina</Text>
+            <ScrollView style={styles.scroll}>
             <View style={styles.containerImagem}>
                 <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
@@ -114,11 +113,12 @@ class AddMinhasVacinas extends Component {
               onDateChange = {this.changeDate2}
             />
             </View>
+            </ScrollView>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.delete} onPress={() => this.props.onCancel}>
+              <TouchableOpacity style={styles.delete} onPress={() => this.props.onCancel()}>
                 <Text style={styles.button}>Cancelar</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.insert}onPress={() => this.save()}>
@@ -126,8 +126,7 @@ class AddMinhasVacinas extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          </ScrollView>
-        <TouchableWithoutFeedback onPress={() => this.props.onCancel}>
+        <TouchableWithoutFeedback onPress={() => this.props.onCancel()}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -153,6 +152,7 @@ const styles = StyleSheet.create({
     width:'100%',
   },
   container: {
+    flex:1.2,
     backgroundColor: '#FFF',
   },
   containerImagem:{
@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
 
   },
   buttons: {
+    marginTop:10,
     flexDirection:'row',
     justifyContent:'center',
   },

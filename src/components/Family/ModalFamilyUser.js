@@ -20,7 +20,7 @@ class ModalFamilia extends Component {
     const teste = this.props.familia !== null ?
     <FlatList  data={this.props.familia.filter(x => x.userId === this.props.userId)}
                 keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <Family key={item.id} {...item} familiaEdt={item} familiaId={item.id}/>} />
+                renderItem={({item}) => <Family key={item.id} {...item} familiaEdt={item} familiaId={item.id} onCancel2={() =>this.props.onCancel()}/>} />
                 :
     <Text>Nenhum Registro Cadastrado</Text>;
 

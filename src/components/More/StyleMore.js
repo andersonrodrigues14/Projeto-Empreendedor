@@ -40,7 +40,6 @@ export const style = StyleSheet.create({
   background: {
     //KeyboardAvoidingView
     flex: 1,
-    backgroundColor: 'red',
     marginTop: Platform.OS === 'ios' ? 20 : 0,
 
   },

@@ -18,7 +18,6 @@ class Profile extends Component {
   }
   delete =() =>{
     this.props.onDltProfile({profileId: this.props.profileId});
-    Actions.home();
   }
   render() {
     const admProfile = this.props.adm ?

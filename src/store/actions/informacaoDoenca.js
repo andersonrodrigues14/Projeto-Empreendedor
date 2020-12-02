@@ -15,7 +15,7 @@ export const addDoenca = doenca => {
         doenca.imagem = resp.data.imageUrl;
         axios.post('/doencas.json',{...doenca})
         .catch(err => console.log(err))
-        .then(res => console.log(res.data));});
+        .then(res =>  dispatch(fetchDoenca()));});
   };
 };
 
@@ -93,7 +93,7 @@ export const delDoenca = doenca => {
     axios.delete(`/doencas/${doenca.doencaId}.json`)
       .catch(err=>console.log(err))
       .then(res => {
-        dispatch(setDoenca());
+        dispatch(fetchDoenca());
       });
   };
 };

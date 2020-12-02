@@ -16,7 +16,7 @@ export const addMinhasVacinas = minhasVacinas => {
         minhasVacinas.imagem = resp.data.imageUrl;
         axios.post('/minhasVacinas.json',{...minhasVacinas})
         .catch(err => console.log(err))
-        .then(res => console.log(res.data));});
+        .then(res =>  dispatch(fetchMinhasVacinas()));});
   };
 };
 
@@ -96,7 +96,6 @@ export const delMinhasVacinas = minhasVacinas => {
   return dispatch => {
     axios.delete(`/minhasVacinas/${minhasVacinas.minhasVacinasId}.json`)
       .catch(err=>console.log(err))
-      .then(res => {(res.console.log(res));
-      });
+      .then(res =>  dispatch(fetchMinhasVacinas()));
   };
 };

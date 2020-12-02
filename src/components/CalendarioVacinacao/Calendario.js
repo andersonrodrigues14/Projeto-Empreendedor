@@ -15,7 +15,6 @@ class Calendario extends Component {
 
   delete =() =>{
     this.props.onDltCalendario({calendarioId: this.props.calendarioId});
-    Actions.home();
   }
   render() {
     const admCalendario = this.props.adm ?

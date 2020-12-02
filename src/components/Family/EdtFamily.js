@@ -4,7 +4,7 @@ import {Modal,Platform,KeyboardAvoidingView,Image, View, StyleSheet, TouchableWi
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {addFamilia} from '../../store/actions/family';
+import {edtFamilia} from '../../store/actions/family';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 import DatePicker from 'react-native-datepicker';
 import Vacinas from './Vacinas';
@@ -43,19 +43,28 @@ class EdtFamily extends Component {
   }
 
   save = () => {
+    if (!this.state.imagem){
+      Alert.alert('Campo não preenchido !',
+            'Campo Imagem é obrigatório!');
+    } else if (!this.state.nomeFamiliar.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Nome é obrigatório!');
+    } else if (!this.state.dtNascimento.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Data de Nascimento é obrigatório!');
+    } else {
     this.props.onEdtFamily({
+      id: this.props.familiaEdt.id,
       imagem: this.state.imagem,
-      userId: this.props.userId,
       nomeFamiliar : this.state.nomeFamiliar,
-      vacinas: [ {vacina:this.state.vacina,
-                dtAplicacao:this.state.dtAplicacao}],
       dtNascimento: this.state.dtNascimento,
     });
 
-    this.setState({imagem: null, nomeFamiliar: null, vacina: '', dtNascimento: '',dtAplicacao:''});
+    this.setState({imagem: null, nomeFamiliar: null, vacina: '', dtNascimento: ''});
     this.props.onCancel();
     Actions.home();
-  };
+  }
+};
 
   render(){
     return (
@@ -63,7 +72,7 @@ class EdtFamily extends Component {
       onRequestClose= {this.props.onCancel}
       animationType= {'slide'}>
         <KeyboardAvoidingView style={styles.background}>
-        <TouchableWithoutFeedback onPress={this.props.onCancel}>
+        <TouchableWithoutFeedback onPress={() => this.props.onCancel()}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
           <View style={styles.container}>
@@ -91,7 +100,7 @@ class EdtFamily extends Component {
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.delete} onPress={this.props.onCancel}>
+              <TouchableOpacity style={styles.delete} onPress={() => this.props.onCancel()}>
                 <Text style={styles.button}>Cancelar</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.insert}onPress={this.save}>
@@ -99,7 +108,7 @@ class EdtFamily extends Component {
               </TouchableOpacity>
             </View>
           </View>
-        <TouchableWithoutFeedback onPress={this.props.onCancel}>
+        <TouchableWithoutFeedback onPress={() => this.props.onCancel()}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -126,7 +135,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#FFF',
-    flex:1,
+    flex:1.2,
   },
   containerImagem:{
     marginTop:15,
@@ -231,7 +240,7 @@ const mapStateToProps = ({user}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onEdtFamily: familia => dispatch(addFamilia(familia)),
+    onEdtFamily: familia => dispatch(edtFamilia(familia)),
   };
 };
 

@@ -50,7 +50,6 @@ class AddVacina extends Component {
 
     this.setState({imagem: null, nome: null, texto: null, tempoDuracao: null});
     this.props.onCancel();
-    Actions.home();
   }
 };
 
@@ -60,12 +59,12 @@ class AddVacina extends Component {
       onRequestClose= {this.props.onCancel}
       animationType= {'slide'}>
       <KeyboardAvoidingView style={styles.background}>
-        <TouchableWithoutFeedback onPress={this.props.onCancel}>
+        <TouchableWithoutFeedback onPress={() => this.props.onCancel()}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
-        <ScrollView style={styles.scroll}>
           <View style={styles.container}>
             <Text style={styles.header}>Nova Vacina</Text>
+            <ScrollView style={styles.scroll}>
             <View style={styles.containerImagem}>
                 <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
@@ -81,6 +80,7 @@ class AddVacina extends Component {
               placeholder="Tempo de Duração"
               onChangeText={tempoDuracao => this.setState({tempoDuracao})}
               value={this.state.tempoDuracao}/>
+            </ScrollView>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -93,7 +93,6 @@ class AddVacina extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          </ScrollView>
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
@@ -120,6 +119,7 @@ const styles = StyleSheet.create({
     width:'100%',
   },
   container: {
+    flex:1.7,
     backgroundColor: '#FFF',
   },
   containerImagem:{
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
 
   },
   buttons: {
+    marginTop:10,
     flexDirection:'row',
     justifyContent:'center',
   },

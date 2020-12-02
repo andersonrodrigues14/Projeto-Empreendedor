@@ -16,7 +16,7 @@ export const addFamilia = familia => {
         familia.imagem = resp.data.imageUrl;
         axios.post('/familias.json',{...familia})
         .catch(err => console.log(err))
-        .then(res => console.log(res.data));});
+        .then(res =>  dispatch(fetchFamilia()));});
   };
 };
 
@@ -41,24 +41,50 @@ export const fetchFamilia = () => {
           });
         }
 
-        dispatch(setFamilia(familia));
+        dispatch(setFamilia(familia.reverse()));
       });
   };
 };
 
 export const edtFamilia = familia => {
   return dispatch => {
-    axios.get(`/familias/${familia.id}.json`)
-      .catch(err => console.log(err))
-      .then(resp => {
-         console.log(familia);
-         console.log(familia.id);
-         const nome = familia.nome
+    if (familia.imagem.base64 != null){
+    axios({
+      url:'uploadImage',
+      baseURL:'https://us-central1-carteiradevacinacaodigital.cloudfunctions.net',
+      method:'post',
+      data:{
+        image: familia.imagem.base64,
+      },
+    }) .catch(err => console.log(err))
+    .then(respo => {
+        axios.get(`/familias/${familia.id}.json`)
+          .catch(err => console.log(err))
+          .then(resp => {
+          familia.imagem = respo.data.imageUrl;
+         const imagem = familia.imagem;
+         const nomeFamiliar = familia.nomeFamiliar;
+         const dtNascimento = familia.dtNascimento;
+         axios.patch(`/familias/${familia.id}.json`,{imagem,nomeFamiliar,dtNascimento})
+          .catch(err=>console.log(err))
+          .then(res => {
+             dispatch(fetchFamilia());
+          });
+        });});
+    } else {
+      axios.get(`/familias/${familia.id}.json`)
+          .catch(err => console.log(err))
+          .then(resp => {
+            const nomeFamiliar = familia.nomeFamiliar;
+            const dtNascimento = familia.dtNascimento;
+         axios.patch(`/familias/${familia.id}.json`,{nomeFamiliar,dtNascimento})
+          .catch(err=>console.log(err))
           .then(res => {
              dispatch(fetchFamilia());
           });
         });
-    };
+    }
+  };
 };
 
 
@@ -67,7 +93,7 @@ export const delFamilia = familia => {
     axios.delete(`/familias/${familia.familiaId}.json`)
       .catch(err=>console.log(err))
       .then(res => {
-        console.log(res);
+        dispatch(fetchFamilia());
       });
   };
 };

@@ -51,7 +51,6 @@ class EdtInfoDoenca extends Component {
 
     this.setState({imagem: null, titulo: null, texto: null, dataPublicacao: null});
     this.props.onCancel();
-    Actions.home();
   }
 };
 
@@ -64,9 +63,9 @@ class EdtInfoDoenca extends Component {
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
-        <ScrollView style={styles.scroll}>
           <View style={styles.container}>
-            <Text style={styles.header}>Nova Doença</Text>
+            <Text style={styles.header}>Editar Doença</Text>
+            <ScrollView style={styles.scroll}>
             <View style={styles.containerImagem}>
                 <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
@@ -82,6 +81,7 @@ class EdtInfoDoenca extends Component {
               <Text style= {styles.texto}>Data da Publicação: </Text>
               <Text> {this.state.dataPublicacao}</Text>
             </View>
+            </ScrollView>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -94,7 +94,6 @@ class EdtInfoDoenca extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          </ScrollView>
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
@@ -121,6 +120,7 @@ const styles = StyleSheet.create({
     width:'100%',
   },
   container: {
+    flex:1.7,
     backgroundColor: '#FFF',
   },
   containerImagem:{

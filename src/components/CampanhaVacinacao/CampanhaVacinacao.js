@@ -15,7 +15,6 @@ class CamapanhaVacinacao extends Component {
 
   delete =() =>{
     this.props.onDltCampanha({campanhaId: this.props.campanhaId});
-    Actions.home();
   }
   render() {
     const admCampanha = this.props.adm ?

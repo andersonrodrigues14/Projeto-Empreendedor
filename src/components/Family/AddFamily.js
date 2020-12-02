@@ -8,7 +8,7 @@ import {addFamilia} from '../../store/actions/family';
 import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 import DatePicker from 'react-native-datepicker';
 
-const initialState = {imagem:null,nome:'',vacina:'',dtNascimento:'',dtAplicacao:''};
+const initialState = {imagem:null,nomeFamiliar:'',vacina:'',dtNascimento:'',dtAplicacao:''};
 
 class AddFamily extends Component {
 
@@ -41,6 +41,22 @@ class AddFamily extends Component {
   }
 
   save = () => {
+    if (!this.state.imagem){
+      Alert.alert('Campo não preenchido !',
+            'Campo Imagem é obrigatório!');
+    } else if (!this.state.nomeFamiliar.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Nome é obrigatório!');
+    } else if (!this.state.dtNascimento.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Data de Nascimento é obrigatório!');
+    } else if (!this.state.vacina.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Nome da Vacina é obrigatório!');
+    } else if (!this.state.dtAplicacao.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Data da Vacina é obrigatório!');
+    } else {
     this.props.onAddFamyli({
       imagem: this.state.imagem,
       userId: this.props.userId,
@@ -50,10 +66,9 @@ class AddFamily extends Component {
       dtNascimento: this.state.dtNascimento,
     });
 
-    this.setState({imagem: null, nomeFamiliar: null, vacina: '', dtNascimento: '',dtAplicacao:''});
+    this.setState({imagem: null, nomeFamiliar: '', vacina: '', dtNascimento: '',dtAplicacao:''});
     this.props.onCancel();
-    Actions.home();
-  };
+  }};
 
   render(){
     return (
@@ -61,7 +76,7 @@ class AddFamily extends Component {
       onRequestClose= {this.props.onCancel}
       animationType= {'slide'}>
         <KeyboardAvoidingView style={styles.background}>
-        <TouchableWithoutFeedback onPress={this.props.onCancel}>
+        <TouchableWithoutFeedback onPress={() => this.props.onCancel()}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
           <View style={styles.container}>
@@ -100,7 +115,7 @@ class AddFamily extends Component {
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.delete} onPress={this.props.onCancel}>
+              <TouchableOpacity style={styles.delete} onPress={() => this.props.onCancel()}>
                 <Text style={styles.button}>Cancelar</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.insert}onPress={this.save}>
@@ -108,7 +123,7 @@ class AddFamily extends Component {
               </TouchableOpacity>
             </View>
           </View>
-        <TouchableWithoutFeedback onPress={this.props.onCancel}>
+        <TouchableWithoutFeedback onPress={() => this.props.onCancel()}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -135,7 +150,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#FFF',
-    flex:1,
+    flex:1.2,
   },
   containerImagem:{
     marginTop:15,

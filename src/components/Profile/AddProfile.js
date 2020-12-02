@@ -80,6 +80,7 @@ class AddProfile extends Component {
       email: this.state.email,
       dtnascimento: this.state.dtnascimento,
       sangue:this.state.sangue,
+      senha:this.state.senha,
       obs:this.state.obs,
       adm:false,
     });
@@ -99,9 +100,9 @@ class AddProfile extends Component {
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
-        <ScrollView style={styles.scroll}>
           <View style={styles.container}>
             <Text style={styles.header}>Novo Usuário</Text>
+            <ScrollView style={styles.scroll}>
             <View style={styles.containerImagem}>
                 <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
@@ -146,6 +147,7 @@ class AddProfile extends Component {
             <TextInput style={styles.input} placeholder="Senha"
         value={this.state.senha}
         onChangeText={senha => this.setState({senha})}/>
+          </ScrollView>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -158,7 +160,6 @@ class AddProfile extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          </ScrollView>
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
@@ -186,6 +187,7 @@ const styles = StyleSheet.create({
     width:'100%',
   },
   container: {
+    flex:1,
     backgroundColor: '#FFF',
   },
   containerImagem:{
@@ -221,6 +223,7 @@ const styles = StyleSheet.create({
 
   },
   buttons: {
+    marginTop:10,
     flexDirection:'row',
     justifyContent:'center',
   },

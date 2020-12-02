@@ -14,7 +14,6 @@ state = {
 }
   delete =() =>{
     this.props.onDltVacina({vacinaId: this.props.vacinaId});
-    Actions.home();
   }
 
   render() {

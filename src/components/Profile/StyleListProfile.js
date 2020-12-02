@@ -7,6 +7,7 @@ export const style = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     width:'100%',
+    marginTop:10,
   },
   containerUser:{
     flex:3.5,
@@ -50,7 +51,7 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
-    marginBottom:10,
+    marginBottom:90,
   },
 
   textRegister: {

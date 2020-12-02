@@ -14,7 +14,6 @@ class MinhasVacinas extends Component {
   }
   delete =() =>{
     this.props.onDltMinhasVacina({minhasVacinasId: this.props.minhasVacinasId});
-    Actions.home();
   }
   render() {
     const admMinhasVacinas = this.props.adm ?

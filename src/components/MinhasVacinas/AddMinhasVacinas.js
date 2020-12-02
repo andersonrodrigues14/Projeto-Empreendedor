@@ -67,7 +67,6 @@ class AddMinhasVacinas extends Component {
     });
     this.setState({imagem: null, nome: null, texto: null, dtAplicacao:'', dtRenovacao: ''});
     this.props.onCancel();
-    Actions.home();
   }
 };
 

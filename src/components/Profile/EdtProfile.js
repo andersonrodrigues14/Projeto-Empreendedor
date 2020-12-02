@@ -11,6 +11,7 @@ import {Modal,
         TextInput,
         KeyboardAvoidingView,
         Dimensions,
+        Alert,
       } from 'react-native';
 //import {Picker} from '@react-native-picker/picker';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -54,6 +55,28 @@ class EdtProfile extends Component {
   }
 
   save = () => {
+    if (!this.state.imagem){
+      Alert.alert('Campo não preenchido !',
+            'Campo Imagem é obrigatório!');
+    } else if (!this.state.nome.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Nome é obrigatório!');
+    } else if (!this.state.cpf.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo CPF é obrigatório!');
+    } else if (!this.state.sus.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo SUS é obrigatório!');
+    } else if (!this.state.email.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Email é obrigatório!');
+    } else if (!this.state.dtnascimento.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Data Nascimento é obrigatório!');
+    } else if (!this.state.senha.trim()){
+      Alert.alert('Campo não preenchido !',
+            'Campo Senha é obrigatório!');
+    } else {
     this.props.onEdtUser({
       id: this.props.profileEdt.id,
       imagem: this.state.imagem,
@@ -69,8 +92,8 @@ class EdtProfile extends Component {
 
     this.setState({imagem: null, nome: null, cpf: null, sus:null, email: null,dtnascimento:null,sangue:null,obs:null});
     this.props.onCancel();
-    Actions.home();
-  };
+  }
+};
 
   render(){
     return (
@@ -81,9 +104,9 @@ class EdtProfile extends Component {
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
-        <ScrollView style={styles.scroll}>
           <View style={styles.container}>
-            <Text style={styles.header}>Novo Usuário</Text>
+            <Text style={styles.header}>Editar Usuário</Text>
+            <ScrollView style={styles.scroll}>
             <View style={styles.containerImagem}>
                 <Image source={{uri:this.state.imagem}} style={styles.imagem}/>
             </View>
@@ -127,6 +150,7 @@ class EdtProfile extends Component {
             <TextInput style={styles.input} placeholder="Senha" editable={false}
         value={this.state.senha}
         onChangeText={senha => this.setState({senha})}/>
+        </ScrollView>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
@@ -139,7 +163,6 @@ class EdtProfile extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          </ScrollView>
         <TouchableWithoutFeedback onPress={this.props.onCancel}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
@@ -167,6 +190,7 @@ const styles = StyleSheet.create({
     width:'100%',
   },
   container: {
+    flex:1,
     backgroundColor: '#FFF',
   },
   containerImagem:{
@@ -202,6 +226,7 @@ const styles = StyleSheet.create({
 
   },
   buttons: {
+    marginTop:10,
     flexDirection:'row',
     justifyContent:'center',
   },

@@ -21,7 +21,7 @@ class ModalVacinas extends Component {
     const teste = this.props.minhasVacinas !== null ?
     <FlatList  data={this.props.minhasVacinas.filter(x => x.userId === this.props.userId)}
                 keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <MinhasVacina key={item.id} {...item} minhasVacinasEdt={item} minhasVacinasId={item.id} onCancel={()=> this.setState({showAddMinhasVacinas: false})}/>} />
+                renderItem={({item}) => <MinhasVacina key={item.id} {...item} minhasVacinasEdt={item} minhasVacinasId={item.id} onCancel={()=> this.setState({showAddMinhasVacinas: false})}/>} esconde = {() => this.props.onCancel} />
                 :
     <Text>Nenhum Registro Cadastrado</Text>;
 

@@ -51,7 +51,6 @@ class EdtVacina extends Component {
 
     this.setState({imagem: null, nome: null, texto: null, tempoDuracao: null});
     this.props.onCancel();
-    Actions.home();
   }
 };
 
@@ -61,12 +60,12 @@ class EdtVacina extends Component {
       onRequestClose= {this.props.onCancel}
       animationType= {'slide'}>
       <KeyboardAvoidingView style={styles.background}>
-        <TouchableWithoutFeedback onPress={() =>this.props.onCancel}>
+        <TouchableWithoutFeedback onPress={() =>this.props.onCancel()}>
           <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
-        <ScrollView style={styles.scroll}>
           <View style={styles.container}>
             <Text style={styles.header}>Editar Vacina</Text>
+            <ScrollView style={styles.scroll}>
             <View style={styles.containerImagem}>
                 <Image source={this.state.imagem} style={styles.imagem}/>
             </View>
@@ -82,11 +81,12 @@ class EdtVacina extends Component {
               placeholder="Tempo de Duração"
               onChangeText={tempoDuracao => this.setState({tempoDuracao})}
               value={this.state.tempoDuracao}/>
+            </ScrollView>
             <View style={styles.buttons}>
               <TouchableOpacity style={styles.insert} onPress={this.pickImage}>
                   <Text style={styles.button}>Escolha a foto</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.delete} onPress={() => this.props.onCancel}>
+              <TouchableOpacity style={styles.delete} onPress={() => this.props.onCancel()}>
                 <Text style={styles.button}>Cancelar</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.insert}onPress={() => this.save()}>
@@ -94,8 +94,7 @@ class EdtVacina extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          </ScrollView>
-        <TouchableWithoutFeedback onPress={this.props.onCancel}>
+        <TouchableWithoutFeedback onPress={() => this.props.onCancel()}>
             <View style={styles.backgtoundFundo} />
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
@@ -121,6 +120,7 @@ const styles = StyleSheet.create({
     width:'100%',
   },
   container: {
+    flex:1.7,
     backgroundColor: '#FFF',
   },
   containerImagem:{
@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
 
   },
   buttons: {
+    marginTop:10,
     flexDirection:'row',
     justifyContent:'center',
   },

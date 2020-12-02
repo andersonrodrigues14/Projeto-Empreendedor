@@ -2,6 +2,7 @@
 import {USER_LOGGED_IN,USER_LOGGED_OUT, LOADING_USER, USER_LOADED} from './actionTypes';
 import axios from 'axios';
 import { setMessage } from './message';
+import {fetchProfile} from './family';
 
 const authBaseUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty';
 const API_KEY = 'AIzaSyCDG1dYmjLOtM2vIGNeggqYqK-KHoPi3QY';
@@ -53,12 +54,7 @@ export const createUser = (user) => {
             adm:user.adm,
           })
             .catch(err => console.log(err))
-            .then(res => {
-              dispatch(setMessage({
-                title: 'Usuário',
-                text: 'Usuário Criado com Sucesso!',
-            }));
-            });
+            .then(res => console.log(res));
         }
       });
     });};

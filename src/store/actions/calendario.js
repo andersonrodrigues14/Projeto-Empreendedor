@@ -16,7 +16,7 @@ export const addCalendario = calendario => {
         calendario.imagem = resp.data.imageUrl;
         axios.post('/calendarios.json',{...calendario})
         .catch(err => console.log(err))
-        .then(res => console.log(res.data));});
+        .then(res => dispatch(fetchCalendario()));});
   };
 };
 

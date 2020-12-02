@@ -23,7 +23,6 @@ class Familia extends Component {
   }
   delete =() =>{
     this.props.onDltFamilia({familiaId: this.props.familiaId});
-    Actions.home();
   }
   render() {
     const addVacina = this.props.adm ?

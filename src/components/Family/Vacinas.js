@@ -8,7 +8,6 @@ import {
 
 class Vacinas extends Component {
     render() {
-      console.log(this.props.vacinas);
         let view = null;
         if (this.props.vacinas) {
             view = this.props.vacinas.map((item, index) => {

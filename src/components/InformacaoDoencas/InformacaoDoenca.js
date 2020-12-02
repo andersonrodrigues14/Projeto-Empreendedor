@@ -14,7 +14,6 @@ class InformacaoDoenca extends Component {
   }
   delete =() =>{
     this.props.onDltDoenca({doencaId: this.props.doencaId});
-    Actions.home();
   }
   render() {
     const admDoenca = this.props.adm ?

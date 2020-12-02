@@ -16,7 +16,7 @@ export const addCampanha = campanha => {
         campanha.imagem = resp.data.imageUrl;
         axios.post('/campanhas.json',{...campanha})
         .catch(err => console.log(err))
-        .then(res => console.log(res.data));});
+        .then(res =>  dispatch(fetchCampanha()));});
   };
 };
 
