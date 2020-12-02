@@ -72,6 +72,25 @@ class AddProfile extends Component {
       Alert.alert('Campo não preenchido !',
             'Campo Senha é obrigatório!');
     } else {
+      var count = this.state.senha.length;
+      var countcpf = this.state.cpf.length;
+      var countsus = this.state.sus.length;
+      var partesData = this.state.dtnascimento.split('/');
+      var data = new Date(partesData[2], partesData[1] - 1, partesData[0]);
+
+      if (data >= new Date()) {
+        Alert.alert('Campo preenchido incorretamente !',
+              'Data Nascimento maior que data atual!');
+      } else if (countcpf < 20 ) {
+        Alert.alert('Campo preenchido incorretamente !',
+              'Campo CPF preenchido incoretamente!');
+      } else if (countsus < 18 ) {
+        Alert.alert('Campo preenchido incorretamente !',
+              'Campo SUS preenchido incoretamente!!');
+      } else if (count < 6 ) {
+        Alert.alert('Campo preenchido incorretamente !',
+              'Senha deve ter no mínimo 6 caracteres!');
+      } else {
     this.props.onCreateUser({
       imagem: this.state.imagem,
       nome : this.state.nome,
@@ -89,6 +108,7 @@ class AddProfile extends Component {
     this.props.onCancel();
     Actions.home();
   }
+}
 };
 
   render(){
