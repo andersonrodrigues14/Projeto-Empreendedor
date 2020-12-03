@@ -1,97 +1,113 @@
 /* eslint-disable prettier/prettier */
-import  {SET_VACINAS} from './actionTypes';
+import {SET_VACINAS} from './actionTypes';
 import axios from 'axios';
 
-export const addVacina = vacina => {
-  return dispatch => {
+export const addVacina = (vacina) => {
+  return (dispatch) => {
     axios({
-      url:'uploadImage',
-      baseURL:'https://us-central1-carteiradevacinacaodigital.cloudfunctions.net',
-      method:'post',
-      data:{
+      url: 'uploadImage',
+      baseURL:
+        'https://us-central1-carteiradevacinacaodigital.cloudfunctions.net',
+      method: 'post',
+      data: {
         image: vacina.imagem.base64,
       },
-    }) .catch(err => console.log(err))
-       .then(resp => {
+    })
+      .catch((err) => console.log(err))
+      .then((resp) => {
         vacina.imagem = resp.data.imageUrl;
-        axios.post('/vacinas.json',{...vacina})
-        .catch(err => console.log(err))
-        .then(res =>{
+        axios
+          .post('/vacinas.json', {...vacina})
+          .catch((err) => console.log(err))
+          .then((res) => {
             dispatch(fetchVacina());
-          }
-          );});
+          });
+      });
   };
 };
 
-export const edtVacina = vacina => {
-  return dispatch => {
-    if (vacina.imagem.base64 != null){
-    axios({
-      url:'uploadImage',
-      baseURL:'https://us-central1-carteiradevacinacaodigital.cloudfunctions.net',
-      method:'post',
-      data:{
-        image: vacina.imagem.base64,
-      },
-    }) .catch(err => console.log(err))
-    .then(respo => {
-        axios.get(`/vacinas/${vacina.id}.json`)
-          .catch(err => console.log(err))
-          .then(resp => {
-         vacina.imagem = respo.data.imageUrl;
-         const imagem = vacina.imagem;
-         const nome = vacina.nome;
-         const texto = vacina.texto;
-         const tempoDuracao = vacina.tempoDuracao;
-         axios.patch(`/vacinas/${vacina.id}.json`,{imagem,nome,texto,tempoDuracao})
-          .catch(err=>console.log(err))
-          .then(res => {
-             dispatch(fetchVacina());
-          });
-        });});
+export const edtVacina = (vacina) => {
+  return (dispatch) => {
+    if (vacina.imagem.base64 != null) {
+      axios({
+        url: 'uploadImage',
+        baseURL:
+          'https://us-central1-carteiradevacinacaodigital.cloudfunctions.net',
+        method: 'post',
+        data: {
+          image: vacina.imagem.base64,
+        },
+      })
+        .catch((err) => console.log(err))
+        .then((respo) => {
+          axios
+            .get(`/vacinas/${vacina.id}.json`)
+            .catch((err) => console.log(err))
+            .then((resp) => {
+              vacina.imagem = respo.data.imageUrl;
+              const imagem = vacina.imagem;
+              const nome = vacina.nome;
+              const texto = vacina.texto;
+              const tempoDuracao = vacina.tempoDuracao;
+              axios
+                .patch(`/vacinas/${vacina.id}.json`, {
+                  imagem,
+                  nome,
+                  texto,
+                  tempoDuracao,
+                })
+                .catch((err) => console.log(err))
+                .then((res) => {
+                  dispatch(fetchVacina());
+                });
+            });
+        });
     } else {
-      axios.get(`/vacinas/${vacina.id}.json`)
-          .catch(err => console.log(err))
-          .then(resp => {
-         const nome = vacina.nome;
-         const texto = vacina.texto;
-         const tempoDuracao = vacina.tempoDuracao;
-         axios.patch(`/vacinas/${vacina.id}.json`,{nome,texto,tempoDuracao})
-          .catch(err=>console.log(err))
-          .then(res => {
-             dispatch(fetchVacina());
-          });
+      axios
+        .get(`/vacinas/${vacina.id}.json`)
+        .catch((err) => console.log(err))
+        .then((resp) => {
+          const nome = vacina.nome;
+          const texto = vacina.texto;
+          const tempoDuracao = vacina.tempoDuracao;
+          axios
+            .patch(`/vacinas/${vacina.id}.json`, {nome, texto, tempoDuracao})
+            .catch((err) => console.log(err))
+            .then((res) => {
+              dispatch(fetchVacina());
+            });
         });
     }
   };
 };
 
-export const delVacina = vacina => {
-  return dispatch => {
-    axios.delete(`/vacinas/${vacina.vacinaId}.json`)
-      .catch(err=>console.log(err))
-      .then(res => {
+export const delVacina = (vacina) => {
+  return (dispatch) => {
+    axios
+      .delete(`/vacinas/${vacina.vacinaId}.json`)
+      .catch((err) => console.log(err))
+      .then((res) => {
         dispatch(fetchVacina());
       });
   };
 };
 
-
-export const setVacina = vacina => {
+export const setVacina = (vacina) => {
   return {
-    type:SET_VACINAS,
+    type: SET_VACINAS,
     payload: vacina,
   };
 };
 //busca dados do banco
 export const fetchVacina = () => {
-  return dispatch => {
-    axios.get('/vacinas.json')
-      .catch(err => console.log(err))
-      .then(res => {
+  return (dispatch) => {
+    axios
+      .get('/vacinas.json')
+      .catch((err) => console.log(err))
+      .then((res) => {
         const rawVacinas = res.data;
         const vacina = [];
-        for (let key in rawVacinas){
+        for (let key in rawVacinas) {
           vacina.push({
             ...rawVacinas[key],
             id: key,
@@ -102,5 +118,3 @@ export const fetchVacina = () => {
       });
   };
 };
-
-

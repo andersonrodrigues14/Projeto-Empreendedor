@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
-import {StyleSheet,Platform} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 export const style = StyleSheet.create({
-  container:{
-    flex:1,
-    justifyContent:'center',
-    alignItems:'center',
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   background: {
     //KeyboardAvoidingView
@@ -33,8 +33,8 @@ export const style = StyleSheet.create({
     color: '#28ABE3',
     fontSize: 20,
     justifyContent: 'center',
-    marginBottom:6,
-    marginTop:1,
+    marginBottom: 6,
+    marginTop: 1,
   },
   containerInfo: {
     alignItems: 'center',
@@ -42,7 +42,7 @@ export const style = StyleSheet.create({
     width: '90%',
     borderRadius: 12,
     flexDirection: 'column',
-    paddingTop:10,
+    paddingTop: 10,
   },
 
   btnInsert: {
@@ -52,13 +52,13 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
-    marginBottom:10,
+    marginBottom: 10,
     flexDirection: 'row',
   },
 
   textInsert: {
     color: '#FFF',
     fontSize: 18,
-    marginLeft:10,
+    marginLeft: 10,
   },
 });

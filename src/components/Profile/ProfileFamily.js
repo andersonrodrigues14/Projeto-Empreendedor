@@ -33,22 +33,23 @@ class Profile extends Component {
             name="angle-right"
             size={30}
             color="#35AAFF"
-            onPress={()=> this.setState({showFamiliares: true})}
+            onPress={() => this.setState({showFamiliares: true})}
           />
         </View>
         <View style={style.editContainer}>
           <Image source={{uri: this.props.imagem}} style={style.imageUser} />
         </View>
 
-        <Text style={style.textTituloUser} >
-          {this.props.nome}
-        </Text>
+        <Text style={style.textTituloUser}>{this.props.nome}</Text>
 
-        <ModalFamilyUser isVisible={this.state.showFamiliares}  userId={this.props.userId} onCancel={()=> this.setState({showFamiliares: false})}/>
+        <ModalFamilyUser
+          isVisible={this.state.showFamiliares}
+          userId={this.props.userId}
+          onCancel={() => this.setState({showFamiliares: false})}
+        />
       </View>
     );
   }
 }
-
 
 export default Profile;

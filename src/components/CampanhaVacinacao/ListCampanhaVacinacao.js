@@ -18,81 +18,89 @@ import {style} from './StyleListCampanha';
 import AddCampanha from './AddCampanha';
 import {fetchCampanha} from '../../store/actions/campanha';
 
-
 class ListCamapanha extends Component {
   state = {
     showAddCampanha: false,
-  }
+  };
 
   componentDidMount = () => {
     this.props.onFetchCampanha();
-  }
-  render(){
-    const addCampanha = this.props.adm ?
-    <TouchableOpacity style={style.btnAdicionar} onPress={() => this.setState({showAddCampanha: true})}>
-      <View style={style.containerInfoRow}>
-        <Text style={style.textRegister}>Adicionar Campanha</Text>
-      </View>
-    </TouchableOpacity> : null;
+  };
+  render() {
+    const addCampanha = this.props.adm ? (
+      <TouchableOpacity
+        style={style.btnAdicionar}
+        onPress={() => this.setState({showAddCampanha: true})}>
+        <View style={style.containerInfoRow}>
+          <Text style={style.textRegister}>Adicionar Campanha</Text>
+        </View>
+      </TouchableOpacity>
+    ) : null;
     return (
       <KeyboardAvoidingView style={style.background}>
-        <AddCampanha isVisible={this.state.showAddCampanha} onCancel={()=> this.setState({showAddCampanha: false})}/>
-      <ImageBackground
-        source={require('../../assets/fundo.png')}
-        style={style.image}>
-      <View style={style.containerLogo}>
-        <Image
-          source={require('../../assets/ListCampanha.png')}
-          style={{width: 100, height: 95}}
+        <AddCampanha
+          isVisible={this.state.showAddCampanha}
+          onCancel={() => this.setState({showAddCampanha: false})}
         />
-        <Text style={style.textTitulo}>Campanha de Vacinação</Text>
-        </View>
+        <ImageBackground
+          source={require('../../assets/fundo.png')}
+          style={style.image}>
+          <View style={style.containerLogo}>
+            <Image
+              source={require('../../assets/ListCampanha.png')}
+              style={{width: 100, height: 95}}
+            />
+            <Text style={style.textTitulo}>Campanha de Vacinação</Text>
+          </View>
 
-        <View style={style.containerInfo}>
-        {addCampanha}
+          <View style={style.containerInfo}>
+            {addCampanha}
 
-            <TouchableOpacity
-              style={style.btnRegister}
-             >
-               <Icon
-                name="globe"
-                size={40}
-                color="#fff"
-              />
+            <TouchableOpacity style={style.btnRegister}>
+              <Icon name="globe" size={40} color="#fff" />
               <View style={style.containerInfoRow}>
-              <Text style={style.textRegister}>Fique por dentro das</Text>
+                <Text style={style.textRegister}>Fique por dentro das</Text>
                 <Text style={style.textRegister}>campanhas que estão</Text>
                 <Text style={style.textRegister}>acontecendo!</Text>
               </View>
             </TouchableOpacity>
           </View>
 
-      <View style={style.container}>
-      <FlatList  data={this.props.campanha}
-                keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <Campanha key={item.id} {...item} campanhaId={item.id} campanhaEdt={item}/>} />
-      </View>
-      <View>
-        <Menu/>
-      </View>
-      </ImageBackground>
+          <View style={style.container}>
+            <FlatList
+              data={this.props.campanha}
+              keyExtractor={(item) => `${item.id}`}
+              renderItem={({item}) => (
+                <Campanha
+                  key={item.id}
+                  {...item}
+                  campanhaId={item.id}
+                  campanhaEdt={item}
+                />
+              )}
+            />
+          </View>
+          <View>
+            <Menu />
+          </View>
+        </ImageBackground>
       </KeyboardAvoidingView>
     );
   }
 }
 
 //retorna dados para a tela
-const mapStateToProps = ({user,campanha}) => {
+const mapStateToProps = ({user, campanha}) => {
   return {
-    adm : user.adm,
+    adm: user.adm,
     campanha: campanha.campanha,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onFetchCampanha: () => dispatch(fetchCampanha()),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(ListCamapanha);
+export default connect(mapStateToProps, mapDispatchToProps)(ListCamapanha);

@@ -11,4 +11,3 @@ export const SET_MINHASVACINAS = 'SET_MINHASVACINAS';
 export const SET_FAMILIA = 'SET_FAMILIA';
 export const SET_PROFILE = 'SET_PROFILE';
 export const SET_MESSAGE = 'SET_MESSAGE';
-

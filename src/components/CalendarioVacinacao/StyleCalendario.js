@@ -1,24 +1,24 @@
 /* eslint-disable prettier/prettier */
-import {StyleSheet,Platform} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 export const style = StyleSheet.create({
-  imagem:{
-    marginHorizontal:10,
+  imagem: {
+    marginHorizontal: 10,
     resizeMode: 'contain',
-    width:100,
-    height:100,
+    width: 100,
+    height: 100,
   },
 
   searchIconInfo: {
     paddingBottom: 60,
-    marginBottom:8,
-    paddingHorizontal:10,
-    paddingTop:15,
+    marginBottom: 8,
+    paddingHorizontal: 10,
+    paddingTop: 15,
   },
 
   searchIconInfo2: {
-    paddingHorizontal:15,
-    paddingTop:15,
+    paddingHorizontal: 15,
+    paddingTop: 15,
   },
 
   editContainer: {
@@ -35,18 +35,17 @@ export const style = StyleSheet.create({
     width: '90%',
     margin: '5%',
     borderRadius: 50,
-    backgroundColor:'#FBFBFB',
+    backgroundColor: '#FBFBFB',
     marginTop: Platform.OS === 'ios' ? 20 : 10,
   },
 
-
-  textStyle:{
-    fontSize:14,
-    color:'#000',
+  textStyle: {
+    fontSize: 14,
+    color: '#000',
   },
 
-  textTitulo:{
-    fontSize:20,
-    color:'#000',
+  textTitulo: {
+    fontSize: 20,
+    color: '#000',
   },
 });

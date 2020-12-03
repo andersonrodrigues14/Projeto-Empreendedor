@@ -1,28 +1,20 @@
 /* eslint-disable prettier/prettier */
-import  {SET_INFORMACAODOENCA, DLT_VACINA} from '../actions/actionTypes';
+import {SET_INFORMACAODOENCA} from '../actions/actionTypes';
 
 const initialState = {
   doenca: [],
 };
 
 const reducer = (state = initialState, action) => {
-    switch (action.type){
-      case SET_INFORMACAODOENCA:
-        return {
-          ...state,
-          doenca:action.payload,
-        };
-      case DLT_VACINA:
-        return {
-          ...state,
-          doenca: state.doenca.map(campanha =>{
-
-
-          }),
-        };
-      default:
-        return state;
-    }
+  switch (action.type) {
+    case SET_INFORMACAODOENCA:
+      return {
+        ...state,
+        doenca: action.payload,
+      };
+    default:
+      return state;
+  }
 };
 
 export default reducer;

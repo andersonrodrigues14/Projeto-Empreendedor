@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {StyleSheet,Platform} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 export const style = StyleSheet.create({
   image: {
@@ -35,8 +35,8 @@ export const style = StyleSheet.create({
     color: '#28ABE3',
     fontSize: 20,
     justifyContent: 'center',
-    marginBottom:6,
-    marginTop:1,
+    marginBottom: 6,
+    marginTop: 1,
   },
 
   InfoUser: {
@@ -56,7 +56,7 @@ export const style = StyleSheet.create({
     flexDirection: 'row',
   },
 
-  buttons:{
+  buttons: {
     flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
@@ -64,7 +64,6 @@ export const style = StyleSheet.create({
     marginTop: 15,
     borderRadius: 12,
   },
-
 
   btnContainer: {
     width: '45%',
@@ -75,18 +74,16 @@ export const style = StyleSheet.create({
     marginTop: 5,
   },
 
-  imageButton:{
+  imageButton: {
     marginTop: 6,
     width: 120,
   },
 
   imagemUser: {
-    width:75,
-    height:75,
+    width: 75,
+    height: 75,
     resizeMode: 'center',
     borderRadius: 60,
     marginRight: 10,
   },
-
-
 });

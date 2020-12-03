@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {StyleSheet,Platform,Dimensions} from 'react-native';
+import {StyleSheet, Platform, Dimensions} from 'react-native';
 
 export const style = StyleSheet.create({
   btnInsert: {
@@ -9,8 +9,8 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
-    marginTop : 10,
-    marginBottom:10,
+    marginTop: 10,
+    marginBottom: 10,
     flexDirection: 'row',
   },
   btnFoto: {
@@ -20,28 +20,28 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
-    marginTop : 10,
-    marginBottom:10,
+    marginTop: 10,
+    marginBottom: 10,
     flexDirection: 'row',
   },
-  containerImagem:{
-    marginTop:15,
-    width:'40%',
-    height: Dimensions.get('window').width  / 3,
+  containerImagem: {
+    marginTop: 15,
+    width: '40%',
+    height: Dimensions.get('window').width / 3,
     backgroundColor: '#eee',
-    marginBottom:20,
+    marginBottom: 20,
   },
-  imagem:{
+  imagem: {
     width: '100%',
-    height: Dimensions.get('window').width  / 3,
-    alignItems:'center',
-    justifyContent:'center',
+    height: Dimensions.get('window').width / 3,
+    alignItems: 'center',
+    justifyContent: 'center',
     resizeMode: 'center',
   },
   textInsert: {
     color: '#FFF',
     fontSize: 18,
-    marginLeft:10,
+    marginLeft: 10,
   },
   containerLogo: {
     //View logo
@@ -53,31 +53,29 @@ export const style = StyleSheet.create({
     //marginLeft:100,
   },
   editContainer2: {
-
     width: '48%',
     flexDirection: 'row',
-    justifyContent:'center',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   background: {
     //KeyboardAvoidingView
     flex: 1,
     marginTop: Platform.OS === 'ios' ? 20 : 0,
-
   },
-  dateComponente:{
-    width:230,
+  dateComponente: {
+    width: 230,
     margin: 15,
   },
-  dateComponenteMaior:{
-    width:220,
+  dateComponenteMaior: {
+    width: 220,
     margin: 15,
   },
-  texto:{
-    marginLeft:15,
-    fontSize:15,
+  texto: {
+    marginLeft: 15,
+    fontSize: 15,
   },
-  linha:{
+  linha: {
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -85,14 +83,14 @@ export const style = StyleSheet.create({
     color: '#28ABE3',
     fontSize: 25,
     justifyContent: 'center',
-    marginBottom:6,
-    marginTop:1,
+    marginBottom: 6,
+    marginTop: 1,
     alignItems: 'center',
   },
   input: {
     backgroundColor: '#FFF',
     borderWidth: 1,
-    borderColor:'#35AAFF',
+    borderColor: '#35AAFF',
     width: '90%',
     height: 40,
     marginBottom: 5,
@@ -104,15 +102,15 @@ export const style = StyleSheet.create({
   inputColunm: {
     backgroundColor: '#FFF',
     borderWidth: 1,
-    borderColor:'#35AAFF',
+    borderColor: '#35AAFF',
     height: 40,
     color: '#222',
     fontSize: 17,
     borderRadius: 7,
     paddingLeft: 10,
-    marginLeft:18,
-    marginRight:20,
-    flex:0.4,
+    marginLeft: 18,
+    marginRight: 20,
+    flex: 0.4,
   },
   InfoUser: {
     alignItems: 'center',
@@ -120,13 +118,13 @@ export const style = StyleSheet.create({
     width: '90%',
     margin: '5%',
     borderRadius: 40,
-    paddingBottom:10,
+    paddingBottom: 10,
     backgroundColor: '#FBFBFB',
     marginTop: Platform.OS === 'ios' ? 20 : 10,
   },
   scroll: {
     flex: 0.1,
-    width:'100%',
+    width: '100%',
   },
   image: {
     flex: 1,
@@ -135,18 +133,17 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  imageUser:{
-    width:200,
-    height:150,
+  imageUser: {
+    width: 200,
+    height: 150,
     resizeMode: 'contain',
     borderRadius: 90,
   },
   editContainer: {
-
     width: '80%',
     margin: '5%',
     flexDirection: 'row',
-    justifyContent:'center',
+    justifyContent: 'center',
     alignItems: 'center',
   },
 });

@@ -4,7 +4,6 @@ import React, {Component} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import {View, Image, TextInput} from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import {delProfile} from '../../store/actions/profile';
 import EdtProfile from './EdtProfile';
 
@@ -15,57 +14,42 @@ import {style} from './StyleProfile';
 class Profile extends Component {
   state = {
     showEdtProfile: false,
-  }
-  delete =() =>{
+  };
+  delete = () => {
     this.props.onDltProfile({profileId: this.props.profileId});
-  }
+  };
   render() {
-    const admProfile = this.props.adm ?
-    <View style={style.editContainerMenu}>
-
+    const admProfile = this.props.adm ? (
+      <View style={style.editContainerMenu}>
+        <Icon style={style.searchIconInfo} size={23} color="#35AAFF" />
         <Icon
-            style={style.searchIconInfo}
-            size={23}
-            color="#35AAFF"
-          />
-          <Icon
-            style={style.searchIconInfo}
-            name="pencil-alt"
-            size={20}
-            color="#35AAFF"
-            onPress={()=> this.setState({showEdtProfile: true})}
-          />
-          <Icon
-            style={style.searchIconInfo}
-            name="trash"
-            size={20}
-            color="#35AAFF"
-            onPress={(this.delete)}
-          />
-        </View> :  <View style={style.editContainerMenu}>
-
-<Icon
-    style={style.searchIconInfo2}
-    size={23}
-    color="#35AAFF"
-  />
-  <Icon
-    style={style.searchIconInfo2}
-    size={20}
-    color="#35AAFF"
-  />
-  <Icon
-    style={style.searchIconInfo2}
-    size={20}
-    color="#35AAFF"
-  />
-</View>;
+          style={style.searchIconInfo}
+          name="pencil-alt"
+          size={20}
+          color="#35AAFF"
+          onPress={() => this.setState({showEdtProfile: true})}
+        />
+        <Icon
+          style={style.searchIconInfo}
+          name="trash"
+          size={20}
+          color="#35AAFF"
+          onPress={this.delete}
+        />
+      </View>
+    ) : (
+      <View style={style.editContainerMenu}>
+        <Icon style={style.searchIconInfo2} size={23} color="#35AAFF" />
+        <Icon style={style.searchIconInfo2} size={20} color="#35AAFF" />
+        <Icon style={style.searchIconInfo2} size={20} color="#35AAFF" />
+      </View>
+    );
 
     return (
       <View style={style.InfoUser}>
         {admProfile}
         <View style={style.editContainer}>
-          <Image source={{uri:this.props.imagem}} style={style.imageUser} />
+          <Image source={{uri: this.props.imagem}} style={style.imageUser} />
         </View>
 
         <TextInput style={style.input} placeholder="Nome" editable={false}>
@@ -99,7 +83,11 @@ class Profile extends Component {
         <TextInput style={style.input} placeholder="OBS" editable={false}>
           {this.props.obs}
         </TextInput>
-        <EdtProfile isVisible={this.state.showEdtProfile} profileEdt={this.props.profileEdt} onCancel={()=> this.setState({showEdtProfile: false})}/>
+        <EdtProfile
+          isVisible={this.state.showEdtProfile}
+          profileEdt={this.props.profileEdt}
+          onCancel={() => this.setState({showEdtProfile: false})}
+        />
       </View>
     );
   }
@@ -112,10 +100,10 @@ const mapStateToProps = ({user}) => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onDltProfile: profile => dispatch(delProfile(profile)),
+    onDltProfile: (profile) => dispatch(delProfile(profile)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

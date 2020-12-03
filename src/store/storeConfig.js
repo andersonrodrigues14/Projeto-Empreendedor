@@ -17,9 +17,9 @@ const reducers = combineReducers({
   calendario: calendarioReducer,
   campanha: campanhaReducer,
   doenca: doencaReducer,
-  minhasVacinas : minhasVacinasReducer,
-  familia : familiaReducer,
-  profile : profileReducer,
+  minhasVacinas: minhasVacinasReducer,
+  familia: familiaReducer,
+  profile: profileReducer,
   message: messageReducer,
 });
 

@@ -4,58 +4,44 @@ import {View, Image, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {style} from './StyleInformacao';
 import {connect} from 'react-redux';
-import { Actions } from 'react-native-router-flux';
 import {delDoenca} from '../../store/actions/informacaoDoenca';
 import EdtDoenca from './EdtInfoDoença';
 
 class InformacaoDoenca extends Component {
   state = {
     showEdtDoenca: false,
-  }
-  delete =() =>{
+  };
+  delete = () => {
     this.props.onDltDoenca({doencaId: this.props.doencaId});
-  }
+  };
   render() {
-    const admDoenca = this.props.adm ?
-    <View style={style.editContainer}>
-          <Image source={{uri:this.props.imagem}} style={style.imagem} />
-          <Icon
-            style={style.searchIconInfo}
-            size={23}
-            color="#35AAFF"
-          />
-          <Icon
-            style={style.searchIconInfo}
-            name="pencil-alt"
-            size={20}
-            color="#35AAFF"
-            onPress={()=> this.setState({showEdtDoenca: true})}
-          />
-          <Icon
-            style={style.searchIconInfo}
-            name="trash"
-            size={20}
-            color="#35AAFF"
-            onPress={(this.delete)}
-          />
-        </View> :  <View style={style.editContainer}>
-          <Image source={{uri:this.props.imagem}} style={style.imagem} />
-          <Icon
-            style={style.searchIconInfo2}
-            size={23}
-            color="#35AAFF"
-          />
-          <Icon
-            style={style.searchIconInfo2}
-            size={20}
-            color="#35AAFF"
-          />
-          <Icon
-            style={style.searchIconInfo2}
-            size={20}
-            color="#35AAFF"
-          />
-        </View>;
+    const admDoenca = this.props.adm ? (
+      <View style={style.editContainer}>
+        <Image source={{uri: this.props.imagem}} style={style.imagem} />
+        <Icon style={style.searchIconInfo} size={23} color="#35AAFF" />
+        <Icon
+          style={style.searchIconInfo}
+          name="pencil-alt"
+          size={20}
+          color="#35AAFF"
+          onPress={() => this.setState({showEdtDoenca: true})}
+        />
+        <Icon
+          style={style.searchIconInfo}
+          name="trash"
+          size={20}
+          color="#35AAFF"
+          onPress={this.delete}
+        />
+      </View>
+    ) : (
+      <View style={style.editContainer}>
+        <Image source={{uri: this.props.imagem}} style={style.imagem} />
+        <Icon style={style.searchIconInfo2} size={23} color="#35AAFF" />
+        <Icon style={style.searchIconInfo2} size={20} color="#35AAFF" />
+        <Icon style={style.searchIconInfo2} size={20} color="#35AAFF" />
+      </View>
+    );
     return (
       <View style={style.container}>
         {admDoenca}
@@ -67,7 +53,11 @@ class InformacaoDoenca extends Component {
             Data da Publicação: {this.props.dataPublicacao}
           </Text>
         </View>
-        <EdtDoenca isVisible={this.state.showEdtDoenca} doencaEdt={this.props.doencaEdt} onCancel={()=> this.setState({showEdtDoenca: false})}/>
+        <EdtDoenca
+          isVisible={this.state.showEdtDoenca}
+          doencaEdt={this.props.doencaEdt}
+          onCancel={() => this.setState({showEdtDoenca: false})}
+        />
       </View>
     );
   }
@@ -80,10 +70,10 @@ const mapStateToProps = ({user}) => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onDltDoenca: doenca => dispatch(delDoenca(doenca)),
+    onDltDoenca: (doenca) => dispatch(delDoenca(doenca)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(InformacaoDoenca);
+export default connect(mapStateToProps, mapDispatchToProps)(InformacaoDoenca);

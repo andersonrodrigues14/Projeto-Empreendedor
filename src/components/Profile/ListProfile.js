@@ -8,11 +8,8 @@ import {
   KeyboardAvoidingView,
   ImageBackground,
   Text,
-  TextInput,
   TouchableOpacity,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import {Actions} from 'react-native-router-flux'; // para navegar nas rotas
 
 import Profile from './Profile';
 import {style} from './StyleListProfile';
@@ -21,41 +18,54 @@ import Menu from '../Main/Main';
 import AddProfile from './AddProfile';
 import {fetchProfile} from '../../store/actions/profile';
 
-
 class ListProfile extends Component {
   state = {
     showAddProfile: false,
   };
   componentDidMount = () => {
     this.props.onFetchProfile();
-  }
+  };
 
   render() {
-    const addProfile = this.props.adm ?
-    <View style={style.containerAdministrador}>
-              <TouchableOpacity
-                style={style.btnRegister}
-                onPress={() => this.setState({showAddProfile: true})}>
-                <Text style={style.textRegister}>Adicionar Usuário</Text>
-              </TouchableOpacity>
-            </View> : null;
-     const containerPadrao = this.props.adm ?
-     <View style={style.container}>
-            <FlatList
-              data={this.props.profile}
-              keyExtractor={(item) => `${item.id}`}
-              renderItem={({item}) => <Profile key={item.id} {...item} profileEdt={item} profileId={item.id}/>}
+    const addProfile = this.props.adm ? (
+      <View style={style.containerAdministrador}>
+        <TouchableOpacity
+          style={style.btnRegister}
+          onPress={() => this.setState({showAddProfile: true})}>
+          <Text style={style.textRegister}>Adicionar Usuário</Text>
+        </TouchableOpacity>
+      </View>
+    ) : null;
+    const containerPadrao = this.props.adm ? (
+      <View style={style.container}>
+        <FlatList
+          data={this.props.profile}
+          keyExtractor={(item) => `${item.id}`}
+          renderItem={({item}) => (
+            <Profile
+              key={item.id}
+              {...item}
+              profileEdt={item}
+              profileId={item.id}
             />
-          </View> : <View style={style.containerUser}>
-            <FlatList
-              data={this.props.profile}
-              keyExtractor={(item) => `${item.id}`}
-              renderItem={({item}) => <Profile key={item.id} {...item} />}
-            />
-          </View>;
+          )}
+        />
+      </View>
+    ) : (
+      <View style={style.containerUser}>
+        <FlatList
+          data={this.props.profile}
+          keyExtractor={(item) => `${item.id}`}
+          renderItem={({item}) => <Profile key={item.id} {...item} />}
+        />
+      </View>
+    );
     return (
       <KeyboardAvoidingView style={style.background}>
-         <AddProfile isVisible={this.state.showAddProfile} onCancel={()=> this.setState({showAddProfile: false})}/>
+        <AddProfile
+          isVisible={this.state.showAddProfile}
+          onCancel={() => this.setState({showAddProfile: false})}
+        />
         <ImageBackground
           source={require('../../assets/fundo.png')}
           style={style.image}>
@@ -70,9 +80,9 @@ class ListProfile extends Component {
 
             {addProfile}
           </ScrollView>
-            {containerPadrao}
+          {containerPadrao}
           <View>
-            <Menu/>
+            <Menu />
           </View>
         </ImageBackground>
       </KeyboardAvoidingView>
@@ -83,15 +93,15 @@ class ListProfile extends Component {
 //retorna dados para a tela
 const mapStateToProps = ({user, profile}) => {
   return {
-    adm : user.adm,
+    adm: user.adm,
     profile: profile.profile,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onFetchProfile: () => dispatch(fetchProfile()),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(ListProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(ListProfile);

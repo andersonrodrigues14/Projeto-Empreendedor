@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {connect} from 'react-redux';
 import {View, Image, Text} from 'react-native';
 import ModalVacinasUser from '../MinhasVacinas/ModalVacinasUser';
 
@@ -34,21 +33,22 @@ class Profile extends Component {
             name="angle-right"
             size={30}
             color="#35AAFF"
-            onPress={()=> this.setState({showVacinas: true})}
+            onPress={() => this.setState({showVacinas: true})}
           />
         </View>
         <View style={style.editContainer}>
           <Image source={{uri: this.props.imagem}} style={style.imageUser} />
         </View>
 
-        <Text style={style.textTituloUser} >
-          {this.props.nome}
-        </Text>
-        <ModalVacinasUser isVisible={this.state.showVacinas}  userId={this.props.userId} onCancel={()=> this.setState({showVacinas: false})}/>
+        <Text style={style.textTituloUser}>{this.props.nome}</Text>
+        <ModalVacinasUser
+          isVisible={this.state.showVacinas}
+          userId={this.props.userId}
+          onCancel={() => this.setState({showVacinas: false})}
+        />
       </View>
     );
   }
 }
-
 
 export default Profile;

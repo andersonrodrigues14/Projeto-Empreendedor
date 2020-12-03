@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
-
-import {StyleSheet,Platform} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 export const style = StyleSheet.create({
   image: {
@@ -25,7 +24,7 @@ export const style = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 50,
     paddingBottom: 30,
-    marginBottom:20,
+    marginBottom: 20,
   },
 
   container: {
@@ -37,7 +36,7 @@ export const style = StyleSheet.create({
     borderRadius: 12,
   },
 
-  buttons:{
+  buttons: {
     flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
@@ -49,7 +48,7 @@ export const style = StyleSheet.create({
   input: {
     backgroundColor: '#FFF',
     borderWidth: 1,
-    borderColor:'#35AAFF',
+    borderColor: '#35AAFF',
     width: '90%',
     marginBottom: 5,
     color: '#222',
@@ -90,7 +89,7 @@ export const style = StyleSheet.create({
 
   btnAlterPasswor: {
     marginTop: 5,
-    marginBottom: 5 ,
+    marginBottom: 5,
   },
 
   textAlterPasswor: {
@@ -102,7 +101,7 @@ export const style = StyleSheet.create({
     color: '#28ABE3',
     fontSize: 20,
     justifyContent: 'center',
-    marginBottom:6,
-    marginTop:30,
+    marginBottom: 6,
+    marginTop: 30,
   },
 });
